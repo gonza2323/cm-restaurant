@@ -22,11 +22,11 @@ public class Imagen extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String mime;
 
-    @Lob
-    @Column(nullable = false)
-    private byte[] contenido;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoImagen tipoImagen;
+
+    @Lob
+    @Column(nullable = false)
+    private byte[] contenido;
 }

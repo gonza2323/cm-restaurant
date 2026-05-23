@@ -1,6 +1,5 @@
 package com.example.restaurant.usuario;
 
-import com.example.restaurant.entity.BaseEntity;
 import com.example.restaurant.resenia.Resenia;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,7 +20,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente extends BaseEntity {
+public class Cliente extends Persona {
     @ManyToOne(optional = false)
     private Persona persona;
 

@@ -32,6 +32,9 @@ public class ArticuloInventario extends BaseEntity {
     @ManyToOne
     private UnidadDeMedida unidadDeMedida;
 
+    @ManyToOne(optional = false)
+    private Stock stock;
+
     @ManyToOne
     private Imagen imagen;
 }

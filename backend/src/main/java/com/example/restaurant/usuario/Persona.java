@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Persona extends BaseEntity {
 
     @Column(nullable = false)

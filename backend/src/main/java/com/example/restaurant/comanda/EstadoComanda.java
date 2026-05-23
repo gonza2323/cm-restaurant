@@ -5,5 +5,5 @@ public enum EstadoComanda {
     FINALIZADA,
     ANULADA,
     PENDIENTE_DE_ENTREGA,
-    ENTREGA_FALLIDA
+    ENTREGA_FALLLongA
 }

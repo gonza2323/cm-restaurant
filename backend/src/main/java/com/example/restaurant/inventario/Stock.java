@@ -2,7 +2,6 @@ package com.example.restaurant.inventario;
 
 import com.example.restaurant.entity.BaseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,4 @@ public class Stock extends BaseEntity {
     private double minimo;
 
     private double cantidadActual;
-
-    @ManyToOne(optional = false)
-    private ArticuloInventario articulo;
 }

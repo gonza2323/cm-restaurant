@@ -1,8 +1,11 @@
 package com.example.restaurant.factura;
 
+import com.example.restaurant.comanda.Comanda;
 import com.example.restaurant.entity.BaseEntity;
-import com.example.restaurant.comanda.DetalleComanda;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +30,5 @@ public class DetalleFactura extends BaseEntity {
     private Factura factura;
 
     @ManyToOne(optional = false)
-    private DetalleComanda detalleComanda;
+    private Comanda comanda;
 }

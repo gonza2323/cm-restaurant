@@ -1,22 +1,18 @@
 package com.example.restaurant.carta;
 
-import com.example.restaurant.entity.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
-@Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Categoria extends BaseEntity {
-
-    @Column(nullable = false)
+public class ItemCartaDto {
+    private Long id;
     private String nombre;
+    private String descripcion;
+    private Double precio;
+    private String imageUrl;
 }
