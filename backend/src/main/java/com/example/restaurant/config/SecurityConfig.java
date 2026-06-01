@@ -101,15 +101,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Profile("prod")
     public PasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    @Profile("dev")
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
