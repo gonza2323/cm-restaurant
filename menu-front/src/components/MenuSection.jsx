@@ -12,10 +12,10 @@ function MenuSection({ title, products }) {
         </div>
       </div>
 
-      {products.map(product => (
+      {products.map(item => (
         <ProductElement
-          key={product.id}
-          product={product}
+          key={item.id}
+          product={item}
         />
       ))}
     </section>

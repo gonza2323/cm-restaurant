@@ -1,20 +1,35 @@
+import { Routes, Route } from 'react-router-dom';
 import Header from "./components/Header";
 import NavigationBar from "./components/NavigationBar";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
 import ReviewsList from "./components/ReviewsList";
+import CreateReview from "./components/CreateReview";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
-import './index.css';
+import './styles/index.css';
 
-function App() {
+function HomePage() {
   return (
     <>
       <Header />
       <NavigationBar />
       <Menu />
-      <ReviewsList  />
+      <CreateReview />
+      <ReviewsList />
       <Footer />
     </>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
   );
 }
 

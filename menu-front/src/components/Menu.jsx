@@ -1,26 +1,18 @@
 import MenuSection from "./MenuSection";
-import products from "../data/products";
+import menu from "../data/products";
 
 function Menu() {
-
-  const main = products.filter(
-    product => product.category === "main"
-  );
-
-  const drink = products.filter(
-    product => product.category === "drink"
-  );
-
-  const dessert = products.filter(
-    product => product.category === "dessert"
-  );
-    return (
+  return (
     <>
-      <MenuSection title="Platos principales" products={main} />
-      <MenuSection title="Bebidas" products={drink} />
-      <MenuSection title="Postres" products={dessert} />
+      {menu.secciones.map(seccion => (
+        <MenuSection
+          key={seccion.id}
+          title={seccion.nombre}
+          products={seccion.items}
+        />
+      ))}
     </>
-    );
+  );
 }
 
 export default Menu;
