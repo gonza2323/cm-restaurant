@@ -7,7 +7,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
 @ConfigurationPropertiesScan
-@SpringBootApplication
+
+
 public class RestaurantApplication {
 
 	public static void main(String[] args) {

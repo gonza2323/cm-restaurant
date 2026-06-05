@@ -1,4 +1,5 @@
 import Menu from "./Menu";
+import LoginButtons from "./LoginButtons";
 
 function NavigationBar() {
   return (
@@ -6,6 +7,9 @@ function NavigationBar() {
       <a href="#platos-principales" className="navigation-link">Platos principales</a>
       <a href="#bebidas" className="navigation-link">Bebidas</a>
       <a href="#postres" className="navigation-link">Postres</a>
+      <div className="navigation-actions">
+        <LoginButtons />
+      </div>
     </nav>
   );
 }

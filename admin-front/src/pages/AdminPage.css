@@ -1,0 +1,299 @@
+.admin-page {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.admin-page h1 {
+  color: var(--secondary-color);
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.tabs-navigation {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background-color: transparent;
+  color: var(--text-light);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tab-button:hover {
+  color: var(--text-dark);
+}
+
+.tab-button.active {
+  color: var(--primary-color);
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+.tab-content {
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.content-header h2 {
+  margin: 0;
+  color: var(--text-dark);
+}
+
+/* Categories Tabs */
+.categories-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.category-btn {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--border-color);
+  background-color: white;
+  color: var(--text-dark);
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.category-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.category-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* Menu Items */
+.menu-item {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.item-image {
+  width: 100%;
+  height: 150px;
+  background-color: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.menu-item h3 {
+  padding: 1rem 1rem 0.5rem;
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+}
+
+.description {
+  padding: 0 1rem 0.5rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.item-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Mesas */
+.mesa-item {
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.mesa-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary-color);
+}
+
+.mesa-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+}
+
+.mesa-status {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.mesa-status.ocupada {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-admin {
+  background-color: #e7d4f5;
+  color: #5a1f7d;
+}
+
+.badge-cocinero {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-mozo {
+  background-color: #cfe2ff;
+  color: #084298;
+}
+
+.badge-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.badge-warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-page h1 {
+    font-size: 1.5rem;
+  }
+
+  .tabs-navigation {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .tab-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .content-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .content-header button {
+    width: 100%;
+  }
+
+  .categories-tabs {
+    flex-wrap: wrap;
+  }
+
+  .category-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .item-footer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .item-footer .btn-group {
+    width: 100%;
+  }
+
+  .item-footer .btn-group .btn {
+    flex: 1;
+  }
+
+  .mesa-item {
+    padding: 1.5rem;
+  }
+
+  .mesa-number {
+    font-size: 2rem;
+  }
+}
