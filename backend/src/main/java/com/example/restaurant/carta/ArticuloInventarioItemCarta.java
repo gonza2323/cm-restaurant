@@ -1,7 +1,7 @@
-package com.example.restaurant.inventario;
+package com.example.restaurant.carta;
 
-import com.example.restaurant.carta.ItemCarta;
 import com.example.restaurant.entity.BaseEntity;
+import com.example.restaurant.inventario.ArticuloInventario;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;

@@ -16,6 +16,4 @@ import java.util.Collection;
 public class AuthUserDto {
     Long userId;
     Collection<UserRole> roles;
-    private Boolean hasCompletedProfile;
-    private Boolean mustChangePassword;
 }

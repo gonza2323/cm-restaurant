@@ -27,21 +27,6 @@ public class UsuarioService {
         return usuarioMapper.toDto(find(id));
     }
 
-    // clientes o empleados (desde admin)
-    @Transactional
-    public Usuario createUserNoPassword(String email, UserRole rol) {
-        String defaultPassword = properties.auth().defaultPassword();
-        String passwordHash = passwordEncoder.encode(defaultPassword);
-
-        Usuario usuario = Usuario.builder()
-                .email(email)
-                .password(passwordHash)
-                .rol(rol)
-                .build();
-
-        return repository.save(usuario);
-    }
-
     // solo clientes
     @Transactional
     public Usuario createUserFromEmailPassword(String email, String password, String passwordConfirm) {

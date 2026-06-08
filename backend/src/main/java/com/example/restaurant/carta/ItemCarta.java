@@ -2,7 +2,6 @@ package com.example.restaurant.carta;
 
 import com.example.restaurant.entity.BaseEntity;
 import com.example.restaurant.imagen.Imagen;
-import com.example.restaurant.inventario.ArticuloInventarioItemCarta;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

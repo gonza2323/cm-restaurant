@@ -4,18 +4,12 @@ import com.example.restaurant.usuario.SignUpFormDto;
 import com.example.restaurant.usuario.Usuario;
 import com.example.restaurant.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,8 +20,6 @@ public class AuthController {
     private final AccessTokenService accessTokenService;
     private final UsuarioService usuarioService;
     private final AuthService authService;
-    private final RefreshTokenService refreshTokenService;
-    private final RefreshTokenCookieHelper refreshTokenCookieHelper;
 
     @PostMapping("/login")
     @PreAuthorize("isAnonymous()")
@@ -36,8 +28,6 @@ public class AuthController {
 
         Usuario usuario = usuarioService.find(user.getId());
         AccessTokenDto accessToken = accessTokenService.createToken(user.getId(), user.getRoles());
-        RefreshTokenDto refreshToken = refreshTokenService.createToken(usuario, loginRequest.isRemember());
-        ResponseCookie refreshTokenCookie = refreshTokenCookieHelper.createRefreshCookie(refreshToken);
 
         LoginResponseDto response = LoginResponseDto.builder()
                 .token(accessToken)
@@ -45,7 +35,6 @@ public class AuthController {
                 .build();
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
                 .body(response);
     }
 
@@ -56,8 +45,6 @@ public class AuthController {
 
         Usuario usuario = usuarioService.find(user.getId());
         AccessTokenDto accessToken = accessTokenService.createToken(user.getId(), user.getRoles());
-        RefreshTokenDto refreshToken = refreshTokenService.createToken(usuario, true);
-        ResponseCookie refreshTokenCookie = refreshTokenCookieHelper.createRefreshCookie(refreshToken);
 
         LoginResponseDto response = LoginResponseDto.builder()
                 .token(accessToken)
@@ -65,7 +52,6 @@ public class AuthController {
                 .build();
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
                 .body(response);
     }
 
@@ -75,11 +61,7 @@ public class AuthController {
             return ResponseEntity.ok().build();
         }
 
-        refreshTokenService.revokeToken(refreshToken);
-        ResponseCookie cookie = refreshTokenCookieHelper.clearCookie();
-
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .build();
     }
 
@@ -92,28 +74,5 @@ public class AuthController {
         Usuario usuario = usuarioService.find(user.getId());
 
         return ResponseEntity.ok(new AuthUserDto(user.getId(), user.getRoles()));
-    }
-
-    @PostMapping("/refresh")
-    public ResponseEntity<?> refreshToken(@CookieValue(name = "refreshToken", required = false) String refreshToken) {
-        if (refreshToken != null) {
-            Optional<Usuario> opt = refreshTokenService.validateToken(refreshToken);
-
-            if (opt.isPresent()) {
-                Usuario usuario = opt.get();
-                AccessTokenDto newAccessToken = accessTokenService.createToken(usuario.getId(), List.of(usuario.getRol()));
-                RefreshTokenDto newRefreshToken = refreshTokenService.rotateToken(refreshToken);
-                ResponseCookie refreshTokenCookie = refreshTokenCookieHelper.createRefreshCookie(newRefreshToken);
-
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
-                        .body(newAccessToken);
-            }
-        }
-
-        ResponseCookie cookie = refreshTokenCookieHelper.clearCookie();
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(Map.of("error", "Invalid refresh token"));
     }
 }
