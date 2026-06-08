@@ -34,3 +34,7 @@ build/
 
 ### Databases ###
 *.db
+
+### python ###
+.venv/
+__pycache__/
