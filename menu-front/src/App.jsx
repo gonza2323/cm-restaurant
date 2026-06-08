@@ -23,12 +23,22 @@ function HomePage() {
   );
 }
 
+//agregar guardas de rutas (desp de hacer lo del contexto)
+//jwt 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route
+        path="/perfil"
+        element={
+          <ProtectedRoute>
+            <Perfil />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

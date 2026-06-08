@@ -1,19 +1,37 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/AuthPages.css';
+import { useAuth } from "../auth/AuthContext";
+
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const success = await login(email, password);
+
+    if (success) {
+      navigate("/");
+    } else {
+      setError("Email o contraseña incorrectos");
+    }
+  };
+
+  /*const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: Conectar con el backend
+    //armar contexto que guarde el state de autenticación
+    //llamar función de login del contexto, que a su vez llame al backend y guarde el token en localStorage
+    //config con axios mandar el token en el header de cada request(revisar el de los autos de ing en soft 2)
     console.log('Login:', { email, password });
     // navigate('/');
-  };
+  };*/
 
   return (
     <div className="auth-container">

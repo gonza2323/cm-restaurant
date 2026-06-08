@@ -10,6 +10,8 @@ function Menu() {
   const [cargando, setCargando] = useState(true); 
   const [error, setError] = useState(null);
   
+
+  //se puede usar una lib tanstackquery para que no sea tan feo esto
   useEffect(() => {
     const fetchCarta = async () => {
       try {
