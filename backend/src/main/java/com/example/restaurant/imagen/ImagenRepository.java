@@ -11,4 +11,6 @@ public interface ImagenRepository extends JpaRepository<Imagen, Long> {
     Optional<Imagen> findByIdAndEliminadoFalse(Long id);
 
     List<Imagen> findByTipo(TipoImagen tipo);
+
+    Optional<Imagen> findByNombreAndTipo(String nombre, TipoImagen tipo);
 }

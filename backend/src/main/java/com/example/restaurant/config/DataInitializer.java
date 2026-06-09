@@ -1,5 +1,6 @@
 package com.example.restaurant.config;
 
+import com.example.restaurant.carta.loader.CartaDataLoader;
 import com.example.restaurant.imagen.Imagen;
 import com.example.restaurant.imagen.ImagenRepository;
 import com.example.restaurant.imagen.TipoImagen;
@@ -29,12 +30,16 @@ public class DataInitializer implements CommandLineRunner {
     private final ResourceLoader resourceLoader;
     private final ImagenRepository imagenRepository;
     private final MesaRepository mesaRepository;
+    private final CartaDataLoader cartaDataLoader;
 
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        if (mesaRepository.count() == 0)
+        if (mesaRepository.count() == 0) {
             loadMesas();
+        }
+
+        cartaDataLoader.loadMenuAndInventory();
 
         log.info("Data initialization complete.");
     }

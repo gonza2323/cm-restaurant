@@ -1,0 +1,436 @@
+{
+  "articulos": [
+    {
+      "id": 0,
+      "nombre": "Coca Cola 500ml",
+      "descripcion": "Bebida gaseosa",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 50
+    },
+    {
+      "id": 1,
+      "nombre": "Sprite 500ml",
+      "descripcion": "Bebida gaseosa limón",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 40
+    },
+    {
+      "id": 2,
+      "nombre": "Agua Mineral 500ml",
+      "descripcion": "Agua mineral sin gas",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 60
+    },
+    {
+      "id": 3,
+      "nombre": "Cerveza Artesanal 473ml",
+      "descripcion": "Cerveza premium artesanal",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 30
+    },
+    {
+      "id": 4,
+      "nombre": "Empanadas",
+      "descripcion": "Empanadas de carne caseras (2 unidades)",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 25
+    },
+    {
+      "id": 5,
+      "nombre": "Alitas de Cebolla",
+      "descripcion": "Aros de cebolla fritos",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 20
+    },
+    {
+      "id": 6,
+      "nombre": "Ensalada de Pollo",
+      "descripcion": "Ensalada fresca con pechuga de pollo",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 15
+    },
+    {
+      "id": 7,
+      "nombre": "Hamburguesa Clásica",
+      "descripcion": "Hamburguesa con queso y vegetales",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 18
+    },
+    {
+      "id": 8,
+      "nombre": "Bife de Carne",
+      "descripcion": "Corte de carne premium a la parrilla",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 12
+    },
+    {
+      "id": 9,
+      "nombre": "Filete de Salmón",
+      "descripcion": "Salmón fresco con limón y mantequilla",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 10
+    },
+    {
+      "id": 10,
+      "nombre": "Spaghetti al Pomodoro",
+      "descripcion": "Pasta con salsa de tomate casera",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 16
+    },
+    {
+      "id": 11,
+      "nombre": "Lasaña de Carne",
+      "descripcion": "Lasaña casera con carne molida",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 14
+    },
+    {
+      "id": 12,
+      "nombre": "Papas Fritas",
+      "descripcion": "Papas fritas caseras con sal",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 22
+    },
+    {
+      "id": 13,
+      "nombre": "Cheesecake",
+      "descripcion": "Tarta de queso cremosa",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 8
+    },
+    {
+      "id": 14,
+      "nombre": "Tiramisu",
+      "descripcion": "Postre italiano tradicional",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 10
+    },
+    {
+      "id": 15,
+      "nombre": "Helado",
+      "descripcion": "Helado cremoso variedad sabores",
+      "sinTAC": false,
+      "esIngrediente": false,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 20
+    },
+    {
+      "id": 16,
+      "nombre": "Pan de burger",
+      "descripcion": "Pan para hamburguesa tostado",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 100
+    },
+    {
+      "id": 17,
+      "nombre": "Carne molida",
+      "descripcion": "Carne vacuna molida premium",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 5000
+    },
+    {
+      "id": 18,
+      "nombre": "Lechuga",
+      "descripcion": "Lechuga fresca",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 50
+    },
+    {
+      "id": 19,
+      "nombre": "Tomate",
+      "descripcion": "Tomates frescos",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 60
+    },
+    {
+      "id": 20,
+      "nombre": "Queso cheddar",
+      "descripcion": "Queso cheddar laminado",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 2000
+    },
+    {
+      "id": 21,
+      "nombre": "Mayonesa",
+      "descripcion": "Salsa mayonesa",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "MILILITRO",
+      "stock": 1500
+    },
+    {
+      "id": 22,
+      "nombre": "Masa para empanada",
+      "descripcion": "Masa congelada lista para hornear",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 2500
+    },
+    {
+      "id": 23,
+      "nombre": "Cebolla",
+      "descripcion": "Cebolla fresca",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 40
+    },
+    {
+      "id": 24,
+      "nombre": "Pechuga de pollo",
+      "descripcion": "Pechuga de pollo fresca",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 3000
+    },
+    {
+      "id": 25,
+      "nombre": "Aceite de oliva",
+      "descripcion": "Aceite de oliva extra virgen",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "MILILITRO",
+      "stock": 3000
+    },
+    {
+      "id": 26,
+      "nombre": "Sal",
+      "descripcion": "Sal fina de mesa",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 5000
+    },
+    {
+      "id": 27,
+      "nombre": "Carne vacuna (bife)",
+      "descripcion": "Carne vacuna corte premium",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 3000
+    },
+    {
+      "id": 28,
+      "nombre": "Ajo",
+      "descripcion": "Dientes de ajo fresco",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 100
+    },
+    {
+      "id": 29,
+      "nombre": "Mantequilla",
+      "descripcion": "Mantequilla sin sal premium",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 1500
+    },
+    {
+      "id": 30,
+      "nombre": "Limón",
+      "descripcion": "Limón fresco",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 80
+    },
+    {
+      "id": 31,
+      "nombre": "Salmón fresco",
+      "descripcion": "Filete de salmón congelado",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 2000
+    },
+    {
+      "id": 32,
+      "nombre": "Spaghetti",
+      "descripcion": "Pasta spaghetti seca",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 2000
+    },
+    {
+      "id": 33,
+      "nombre": "Salsa de tomate",
+      "descripcion": "Salsa de tomate enlatada",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "MILILITRO",
+      "stock": 3000
+    },
+    {
+      "id": 34,
+      "nombre": "Queso parmesano",
+      "descripcion": "Queso parmesano rallado",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 1000
+    },
+    {
+      "id": 35,
+      "nombre": "Hojas de lasaña",
+      "descripcion": "Pasta para lasaña",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 1000
+    },
+    {
+      "id": 36,
+      "nombre": "Crema de leche",
+      "descripcion": "Crema de leche para cocinar",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "MILILITRO",
+      "stock": 2000
+    },
+    {
+      "id": 37,
+      "nombre": "Papa",
+      "descripcion": "Papa para freír",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "KILOGRAMO",
+      "stock": 20
+    },
+    {
+      "id": 38,
+      "nombre": "Queso crema",
+      "descripcion": "Queso crema para cheesecake",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 1500
+    },
+    {
+      "id": 39,
+      "nombre": "Galleta de soda",
+      "descripcion": "Galleta molida para cheesecake",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 800
+    },
+    {
+      "id": 40,
+      "nombre": "Azúcar",
+      "descripcion": "Azúcar blanca",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 5000
+    },
+    {
+      "id": 41,
+      "nombre": "Mascarpone",
+      "descripcion": "Queso mascarpone italiano",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 1000
+    },
+    {
+      "id": 42,
+      "nombre": "Ladyfinger",
+      "descripcion": "Bizcochos para tiramisu",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "UNIDAD",
+      "stock": 400
+    },
+    {
+      "id": 43,
+      "nombre": "Cacao en polvo",
+      "descripcion": "Cacao en polvo sin azúcar",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 500
+    },
+    {
+      "id": 44,
+      "nombre": "Café",
+      "descripcion": "Café espresso fuerte",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "MILILITRO",
+      "stock": 2000
+    },
+    {
+      "id": 45,
+      "nombre": "Helado base",
+      "descripcion": "Base de helado",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 3000
+    },
+    {
+      "id": 46,
+      "nombre": "Harina",
+      "descripcion": "Harina de trigo",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "GRAMO",
+      "stock": 3000
+    },
+    {
+      "id": 47,
+      "nombre": "Vinagre",
+      "descripcion": "Vinagre de alcohol",
+      "sinTAC": true,
+      "esIngrediente": true,
+      "unidadDeMedida": "MILILITRO",
+      "stock": 1000
+    }
+  ]
+}

@@ -1,0 +1,360 @@
+{
+  "secciones": [
+    {
+      "nombre": "Bebidas",
+      "items": [
+        {
+          "nombre": "Coca Cola 500ml",
+          "descripcion": "Bebida gaseosa clásica",
+          "precio": 3500.00,
+          "imagen": "coke.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Coca Cola 500ml",
+              "cantidad": 1
+            }
+          ]
+        },
+        {
+          "nombre": "Sprite 500ml",
+          "descripcion": "Bebida gaseosa con sabor limón",
+          "precio": 3500.00,
+          "imagen": "sprite.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Sprite 500ml",
+              "cantidad": 1
+            }
+          ]
+        },
+        {
+          "nombre": "Agua Mineral 500ml",
+          "descripcion": "Agua mineral sin gas",
+          "precio": 2500.00,
+          "imagen": "water.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Agua Mineral 500ml",
+              "cantidad": 1
+            }
+          ]
+        },
+        {
+          "nombre": "Cerveza Artesanal 473ml",
+          "descripcion": "Cerveza premium artesanal",
+          "precio": 5500.00,
+          "imagen": "pint.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Cerveza Artesanal 473ml",
+              "cantidad": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Entradas",
+      "items": [
+        {
+          "nombre": "Empanadas",
+          "descripcion": "Empanadas de carne caseras (2 unidades)",
+          "precio": 5800.00,
+          "imagen": "empanadas.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Masa para empanada",
+              "cantidad": 150
+            },
+            {
+              "nombre": "Carne molida",
+              "cantidad": 150
+            },
+            {
+              "nombre": "Queso cheddar",
+              "cantidad": 50
+            },
+            {
+              "nombre": "Cebolla",
+              "cantidad": 0.5
+            }
+          ]
+        },
+        {
+          "nombre": "Alitas de Cebolla",
+          "descripcion": "Aros de cebolla fritos crujientes",
+          "precio": 4500.00,
+          "imagen": "onion-rings.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Cebolla",
+              "cantidad": 2
+            },
+            {
+              "nombre": "Harina",
+              "cantidad": 80
+            },
+            {
+              "nombre": "Sal",
+              "cantidad": 5
+            }
+          ]
+        },
+        {
+          "nombre": "Ensalada de Pollo",
+          "descripcion": "Ensalada fresca con pechuga de pollo grillada",
+          "precio": 8500.00,
+          "imagen": "chicken-salad.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Pechuga de pollo",
+              "cantidad": 200
+            },
+            {
+              "nombre": "Lechuga",
+              "cantidad": 1.5
+            },
+            {
+              "nombre": "Tomate",
+              "cantidad": 1
+            },
+            {
+              "nombre": "Aceite de oliva",
+              "cantidad": 30
+            },
+            {
+              "nombre": "Vinagre",
+              "cantidad": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Platos principales",
+      "items": [
+        {
+          "nombre": "Hamburguesa Clásica",
+          "descripcion": "Hamburguesa con queso, lechuga y tomate",
+          "precio": 9500.00,
+          "imagen": "burger.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Pan de burger",
+              "cantidad": 1
+            },
+            {
+              "nombre": "Carne molida",
+              "cantidad": 200
+            },
+            {
+              "nombre": "Queso cheddar",
+              "cantidad": 80
+            },
+            {
+              "nombre": "Lechuga",
+              "cantidad": 1
+            },
+            {
+              "nombre": "Tomate",
+              "cantidad": 0.5
+            },
+            {
+              "nombre": "Mayonesa",
+              "cantidad": 30
+            }
+          ]
+        },
+        {
+          "nombre": "Bife de Carne",
+          "descripcion": "Corte de carne premium a la parrilla con ajo y mantequilla",
+          "precio": 18000.00,
+          "imagen": "steak.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Carne vacuna (bife)",
+              "cantidad": 300
+            },
+            {
+              "nombre": "Ajo",
+              "cantidad": 2
+            },
+            {
+              "nombre": "Mantequilla",
+              "cantidad": 40
+            },
+            {
+              "nombre": "Sal",
+              "cantidad": 5
+            }
+          ]
+        },
+        {
+          "nombre": "Filete de Salmón",
+          "descripcion": "Salmón fresco con limón y mantequilla",
+          "precio": 16500.00,
+          "imagen": "salmon.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Salmón fresco",
+              "cantidad": 250
+            },
+            {
+              "nombre": "Limón",
+              "cantidad": 1
+            },
+            {
+              "nombre": "Mantequilla",
+              "cantidad": 30
+            },
+            {
+              "nombre": "Sal",
+              "cantidad": 3
+            }
+          ]
+        },
+        {
+          "nombre": "Spaghetti al Pomodoro",
+          "descripcion": "Pasta con salsa de tomate casera y parmesano",
+          "precio": 8900.00,
+          "imagen": "spaghetti.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Spaghetti",
+              "cantidad": 300
+            },
+            {
+              "nombre": "Salsa de tomate",
+              "cantidad": 200
+            },
+            {
+              "nombre": "Ajo",
+              "cantidad": 3
+            },
+            {
+              "nombre": "Aceite de oliva",
+              "cantidad": 40
+            },
+            {
+              "nombre": "Queso parmesano",
+              "cantidad": 50
+            }
+          ]
+        },
+        {
+          "nombre": "Lasaña de Carne",
+          "descripcion": "Lasaña casera con carne molida y queso fundido",
+          "precio": 11500.00,
+          "imagen": "lasagna.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Hojas de lasaña",
+              "cantidad": 200
+            },
+            {
+              "nombre": "Carne molida",
+              "cantidad": 400
+            },
+            {
+              "nombre": "Salsa de tomate",
+              "cantidad": 300
+            },
+            {
+              "nombre": "Queso cheddar",
+              "cantidad": 150
+            },
+            {
+              "nombre": "Crema de leche",
+              "cantidad": 100
+            }
+          ]
+        },
+        {
+          "nombre": "Papas Fritas",
+          "descripcion": "Papas fritas caseras con sal",
+          "precio": 4000.00,
+          "imagen": "fries.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Papa",
+              "cantidad": 0.3
+            },
+            {
+              "nombre": "Sal",
+              "cantidad": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nombre": "Postres",
+      "items": [
+        {
+          "nombre": "Cheesecake",
+          "descripcion": "Tarta de queso cremosa con costra de galleta",
+          "precio": 6500.00,
+          "imagen": "cheesecake.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Queso crema",
+              "cantidad": 300
+            },
+            {
+              "nombre": "Galleta de soda",
+              "cantidad": 200
+            },
+            {
+              "nombre": "Mantequilla",
+              "cantidad": 50
+            },
+            {
+              "nombre": "Azúcar",
+              "cantidad": 100
+            }
+          ]
+        },
+        {
+          "nombre": "Tiramisu",
+          "descripcion": "Postre italiano tradicional con mascarpone y cacao",
+          "precio": 5500.00,
+          "imagen": "tiramisu.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Mascarpone",
+              "cantidad": 250
+            },
+            {
+              "nombre": "Ladyfinger",
+              "cantidad": 20
+            },
+            {
+              "nombre": "Cacao en polvo",
+              "cantidad": 15
+            },
+            {
+              "nombre": "Café",
+              "cantidad": 100
+            },
+            {
+              "nombre": "Azúcar",
+              "cantidad": 50
+            }
+          ]
+        },
+        {
+          "nombre": "Helado",
+          "descripcion": "Helado cremoso con variedad de sabores",
+          "precio": 4500.00,
+          "imagen": "icecream.jpg",
+          "articulosInvetario": [
+            {
+              "nombre": "Helado base",
+              "cantidad": 150
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
