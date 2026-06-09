@@ -29,11 +29,6 @@ public class Persona extends BaseEntity {
     @Column(nullable = false)
     private LocalDate fechaNacimiento;
 
-    @Column(nullable = false)
-    private String numeroDocumento;
-
-    // TODO: dirección pero como strings no más
-
     @ManyToOne(optional = false)
     private Usuario usuario;
 

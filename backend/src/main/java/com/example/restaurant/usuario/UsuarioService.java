@@ -27,9 +27,8 @@ public class UsuarioService {
         return usuarioMapper.toDto(find(id));
     }
 
-    // solo clientes
     @Transactional
-    public Usuario createUserFromEmailPassword(String email, String password, String passwordConfirm) {
+    public Usuario createUserFromEmailPassword(String email, String password, String passwordConfirm, UserRole role) {
         validarEmail(email);
         validarClave(password, passwordConfirm);
 
@@ -38,7 +37,7 @@ public class UsuarioService {
         Usuario usuario = Usuario.builder()
                 .email(email)
                 .password(passwordHash)
-                .rol(UserRole.CLIENTE)
+                .rol(role)
                 .build();
 
         return repository.save(usuario);

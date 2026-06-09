@@ -11,6 +11,5 @@ public class ClienteSummaryDto {
     private Long id;
     private String nombre;
     private String apellido;
-    private String numeroDocumento;
     private String usuarioEmail;
 }

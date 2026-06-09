@@ -1,4 +1,4 @@
-package com.example.restaurant.carta.loader;
+package com.example.restaurant.init;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

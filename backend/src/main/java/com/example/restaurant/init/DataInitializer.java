@@ -1,21 +1,16 @@
-package com.example.restaurant.config;
+package com.example.restaurant.init;
 
-import com.example.restaurant.carta.loader.CartaDataLoader;
-import com.example.restaurant.imagen.Imagen;
 import com.example.restaurant.imagen.ImagenRepository;
-import com.example.restaurant.imagen.TipoImagen;
 import com.example.restaurant.mesa.EstadoMesa;
 import com.example.restaurant.mesa.Mesa;
 import com.example.restaurant.mesa.MesaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,6 +26,7 @@ public class DataInitializer implements CommandLineRunner {
     private final ImagenRepository imagenRepository;
     private final MesaRepository mesaRepository;
     private final CartaDataLoader cartaDataLoader;
+    private final UserDataLoader userDataLoader;
 
     @Override
     @Transactional
@@ -40,6 +36,7 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         cartaDataLoader.loadMenuAndInventory();
+        userDataLoader.loadUsersAndAvatars();
 
         log.info("Data initialization complete.");
     }
@@ -75,41 +72,5 @@ public class DataInitializer implements CommandLineRunner {
         }
 
         return mesaRepository.saveAll(mesas);
-    }
-
-    private List<Imagen> loadAvatars() {
-        List<Imagen> avatars = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            String fileName = String.format("avatar_%02d.png", i);
-            Imagen imagen = loadImagenFromPath("classpath:user/avatar/" + fileName, TipoImagen.PERSONA);
-            if (imagen != null) {
-                avatars.add(imagenRepository.save(imagen));
-            }
-        }
-        return avatars;
-    }
-
-    private Imagen loadImagenFromPath(String path, TipoImagen tipo) {
-        try {
-            Resource imgResource = resourceLoader.getResource(path);
-            if (!imgResource.exists()) {
-                log.warn("Image file not found: {}", path);
-                return null;
-            }
-            try (InputStream is = imgResource.getInputStream()) {
-                byte[] content = is.readAllBytes();
-                String fileName = imgResource.getFilename();
-                String mime = fileName.endsWith(".png") ? "image/png" : "image/jpeg";
-                return Imagen.builder()
-                        .nombre(fileName)
-                        .mime(mime)
-                        .tipo(tipo)
-                        .contenido(content)
-                        .build();
-            }
-        } catch (Exception e) {
-            log.error("Error loading image {}: {}", path, e.getMessage());
-            return null;
-        }
     }
 }

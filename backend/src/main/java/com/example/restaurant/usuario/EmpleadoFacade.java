@@ -10,33 +10,39 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class ClienteFacade {
+public class EmpleadoFacade {
 
+    private final EmpleadoMapper empleadoMapper;
+    private final EmpleadoService empleadoService;
     private final UsuarioService usuarioService;
-    private final ClienteService clienteService;
-    private final ClienteMapper clienteMapper;
     private final ImagenService imagenService;
 
     @Transactional
-    public Cliente registarCliente(ClienteCreateRequestDto request, ImageData imageData) {
+    public Empleado registrarEmpleado(EmpleadoCreateRequestDto request) {
+        return registrarEmpleado(request, null);
+    }
+
+    @Transactional
+    public Empleado registrarEmpleado(EmpleadoCreateRequestDto request, ImageData imageData) {
         Imagen imagen = null;
         if (imageData != null) {
             imagen = imagenService.createFromImageData(imageData, TipoImagen.PERSONA);
         }
 
+        UserRole role = UserRole.valueOf(request.getTipoEmpleado().name());
         Usuario usuario = usuarioService.createUserFromEmailPassword(
                 request.getEmail(),
                 request.getPassword(),
                 request.getPasswordConfirm(),
-                UserRole.CLIENTE);
+                role);
 
-        ClienteCreateDto clienteDto = clienteMapper.toDto(request);
-        return clienteService.create(clienteDto, usuario, imagen);
+        EmpleadoCreateDto empleadoDto = empleadoMapper.toDto(request);
+        return empleadoService.create(empleadoDto, usuario, imagen);
     }
 
-    public void borrarCliente(Long id) {
+    public void borrarEmpleado(Long id) {
 
-        Cliente cliente = clienteService.delete(id);
-        usuarioService.delete(cliente.getUsuario());
+        Empleado empleado = empleadoService.delete(id);
+        usuarioService.delete(empleado.getUsuario());
     }
 }

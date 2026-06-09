@@ -1,6 +1,7 @@
 package com.example.restaurant.usuario;
 
 import com.example.restaurant.error.BusinessException;
+import com.example.restaurant.imagen.Imagen;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +16,16 @@ public class ClienteService {
 
     @Transactional
     public Cliente create(ClienteCreateDto dto, Usuario usuario) {
+        return create(dto, usuario, null);
+    }
+
+    @Transactional
+    public Cliente create(ClienteCreateDto dto, Usuario usuario, Imagen imagen) {
         Cliente cliente = clienteMapper.toEntity(dto);
         cliente.setUsuario(usuario);
+        if (imagen != null) {
+            cliente.setImagen(imagen);
+        }
         return clienteRepository.save(cliente);
     }
 

@@ -22,7 +22,7 @@ public interface CartaRepository extends BaseRepository<Carta> {
     SELECT new com.example.restaurant.carta.SeccionCartaDTO(s.id, s.nombre)
     FROM SeccionCarta s
     JOIN s.carta m
-    WHERE m.id = :menuId
+    WHERE m.id = :cartaId
     AND s.eliminado = false
 """)
     List<SeccionCartaDTO> findSeccionesCarta(@Param("cartaId") Long cartaId);
@@ -38,5 +38,5 @@ public interface CartaRepository extends BaseRepository<Carta> {
     GROUP BY i.id, i.nombre, i.descripcion, i.precio, s.id
     HAVING MIN(stock.cantidadActual - miii.cantidad) >= 0
 """)
-    List<ItemCarta> findItemsCartaDisponibles(@Param("menuId") Long cartaId);
+    List<ItemCarta> findItemsCartaDisponibles(@Param("cartaId") Long cartaId);
 }

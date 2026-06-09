@@ -12,7 +12,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @Query("""
 SELECT DISTINCT new com.example.restaurant.usuario.ClienteSummaryDto(
-    c.id, c.nombre, c.apellido, c.numeroDocumento, c.usuario.email
+    c.id, c.nombre, c.apellido, c.usuario.email
 ) FROM Cliente c
 """)
     Page<ClienteSummaryDto> buscarResumenClientes(Pageable pageable);

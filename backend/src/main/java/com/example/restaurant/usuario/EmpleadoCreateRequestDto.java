@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClienteCreateRequestDto {
+public class EmpleadoCreateRequestDto {
     @NotBlank(message = "Debe indicar el nombre")
     @Size(max = 50, message = "Máximo 50 caracteres")
     private String nombre;
@@ -23,6 +23,10 @@ public class ClienteCreateRequestDto {
     @Past(message = "La fecha debe ser en el pasado")
     private LocalDate fechaNacimiento;
 
+    @NotNull
+    private TipoEmpleado tipoEmpleado;
+
+    // para entidad usuario
     @Email(message = "Debe indicar un mail válido")
     private String email;
 

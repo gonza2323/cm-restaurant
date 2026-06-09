@@ -1,4 +1,4 @@
-package com.example.restaurant.carta.loader;
+package com.example.restaurant.init;
 
 import com.example.restaurant.carta.*;
 import com.example.restaurant.imagen.Imagen;

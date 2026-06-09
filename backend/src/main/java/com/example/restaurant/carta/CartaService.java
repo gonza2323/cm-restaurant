@@ -3,6 +3,7 @@ package com.example.restaurant.carta;
 import com.example.restaurant.error.BusinessException;
 import com.example.restaurant.service.BaseService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,6 +29,7 @@ public class CartaService extends BaseService<Carta, CartaRepository> {
         return repository.save(carta);
     }
 
+    @Transactional(readOnly = true)
     public CartaDto getCartaWithItemsDisponibles() {
         CartaDto carta = repository.findCurrentCarta(LocalDate.now())
                 .orElseThrow(() -> new BusinessException("No hay una carta vigente"));

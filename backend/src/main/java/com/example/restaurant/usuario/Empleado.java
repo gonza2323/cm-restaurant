@@ -14,9 +14,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Empleado extends Persona {
-    @ManyToOne(optional = false)
-    private Persona persona;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoEmpleado tipoEmpleado;
