@@ -22,7 +22,6 @@ import java.util.List;
 public class AuthController {
 
     private final AccessTokenService accessTokenService;
-    private final UsuarioService usuarioService;
     private final AuthService authService;
     private final ClienteFacade clienteFacade;
 

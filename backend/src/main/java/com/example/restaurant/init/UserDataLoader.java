@@ -24,7 +24,7 @@ public class UserDataLoader {
     private static final int NUM_CLIENTES = 10;
     private static final int NUM_MOZOS = 8;
     private static final long FAKER_SEED = 12345L;
-    private static final String PASSWORD = "1234abcd";
+    private static final String PASSWORD = "1234";
     private static final String IMAGE_MIME_TYPE = "image/jpeg";
 
     private final ResourceLoader resourceLoader;
@@ -97,7 +97,7 @@ public class UserDataLoader {
                         .nombre(firstName)
                         .apellido(lastName)
                         .fechaNacimiento(faker.timeAndDate().birthday(18, 80))
-                        .email("client" + String.format("%02d", i) + "@gmail.com")
+                        .email("cliente" + String.format("%02d", i) + "@gmail.com")
                         .password(PASSWORD)
                         .passwordConfirm(PASSWORD)
                         .build();
