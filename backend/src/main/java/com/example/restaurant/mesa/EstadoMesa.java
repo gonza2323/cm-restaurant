@@ -2,7 +2,7 @@ package com.example.restaurant.mesa;
 
 public enum EstadoMesa {
     LIBRE,
-    RESERVADA, // TODO: reservada no tiene sentido? depende de la fecha?
+    RESERVADA,
     OCUPADA,
     FUERA_DE_SERVICIO
 }

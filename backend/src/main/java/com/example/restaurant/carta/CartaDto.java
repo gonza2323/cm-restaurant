@@ -9,7 +9,7 @@ import java.util.List;
 @Getter @Setter
 public class CartaDto {
     private Long id;
-    private List<SeccionCartaDto> secciones = new ArrayList<>();
+    private List<SeccionCartaDTO> secciones = new ArrayList<>();
 
     public CartaDto(Long id) {
         this.id = id;

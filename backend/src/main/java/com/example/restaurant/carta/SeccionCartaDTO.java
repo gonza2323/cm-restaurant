@@ -8,12 +8,12 @@ import java.util.List;
 
 @Getter
 @Setter
-public class SeccionCartaDto {
+public class SeccionCartaDTO {
     private Long id;
     private String nombre;
     private List<ItemCartaDto> items = new ArrayList<>();
 
-    public SeccionCartaDto(Long id, String nombre) {
+    public SeccionCartaDTO(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }

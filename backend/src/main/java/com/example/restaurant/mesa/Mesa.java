@@ -18,13 +18,16 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Mesa extends BaseEntity {
-    private int numero;
+    @Column(nullable = false)
+    private Integer numero;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private EstadoMesa estado;
 
-    private int capacidad;
+    @Column(nullable = false)
+    private Integer capacidad;
 
+    @Column(nullable = false)
     private String zona;
 }

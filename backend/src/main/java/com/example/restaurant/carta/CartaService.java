@@ -32,7 +32,7 @@ public class CartaService extends BaseService<Carta, CartaRepository> {
         CartaDto carta = repository.findCurrentCarta(LocalDate.now())
                 .orElseThrow(() -> new BusinessException("No hay una carta vigente"));
 
-        List<SeccionCartaDto> secciones = repository.findSeccionesCarta(carta.getId());
+        List<SeccionCartaDTO> secciones = repository.findSeccionesCarta(carta.getId());
 
         List<ItemCarta> itemsDisponibles = repository.findItemsCartaDisponibles(carta.getId());
 

@@ -19,13 +19,13 @@ public interface CartaRepository extends BaseRepository<Carta> {
     Optional<CartaDto> findCurrentCarta(@Param("now") LocalDate now);
 
     @Query("""
-    SELECT new com.example.restaurant.carta.SeccionCartaDto(s.id, s.nombre)
+    SELECT new com.example.restaurant.carta.SeccionCartaDTO(s.id, s.nombre)
     FROM SeccionCarta s
     JOIN s.carta m
     WHERE m.id = :menuId
     AND s.eliminado = false
 """)
-    List<SeccionCartaDto> findSeccionesCarta(@Param("cartaId") Long cartaId);
+    List<SeccionCartaDTO> findSeccionesCarta(@Param("cartaId") Long cartaId);
 
     @Query("""
     SELECT i FROM ItemCarta i
