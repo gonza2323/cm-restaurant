@@ -18,7 +18,7 @@ import java.util.Random;
 @Slf4j
 public class DataInitializer implements CommandLineRunner {
 
-    private final Random random = new Random(0);
+    private final Random random;
 
     private final MesaRepository mesaRepository;
     private final CartaDataLoader cartaDataLoader;

@@ -30,7 +30,6 @@ public class UserDataLoader {
     // Configuration constants
     private static final int NUM_CLIENTES = 10;
     private static final int NUM_MOZOS = 8;
-    private static final long FAKER_SEED = 12345L;
     private static final String PASSWORD = "1234";
     private static final String IMAGE_MIME_TYPE = "image/jpeg";
 
@@ -39,8 +38,8 @@ public class UserDataLoader {
     private final EmpleadoFacade empleadoFacade;
     private final UsuarioRepository usuarioRepository;
 
-    private final Random random = new Random(FAKER_SEED);
-    private final Faker faker = new Faker(new Random(FAKER_SEED));
+    private final Random random;
+    private final Faker faker;
 
     @Transactional
     public void loadUsersAndAvatars() {

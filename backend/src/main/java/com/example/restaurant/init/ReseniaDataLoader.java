@@ -26,14 +26,13 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ReseniaDataLoader {
 
-    private static final long FAKER_SEED = 12345L;
     private final ResourceLoader resourceLoader;
     private final ObjectMapper objectMapper;
     private final ReseniaRepository reseniaRepository;
     private final ClienteRepository clienteRepository;
 
-    private final Random random = new Random(FAKER_SEED);
-    private final Faker faker = new Faker(new Random(FAKER_SEED));
+    private final Random random;
+    private final Faker faker;
 
     @Transactional
     public void loadResenias() {
