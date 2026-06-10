@@ -16,4 +16,15 @@ public class ComandaService {
         List<Comanda> comandas = repository.findAllByMesa(mesa);
         return mapper.toDTOs(comandas);
     }
+
+    public ComandaDetailViewDTO getDetails(Long comandaId) {
+        Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId);
+        ComandaDetailViewDTO dto = mapper.toDetailDTO(comanda);
+
+        // TODO
+        List<DetalleComandaViewDTO> detalles = List.of();
+        
+        dto.setDetalles(detalles);
+        return dto;
+    }
 }
