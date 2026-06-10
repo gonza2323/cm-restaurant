@@ -1,7 +1,6 @@
 package com.example.restaurant.empleado;
 
-import com.example.restaurant.usuario.Persona;
-import com.example.restaurant.usuario.TipoEmpleado;
+import com.example.restaurant.persona.Persona;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

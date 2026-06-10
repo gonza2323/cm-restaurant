@@ -9,6 +9,8 @@ public interface ClienteMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "eliminado", ignore = true)
     @Mapping(target = "usuario", ignore = true)
+    @Mapping(target = "imagen", ignore = true)
+    @Mapping(target = "resenias", ignore = true)
     Cliente toEntity(ClienteCreateDto dto);
 
     ClienteCreateDto toDto(ClienteCreateRequestDto request);

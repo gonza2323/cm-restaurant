@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DetalleComandaRepository extends JpaRepository<DetalleComanda, Long> {
@@ -15,4 +16,6 @@ public interface DetalleComandaRepository extends JpaRepository<DetalleComanda, 
     WHERE d.comanda = :comanda AND d.eliminado = false
 """)
     List<DetalleComanda> getDetallesOfComanda(@Param("comanda") Comanda comanda);
+
+    Optional<DetalleComanda> findByIdAndComandaAndEliminadoFalse(Long id, Comanda comanda);
 }

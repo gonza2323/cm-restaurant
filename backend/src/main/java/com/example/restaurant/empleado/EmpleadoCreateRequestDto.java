@@ -1,6 +1,5 @@
 package com.example.restaurant.empleado;
 
-import com.example.restaurant.usuario.TipoEmpleado;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

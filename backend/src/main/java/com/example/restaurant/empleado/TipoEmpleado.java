@@ -1,4 +1,4 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.empleado;
 
 public enum TipoEmpleado {
     ADMINISTRATIVO,

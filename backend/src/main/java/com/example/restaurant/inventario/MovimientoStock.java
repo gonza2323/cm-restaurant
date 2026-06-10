@@ -21,6 +21,8 @@ import java.time.LocalDate;
 public class MovimientoStock extends BaseEntity {
     private double cantidad;
 
+    private String motivo;
+
     @Column(nullable = false)
     private TipoMovimientoStock tipo;
 

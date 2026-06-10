@@ -13,15 +13,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("/api/imagenes")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ImagenController {
     private final ImagenService service;
 
-    @GetMapping("/{imagenId}")
-    public ResponseEntity<byte[]> getImagen(@PathVariable Long imagenId) {
-        ImagenViewDto imagen = service.findDto(imagenId);
+    @GetMapping("/items-carta/{itemCartaId}/imagen")
+    public ResponseEntity<byte[]> getImagenOfItemCarta(@PathVariable Long itemCartaId) {
+        ImagenViewDto imagen = service.findImageOfItemCarta(itemCartaId);
+        return createImageReponse(imagen);
+    }
 
+    @GetMapping("/personas/{personaId}/imagen")
+    public ResponseEntity<byte[]> getImagenOfPersona(@PathVariable Long personaId) {
+        ImagenViewDto imagen = service.findImageOfPersona(personaId);
+        return createImageReponse(imagen);
+    }
+
+    private ResponseEntity<byte[]> createImageReponse(ImagenViewDto imagen) {
         CacheControl cacheControl = CacheControl
                 .maxAge(24, TimeUnit.HOURS)
                 .cachePublic();

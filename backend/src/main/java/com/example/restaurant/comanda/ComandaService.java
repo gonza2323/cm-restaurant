@@ -3,6 +3,7 @@ package com.example.restaurant.comanda;
 import com.example.restaurant.carta.ItemCarta;
 import com.example.restaurant.carta.ItemCartaRepository;
 import com.example.restaurant.error.BusinessException;
+import com.example.restaurant.inventario.InventarioService;
 import com.example.restaurant.mesa.Mesa;
 import com.example.restaurant.mesa.MesaRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class ComandaService {
     private final MesaRepository mesaRepository;
     private final ItemCartaRepository itemCartaRepository;
     private final DetalleComandaRepository detalleComandaRepository;
+    private final InventarioService inventarioService;
 
     public List<ComandaSummaryViewDTO> getComandasForMesa(Mesa mesa) {
         List<Comanda> comandas = repository.findAllByMesa(mesa);
@@ -69,6 +71,87 @@ public class ComandaService {
                 .estado(EstadoDetalleComanda.EN_PROCESO_DE_SOLICITUD)
                 .build();
 
+        detalleComandaRepository.save(detalle);
+    }
+
+    @Transactional
+    public void enviarACocina(Long comandaId) {
+        Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId)
+                .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
+
+        if (comanda.getEstado() != EstadoComanda.EN_PROCESO_DE_SOLICITUD)
+            throw new BusinessException("La comanda no está en proceso de solicitud");
+
+        List<DetalleComanda> detalles = detalleComandaRepository.getDetallesOfComanda(comanda);
+        if (detalles.isEmpty())
+            throw new BusinessException("La comanda no tiene platos");
+
+        for (DetalleComanda detalle : detalles) {
+            detalle.setEstado(EstadoDetalleComanda.PREPARADO);
+            inventarioService.descontarStock(detalle.getItemCarta());
+        }
+
+        comanda.setEstado(EstadoComanda.PREPARACION_LISTA);
+        repository.save(comanda);
+        detalleComandaRepository.saveAll(detalles);
+    }
+
+    @Transactional
+    public void marcarEntregada(Long comandaId) {
+        Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId)
+                .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
+
+        if (comanda.getEstado() != EstadoComanda.PREPARACION_LISTA)
+            throw new BusinessException("La comanda no está lista para entrega");
+
+        List<DetalleComanda> detalles = detalleComandaRepository.getDetallesOfComanda(comanda);
+        for (DetalleComanda detalle : detalles) {
+            detalle.setEstado(EstadoDetalleComanda.ENTREGADO_AL_CLIENTE);
+        }
+
+        comanda.setEstado(EstadoComanda.ENTREGADA);
+        comanda.setFechaEntrega(LocalDate.now());
+        repository.save(comanda);
+        detalleComandaRepository.saveAll(detalles);
+    }
+
+    @Transactional
+    public void marcarItemEntregado(Long comandaId, Long detalleId) {
+        Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId)
+                .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
+
+        DetalleComanda detalle = detalleComandaRepository.findByIdAndComandaAndEliminadoFalse(detalleId, comanda)
+                .orElseThrow(() -> new BusinessException("Detalle no encontrado"));
+
+        if (detalle.getEstado() != EstadoDetalleComanda.PREPARADO)
+            throw new BusinessException("El plato no está preparado");
+
+        detalle.setEstado(EstadoDetalleComanda.ENTREGADO_AL_CLIENTE);
+        detalleComandaRepository.save(detalle);
+
+        List<DetalleComanda> todosLosDetalles = detalleComandaRepository.getDetallesOfComanda(comanda);
+        boolean todosEntregados = todosLosDetalles.stream()
+                .allMatch(d -> d.getEstado() == EstadoDetalleComanda.ENTREGADO_AL_CLIENTE);
+
+        if (todosEntregados) {
+            comanda.setEstado(EstadoComanda.ENTREGADA);
+            comanda.setFechaEntrega(LocalDate.now());
+            repository.save(comanda);
+        }
+    }
+
+    @Transactional
+    public void removerDetalle(Long comandaId, Long detalleId) {
+        Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId)
+                .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
+
+        if (comanda.getEstado() != EstadoComanda.EN_PROCESO_DE_SOLICITUD)
+            throw new BusinessException("Solo se pueden remover detalles en proceso de solicitud");
+
+        DetalleComanda detalle = detalleComandaRepository.findByIdAndComandaAndEliminadoFalse(detalleId, comanda)
+                .orElseThrow(() -> new BusinessException("Detalle no encontrado"));
+
+        detalle.setEliminado(true);
         detalleComandaRepository.save(detalle);
     }
 }

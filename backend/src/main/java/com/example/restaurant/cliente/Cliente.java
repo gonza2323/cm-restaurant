@@ -1,7 +1,7 @@
 package com.example.restaurant.cliente;
 
 import com.example.restaurant.resenia.Resenia;
-import com.example.restaurant.usuario.Persona;
+import com.example.restaurant.persona.Persona;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;

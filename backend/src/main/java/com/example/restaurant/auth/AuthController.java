@@ -3,6 +3,8 @@ package com.example.restaurant.auth;
 import com.example.restaurant.cliente.Cliente;
 import com.example.restaurant.cliente.ClienteCreateRequestDto;
 import com.example.restaurant.cliente.ClienteFacade;
+import com.example.restaurant.persona.PersonaService;
+import com.example.restaurant.persona.ProfileDTO;
 import com.example.restaurant.usuario.*;
 import com.example.restaurant.imagen.ImageData;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class AuthController {
     private final AccessTokenService accessTokenService;
     private final AuthService authService;
     private final ClienteFacade clienteFacade;
+    private final PersonaService personaService;
 
     @PostMapping("/login")
     @PreAuthorize("isAnonymous()")
@@ -82,5 +85,11 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(new AuthUserDto(user.getId(), user.getRoles()));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDTO> getProfile(@AuthenticationPrincipal CurrentUser user) {
+        ProfileDTO dto = personaService.getProfile(user.getId());
+        return ResponseEntity.ok(dto);
     }
 }

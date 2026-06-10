@@ -12,7 +12,6 @@ public interface ItemCartaMapper {
         if (itemCarta == null || itemCarta.getId() == null) {
             return null;
         }
-
         return "/api/items-carta/" + itemCarta.getId() + "/imagen";
     }
 }

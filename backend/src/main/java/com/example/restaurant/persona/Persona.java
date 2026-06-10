@@ -1,7 +1,8 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.persona;
 
 import com.example.restaurant.entity.BaseEntity;
 import com.example.restaurant.imagen.Imagen;
+import com.example.restaurant.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
