@@ -57,6 +57,9 @@ public class ComandaService {
         Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId)
                 .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
 
+        if (comanda.getEstado() != EstadoComanda.EN_PROCESO_DE_SOLICITUD)
+            throw new BusinessException("La comanda ya no está en proceso de solicitud");
+
         ItemCarta itemCarta = itemCartaRepository.findByIdAndEliminadoFalse(itemCartaId)
                 .orElseThrow(() -> new BusinessException("Item de carta no encontrado"));
 

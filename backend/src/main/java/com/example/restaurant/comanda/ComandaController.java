@@ -46,7 +46,6 @@ public class ComandaController {
 
     @PostMapping("/{comandaId}/detalles")
     public ResponseEntity<?> addItemCarta(@PathVariable Long comandaId, @RequestBody AddItemCartaRequest request) {
-        // todo. Solo dispnible si comanda en proceso de solicitud
         comandaService.addItemCarta(comandaId, request.itemCartaId);
         return ResponseEntity.ok().build();
     }
