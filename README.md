@@ -40,8 +40,9 @@ Ver los DTOs en el back para saber con más detalle que requiere y que devuelve 
 
 * **GET `/api/mesas/{mesaId}`**: Devuelve una mesa con sus datos y la lista de comandas de esa mesa
 
-A partir de acá no está implementado
 
 ### Comandas
 
 * **GET `/api/comandas/{comandaId}`**: Devuelve los datos de una comanda, incluyendo cada plato agregado.
+
+* **POST `/api/comandas`**: Crea una comanda nueva

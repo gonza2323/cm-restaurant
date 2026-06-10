@@ -2,6 +2,7 @@ package com.example.restaurant.mesa;
 
 import com.example.restaurant.comanda.ComandaService;
 import com.example.restaurant.comanda.ComandaSummaryViewDTO;
+import com.example.restaurant.error.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,8 @@ public class MesaService {
     }
 
     public MesaDetailViewDTO getDetails(Long mesaId) {
-        Mesa mesa = repository.findByIdAndEliminadoFalse(mesaId);
+        Mesa mesa = repository.findByIdAndEliminadoFalse(mesaId)
+                .orElseThrow(() -> new BusinessException("Mesa no encontrada"));
 
         MesaDetailViewDTO dto = mapper.toDetailDTO(mesa);
 
