@@ -2,10 +2,14 @@ package com.example.restaurant.comanda;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('MOZO', 'ADMINISTRATIVO')")
+@EnableMethodSecurity(prePostEnabled = true)
 @RequestMapping("/api/comandas")
 public class ComandaController {
     private final ComandaService comandaService;

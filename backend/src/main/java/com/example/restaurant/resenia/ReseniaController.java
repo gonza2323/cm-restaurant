@@ -3,14 +3,17 @@ package com.example.restaurant.resenia;
 import com.example.restaurant.auth.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/resenias")
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
+@RequestMapping("/api/resenias")
 public class ReseniaController {
     private final ReseniaService reseniaService;
 
@@ -21,6 +24,7 @@ public class ReseniaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('CLIENTE')")
     public ResponseEntity<Void> crear(
             @AuthenticationPrincipal CurrentUser user,
             @RequestBody ReseniaCreateRequest request) {

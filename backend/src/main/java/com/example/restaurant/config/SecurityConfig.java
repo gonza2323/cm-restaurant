@@ -45,7 +45,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/api/payments/**", "/api/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/carta").permitAll()
+                        .requestMatchers("/api/resenias").permitAll()
+                        .requestMatchers("/api/items-carta/*/imagen", "/api/personas/*/imagen").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/webhook/mercadopago").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
