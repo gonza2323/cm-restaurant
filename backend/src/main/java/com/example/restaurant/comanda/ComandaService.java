@@ -26,7 +26,7 @@ public class ComandaService {
         Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId);
         ComandaDetailViewDTO dto = mapper.toDetailDTO(comanda);
 
-        // TODO
+        // TODO 
         List<DetalleComandaViewDTO> detalles = List.of();
 
         dto.setDetalles(detalles);
@@ -40,7 +40,7 @@ public class ComandaService {
 
         Comanda comanda = Comanda.builder()
                 .fechaSolicitud(LocalDate.now())
-                .estado(EstadoComanda.ABIERTA)
+                .estado(EstadoComanda.EN_PROCESO_DE_SOLICITUD)
                 .mesa(mesa)
                 .build();
         return repository.save(comanda);

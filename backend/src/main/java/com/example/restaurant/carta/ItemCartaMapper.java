@@ -13,6 +13,6 @@ public interface ItemCartaMapper {
             return null;
         }
 
-        return "/api/items-carta/" + itemCarta.getId() + "/image";
+        return "/api/items-carta/" + itemCarta.getId() + "/imagen";
     }
 }

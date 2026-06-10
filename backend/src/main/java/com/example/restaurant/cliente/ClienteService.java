@@ -4,8 +4,6 @@ import com.example.restaurant.error.BusinessException;
 import com.example.restaurant.imagen.Imagen;
 import com.example.restaurant.usuario.Usuario;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +26,6 @@ public class ClienteService {
             cliente.setImagen(imagen);
         }
         return clienteRepository.save(cliente);
-    }
-
-    @Transactional(readOnly = true)
-    public Page<ClienteSummaryDto> findDtos(Pageable pageable) {
-        return clienteRepository.buscarResumenClientes(pageable);
     }
 
     @Transactional(readOnly = true)

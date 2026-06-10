@@ -2,10 +2,7 @@ package com.example.restaurant.carta;
 
 import com.example.restaurant.entity.BaseEntity;
 import com.example.restaurant.imagen.Imagen;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +26,7 @@ public class ItemCarta extends BaseEntity {
 
     private double precio;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Imagen imagen;
 
     @ManyToOne

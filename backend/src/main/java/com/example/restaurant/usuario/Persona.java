@@ -32,6 +32,6 @@ public class Persona extends BaseEntity {
     @ManyToOne(optional = false)
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Imagen imagen;
 }

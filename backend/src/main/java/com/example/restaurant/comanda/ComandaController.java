@@ -25,31 +25,34 @@ public class ComandaController {
 
     @PostMapping("/{comandaId}/enviar-a-cocina")
     public ResponseEntity<?> enviarACocina(@PathVariable Long comandaId) {
-        // todo
+        // todo. No disponible si no hay platos. Debe tmb marcar cada detalle como enviado a cocina.
+        // Pasar directamente al estado PREPARADO, no EN_COCINA o similar, para comanda y detalles, ya que no está implementado
+        // el sistema de cocina. Debe descontar del sistema de stock al hacerlo.
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{comandaId}/marcar-entregada")
     public ResponseEntity<?> marcarEntregada(@PathVariable Long comandaId) {
-        // todo
+        // todo. No disponible si no está preparada. tmb debe marcarse entregado cada plato.
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{comandaId}/detalles/{detalleId}/marcar-entregado")
-    public ResponseEntity<?> marcarEntregada(@PathVariable Long comandaId, @PathVariable Long detalleId) {
-        // todo
+    public ResponseEntity<?> mercarItemEntregado(@PathVariable Long comandaId, @PathVariable Long detalleId) {
+        // todo. No disponible si plato no preparad. Si quedaron todos los platos preparados, marcar la comanda
+        // como entregada tmb.
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{comandaId}/items")
-    public ResponseEntity<?> addItemCarta(@PathVariable Long comandaId, @RequestBody ComandaCreateRequest request) {
-        // todo
+    @PostMapping("/{comandaId}/detalles")
+    public ResponseEntity<?> addItemCarta(@PathVariable Long comandaId, @RequestBody AddItemCartaRequest request) {
+        // todo. Solo dispnible si comanda en proceso de solicitud
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{comandaId}/items")
-    public ResponseEntity<?> removeItemCarta(@PathVariable Long comandaId, @RequestBody ComandaCreateRequest request) {
-        // todo
+    @DeleteMapping("/{comandaId}/detalles/{detalleId}")
+    public ResponseEntity<?> removerDetalle(@PathVariable Long comandaId, @PathVariable Long detalleId) {
+        // todo. Solo dispnible si comanda en proceso de solicitud
         return ResponseEntity.ok().build();
     }
 

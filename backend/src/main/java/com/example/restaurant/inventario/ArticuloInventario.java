@@ -2,10 +2,7 @@ package com.example.restaurant.inventario;
 
 import com.example.restaurant.entity.BaseEntity;
 import com.example.restaurant.imagen.Imagen;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +32,6 @@ public class ArticuloInventario extends BaseEntity {
     @ManyToOne(optional = false)
     private Stock stock;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Imagen imagen;
 }
