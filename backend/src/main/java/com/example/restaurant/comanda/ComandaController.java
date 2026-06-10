@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('MOZO', 'ADMINISTRATIVO')")
+//@PreAuthorize("hasAnyRole('MOZO', 'ADMINISTRATIVO')") TODO QUITAR
 @EnableMethodSecurity(prePostEnabled = true)
 @RequestMapping("/api/comandas")
 public class ComandaController {

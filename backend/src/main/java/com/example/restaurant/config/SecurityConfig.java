@@ -51,7 +51,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/items-carta/*/imagen", "/api/personas/*/imagen").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/webhook/mercadopago").permitAll()
                         .requestMatchers("/error").permitAll()
-                        .anyRequest().authenticated()
+                                .anyRequest().permitAll() // TODO QUITAR
+//                        .anyRequest().authenticated() TODO QUITAR
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.decoder(jwtDecoder())

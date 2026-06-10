@@ -22,7 +22,7 @@ public class CartaController {
     }
 
     @GetMapping("/mozos/carta")
-    @PreAuthorize("hasAnyRole('MOZO', 'ADMINISTRATIVO')")
+//    @PreAuthorize("hasAnyRole('MOZO', 'ADMINISTRATIVO')") TODO QUITAR
     public ResponseEntity<CartaDto> getCartaMozos() {
         // TODO Cambiar query, deberia restar stock reservado por comandas abiertas
         CartaDto cartaDto = cartaService.getCartaWithItemsDisponibles();

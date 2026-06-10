@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('MOZO', 'ADMINISTRATIVO')")
+//@PreAuthorize("hasAnyRole('MOZO', 'ADMINISTRATIVO')") TODO QUITAR
 @EnableMethodSecurity(prePostEnabled = true)
 @RequestMapping("/api/mesas")
 public class MesaController {
