@@ -17,8 +17,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DetalleComanda extends BaseEntity {
-    private int cantidad;
-
     EstadoDetalleComanda estado;
 
     @ManyToOne(optional = false)

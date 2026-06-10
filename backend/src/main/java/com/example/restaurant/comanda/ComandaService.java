@@ -1,5 +1,7 @@
 package com.example.restaurant.comanda;
 
+import com.example.restaurant.carta.ItemCarta;
+import com.example.restaurant.carta.ItemCartaRepository;
 import com.example.restaurant.error.BusinessException;
 import com.example.restaurant.mesa.Mesa;
 import com.example.restaurant.mesa.MesaRepository;
@@ -16,6 +18,8 @@ public class ComandaService {
     private final ComandaRepository repository;
     private final ComandaMapper mapper;
     private final MesaRepository mesaRepository;
+    private final ItemCartaRepository itemCartaRepository;
+    private final DetalleComandaRepository detalleComandaRepository;
 
     public List<ComandaSummaryViewDTO> getComandasForMesa(Mesa mesa) {
         List<Comanda> comandas = repository.findAllByMesa(mesa);
@@ -23,13 +27,15 @@ public class ComandaService {
     }
 
     public ComandaDetailViewDTO getDetails(Long comandaId) {
-        Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId);
+        Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId)
+                .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
+
         ComandaDetailViewDTO dto = mapper.toDetailDTO(comanda);
 
-        // TODO 
-        List<DetalleComandaViewDTO> detalles = List.of();
+        List<DetalleComanda> detalles = detalleComandaRepository.getDetallesOfComanda(comanda);
+        List<DetalleComandaViewDTO> detallesDTOs = mapper.toDetallesDTOs(detalles);
 
-        dto.setDetalles(detalles);
+        dto.setDetalles(detallesDTOs);
         return dto;
     }
 
@@ -44,5 +50,22 @@ public class ComandaService {
                 .mesa(mesa)
                 .build();
         return repository.save(comanda);
+    }
+
+    @Transactional
+    public void addItemCarta(Long comandaId, Long itemCartaId) {
+        Comanda comanda = repository.findByIdAndEliminadoFalse(comandaId)
+                .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
+
+        ItemCarta itemCarta = itemCartaRepository.findByIdAndEliminadoFalse(itemCartaId)
+                .orElseThrow(() -> new BusinessException("Item de carta no encontrado"));
+
+        DetalleComanda detalle = DetalleComanda.builder()
+                .comanda(comanda)
+                .itemCarta(itemCarta)
+                .estado(EstadoDetalleComanda.EN_PROCESO_DE_SOLICITUD)
+                .build();
+
+        detalleComandaRepository.save(detalle);
     }
 }

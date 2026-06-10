@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class DetalleComandaViewDTO {
     private Long id;
     private EstadoDetalleComanda estado;
-    private ItemCartaDto item;
+    private ItemCartaDto itemCarta;
 }
