@@ -1,4 +1,4 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.cliente;
 
 
 import org.springframework.data.domain.Page;
@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @Query("""
-SELECT DISTINCT new com.example.restaurant.usuario.ClienteSummaryDto(
+SELECT DISTINCT new com.example.restaurant.cliente.ClienteSummaryDto(
     c.id, c.nombre, c.apellido, c.usuario.email
 ) FROM Cliente c
 """)

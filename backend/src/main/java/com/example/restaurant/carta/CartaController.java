@@ -8,12 +8,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/carta")
+@RequestMapping("/api")
 public class CartaController {
     private final CartaService cartaService;
 
-    @GetMapping
-    public ResponseEntity<CartaDto> getCarta() {
+    @GetMapping("/carta")
+    public ResponseEntity<CartaDto> getCartaClientes() {
+        CartaDto cartaDto = cartaService.getCartaWithItemsDisponibles();
+        return ResponseEntity.ok(cartaDto);
+    }
+
+    @GetMapping("/mozos/carta")
+    public ResponseEntity<CartaDto> getCartaMozos() {
+        // TODO Cambiar query, deberia restar stock reservado por comandas abiertas
         CartaDto cartaDto = cartaService.getCartaWithItemsDisponibles();
         return ResponseEntity.ok(cartaDto);
     }

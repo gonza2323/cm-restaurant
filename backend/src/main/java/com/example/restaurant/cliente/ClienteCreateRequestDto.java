@@ -1,4 +1,4 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.cliente;
 
 import jakarta.validation.constraints.*;
 import lombok.*;

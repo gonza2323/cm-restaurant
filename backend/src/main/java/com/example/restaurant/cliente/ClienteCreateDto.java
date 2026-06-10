@@ -1,4 +1,4 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.cliente;
 
 import lombok.*;
 
@@ -9,9 +9,8 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmpleadoCreateDto {
+public class ClienteCreateDto {
     private String nombre;
     private String apellido;
     private LocalDate fechaNacimiento;
-    private TipoEmpleado tipoEmpleado;
 }

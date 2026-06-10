@@ -1,7 +1,8 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.cliente;
 
 import com.example.restaurant.error.BusinessException;
 import com.example.restaurant.imagen.Imagen;
+import com.example.restaurant.usuario.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

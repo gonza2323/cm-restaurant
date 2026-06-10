@@ -32,6 +32,8 @@ Ver los DTOs en el back para saber con más detalle que requiere y que devuelve 
 * **GET `/api/carta`**: Devuelve la carta vigente
   * **Output**: La carta vigente con sus secciones, y en cada una, cada item de la carta, con sus datos y url de la imagen.
 
+* **GET `/api/mozos/carta`**: Igual que el anterior, pero resta del stock según los platos cargados a comandas aún sin cerrar.
+
 
 ### Mesas
 

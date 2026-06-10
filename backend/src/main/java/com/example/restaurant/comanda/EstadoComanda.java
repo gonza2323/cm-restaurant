@@ -2,8 +2,9 @@ package com.example.restaurant.comanda;
 
 public enum EstadoComanda {
     ABIERTA,
-    FINALIZADA,
+    ENVIADA_A_COCINA,
+    PREPARACION_LISTA,
+    ENTREGADA,
+    PAGADA,
     ANULADA,
-    PENDIENTE_DE_ENTREGA,
-    ENTREGA_FALLLongA
 }

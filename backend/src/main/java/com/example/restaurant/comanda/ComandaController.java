@@ -23,5 +23,36 @@ public class ComandaController {
         return ResponseEntity.ok(dto);
     }
 
+    @PostMapping("/{comandaId}/enviar-a-cocina")
+    public ResponseEntity<?> enviarACocina(@PathVariable Long comandaId) {
+        // todo
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{comandaId}/marcar-entregada")
+    public ResponseEntity<?> marcarEntregada(@PathVariable Long comandaId) {
+        // todo
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{comandaId}/detalles/{detalleId}/marcar-entregado")
+    public ResponseEntity<?> marcarEntregada(@PathVariable Long comandaId, @PathVariable Long detalleId) {
+        // todo
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{comandaId}/items")
+    public ResponseEntity<?> addItemCarta(@PathVariable Long comandaId, @RequestBody ComandaCreateRequest request) {
+        // todo
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{comandaId}/items")
+    public ResponseEntity<?> removeItemCarta(@PathVariable Long comandaId, @RequestBody ComandaCreateRequest request) {
+        // todo
+        return ResponseEntity.ok().build();
+    }
+
     private record ComandaCreateRequest(Long mesaId) {};
+    private record AddItemCartaRequest(Long itemCartaId) {};
 }

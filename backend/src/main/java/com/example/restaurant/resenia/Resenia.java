@@ -1,7 +1,7 @@
 package com.example.restaurant.resenia;
 
 import com.example.restaurant.entity.BaseEntity;
-import com.example.restaurant.usuario.Cliente;
+import com.example.restaurant.cliente.Cliente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.empleado;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

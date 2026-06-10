@@ -1,5 +1,11 @@
 package com.example.restaurant.init;
 
+import com.example.restaurant.cliente.Cliente;
+import com.example.restaurant.cliente.ClienteCreateRequestDto;
+import com.example.restaurant.cliente.ClienteFacade;
+import com.example.restaurant.empleado.Empleado;
+import com.example.restaurant.empleado.EmpleadoCreateRequestDto;
+import com.example.restaurant.empleado.EmpleadoFacade;
 import com.example.restaurant.imagen.ImageData;
 import com.example.restaurant.usuario.*;
 import lombok.RequiredArgsConstructor;

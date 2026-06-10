@@ -1,7 +1,8 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.empleado;
 
 import com.example.restaurant.error.BusinessException;
 import com.example.restaurant.imagen.Imagen;
+import com.example.restaurant.usuario.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

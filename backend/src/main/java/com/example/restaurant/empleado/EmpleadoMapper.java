@@ -1,15 +1,15 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.empleado;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface ClienteMapper {
+public interface EmpleadoMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "eliminado", ignore = true)
     @Mapping(target = "usuario", ignore = true)
-    Cliente toEntity(ClienteCreateDto dto);
+    Empleado toEntity(EmpleadoCreateDto dto);
 
-    ClienteCreateDto toDto(ClienteCreateRequestDto request);
+    EmpleadoCreateDto toDto(EmpleadoCreateRequestDto request);
 }

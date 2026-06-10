@@ -1,9 +1,12 @@
-package com.example.restaurant.usuario;
+package com.example.restaurant.cliente;
 
 import com.example.restaurant.imagen.Imagen;
 import com.example.restaurant.imagen.ImagenService;
 import com.example.restaurant.imagen.ImageData;
 import com.example.restaurant.imagen.TipoImagen;
+import com.example.restaurant.usuario.UserRole;
+import com.example.restaurant.usuario.Usuario;
+import com.example.restaurant.usuario.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

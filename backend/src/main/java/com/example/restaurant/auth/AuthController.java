@@ -1,5 +1,8 @@
 package com.example.restaurant.auth;
 
+import com.example.restaurant.cliente.Cliente;
+import com.example.restaurant.cliente.ClienteCreateRequestDto;
+import com.example.restaurant.cliente.ClienteFacade;
 import com.example.restaurant.usuario.*;
 import com.example.restaurant.imagen.ImageData;
 import lombok.RequiredArgsConstructor;
