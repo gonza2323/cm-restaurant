@@ -3,10 +3,9 @@ package com.example.restaurant.auth;
 import com.example.restaurant.cliente.Cliente;
 import com.example.restaurant.cliente.ClienteCreateRequestDto;
 import com.example.restaurant.cliente.ClienteFacade;
-import com.example.restaurant.persona.PersonaService;
-import com.example.restaurant.persona.ProfileDTO;
-import com.example.restaurant.usuario.*;
 import com.example.restaurant.imagen.ImageData;
+import com.example.restaurant.persona.PersonaService;
+import com.example.restaurant.usuario.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-
 import java.util.List;
 
 @RestController
@@ -85,11 +83,5 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(new AuthUserDto(user.getId(), user.getRoles()));
-    }
-
-    @GetMapping("/profile")
-    public ResponseEntity<ProfileDTO> getProfile(@AuthenticationPrincipal CurrentUser user) {
-        ProfileDTO dto = personaService.getProfile(user.getId());
-        return ResponseEntity.ok(dto);
     }
 }

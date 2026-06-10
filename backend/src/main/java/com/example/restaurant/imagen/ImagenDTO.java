@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImagenViewDto {
+public class ImagenDTO {
     private Long id;
     private String nombre;
     private String mime;

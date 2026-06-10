@@ -20,17 +20,17 @@ public class ImagenController {
 
     @GetMapping("/items-carta/{itemCartaId}/imagen")
     public ResponseEntity<byte[]> getImagenOfItemCarta(@PathVariable Long itemCartaId) {
-        ImagenViewDto imagen = service.findImageOfItemCarta(itemCartaId);
+        ImagenDTO imagen = service.findImageOfItemCarta(itemCartaId);
         return createImageReponse(imagen);
     }
 
     @GetMapping("/personas/{personaId}/imagen")
     public ResponseEntity<byte[]> getImagenOfPersona(@PathVariable Long personaId) {
-        ImagenViewDto imagen = service.findImageOfPersona(personaId);
+        ImagenDTO imagen = service.findImageOfPersona(personaId);
         return createImageReponse(imagen);
     }
 
-    private ResponseEntity<byte[]> createImageReponse(ImagenViewDto imagen) {
+    private ResponseEntity<byte[]> createImageReponse(ImagenDTO imagen) {
         CacheControl cacheControl = CacheControl
                 .maxAge(24, TimeUnit.HOURS)
                 .cachePublic();

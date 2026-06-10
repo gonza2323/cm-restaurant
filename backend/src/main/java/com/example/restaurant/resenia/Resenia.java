@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Resenia extends BaseEntity {
     @Column(nullable = false)
-    private LocalDate fechaResenia;
+    private LocalDate fecha;
 
     @Lob
     private String observacion;

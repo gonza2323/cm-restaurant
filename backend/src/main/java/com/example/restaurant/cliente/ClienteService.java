@@ -40,4 +40,9 @@ public class ClienteService {
         cliente.setEliminado(true);
         return clienteRepository.save(cliente);
     }
+
+    public Cliente findByUserId(Long userId) {
+        return clienteRepository.findByUsuarioIdAndEliminadoFalse(userId)
+                .orElseThrow(() -> new BusinessException("Cliente no encontrado"));
+    }
 }

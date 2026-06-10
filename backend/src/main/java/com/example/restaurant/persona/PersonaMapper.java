@@ -9,6 +9,7 @@ public interface PersonaMapper {
     @Mapping(target = "personaId", source = "id")
     @Mapping(target = "userId", source = "usuario.id")
     @Mapping(target = "email", source = "usuario.email")
+    @Mapping(target = "rol", source = "usuario.rol")
     @Mapping(target = "imageUrl", source = "entity")
     ProfileDTO toDto(Persona entity);
 

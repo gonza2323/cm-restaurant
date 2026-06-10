@@ -21,7 +21,7 @@ public class ImagenService {
     private final PersonaRepository personaRepository;
 
     @Transactional(readOnly = true)
-    public ImagenViewDto findImageOfItemCarta(Long itemId) {
+    public ImagenDTO findImageOfItemCarta(Long itemId) {
         ItemCarta item = itemCartaRepository.findByIdAndEliminadoFalse(itemId)
                 .orElseThrow(() -> new BusinessException("Item de carta no encontrado"));
 
@@ -32,7 +32,7 @@ public class ImagenService {
     }
 
     @Transactional(readOnly = true)
-    public ImagenViewDto findImageOfPersona(Long personaId) {
+    public ImagenDTO findImageOfPersona(Long personaId) {
         Persona persona = personaRepository.findByIdAndEliminadoFalse(personaId)
                 .orElseThrow(() -> new BusinessException("Persona no encontrada"));
 

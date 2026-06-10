@@ -1,13 +1,11 @@
 package com.example.restaurant.init;
 
-import com.example.restaurant.imagen.ImagenRepository;
 import com.example.restaurant.mesa.EstadoMesa;
 import com.example.restaurant.mesa.Mesa;
 import com.example.restaurant.mesa.MesaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +20,10 @@ public class DataInitializer implements CommandLineRunner {
 
     private final Random random = new Random(0);
 
-    private final ResourceLoader resourceLoader;
-    private final ImagenRepository imagenRepository;
     private final MesaRepository mesaRepository;
     private final CartaDataLoader cartaDataLoader;
     private final UserDataLoader userDataLoader;
+    private final ReseniaDataLoader reseniaDataLoader;
 
     @Override
     @Transactional
@@ -37,6 +34,7 @@ public class DataInitializer implements CommandLineRunner {
 
         cartaDataLoader.loadMenuAndInventory();
         userDataLoader.loadUsersAndAvatars();
+        reseniaDataLoader.loadResenias();
 
         log.info("Data initialization complete.");
     }
