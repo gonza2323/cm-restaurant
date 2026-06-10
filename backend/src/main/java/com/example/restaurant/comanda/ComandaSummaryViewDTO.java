@@ -1,5 +1,6 @@
-package com.example.restaurant.mesa;
+package com.example.restaurant.comanda;
 
+import com.example.restaurant.mesa.EstadoMesa;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,10 +10,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MesaDTO {
+public class ComandaSummaryViewDTO {
     private Long id;
-    private Integer numero;
-    private EstadoMesa estado;
-    private Integer capacidad;
-    private String zona;
 }

@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface MesaRepository extends JpaRepository<Mesa, Long> {
     List<Mesa> findByEliminadoFalse();
+    Mesa findByIdAndEliminadoFalse(Long id);
 }

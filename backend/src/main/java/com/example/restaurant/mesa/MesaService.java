@@ -1,5 +1,7 @@
 package com.example.restaurant.mesa;
 
+import com.example.restaurant.comanda.ComandaService;
+import com.example.restaurant.comanda.ComandaSummaryViewDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +12,21 @@ import java.util.List;
 public class MesaService {
     private final MesaRepository repository;
     private final MesaMapper mapper;
+    private final ComandaService comandaService;
 
-    public List<MesaDTO> listAll() {
+    public List<MesaSummaryViewDTO> listAll() {
         List<Mesa> mesas = repository.findByEliminadoFalse();
         return mapper.toDTOs(mesas);
+    }
+
+    public MesaDetailViewDTO getDetails(Long mesaId) {
+        Mesa mesa = repository.findByIdAndEliminadoFalse(mesaId);
+
+        MesaDetailViewDTO dto = mapper.toDetailDTO(mesa);
+
+        List<ComandaSummaryViewDTO> comandas = comandaService.getComandasForMesa(mesa);
+
+        dto.setComandas(comandas);
+        return dto;
     }
 }

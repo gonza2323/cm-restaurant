@@ -3,6 +3,7 @@ package com.example.restaurant.mesa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,14 @@ public class MesaController {
     private final MesaService mesaService;
 
     @GetMapping
-    public ResponseEntity<List<MesaDTO>> getMesas() {
-        List<MesaDTO> mesas = mesaService.listAll();
+    public ResponseEntity<List<MesaSummaryViewDTO>> getMesas() {
+        List<MesaSummaryViewDTO> mesas = mesaService.listAll();
         return ResponseEntity.ok(mesas);
+    }
+
+    @GetMapping("/{mesaId}")
+    public ResponseEntity<MesaDetailViewDTO> getMesa(@PathVariable("mesaId") Long mesaId) {
+        MesaDetailViewDTO mesa = mesaService.getDetails(mesaId);
+        return ResponseEntity.ok(mesa);
     }
 }

@@ -38,12 +38,9 @@ Ver los DTOs en el back para saber con más detalle que requiere y que devuelve 
 * **GET `/api/mesas`**: Devuelve la lista de mesas y sus datos
   * **Output**: Lista de mesas con su id, número, capacidad, estado, zona.
 
+* **GET `/api/mesas/{mesaId}`**: Devuelve una mesa con sus datos y la lista de comandas de esa mesa
 
 A partir de acá no está implementado
-
-
-* **GET `/api/mesas/{mesaId}`**: Devuelve una mesa con sus datos y comandas
-
 
 ### Comandas
 
