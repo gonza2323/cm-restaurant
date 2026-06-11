@@ -2,18 +2,25 @@ import React from "react";
 
 function Reviews({ review }) {
   return (
-    <article className="review-card">
-      <header className="review-header">
-        <h4 className="review-author">{review.author}</h4>
-        <p className="review-stars">
-          {"⭐".repeat(review.stars)}
-        </p>
-      </header>
+    <div>
+      <article className="review-card">
+        <header className="review-header">
+            <h4 className="review-author">{`${review.cliente?.nombre ?? ''} ${review.cliente?.apellido ?? ''}`.trim()}</h4>
 
-      <p className="review-text">
-        {review.comment || "Sin comentario"}
-      </p>
-    </article>
+          <p className="review-text">
+          {review.observacion || "Sin comentario"}
+          </p>
+        </header>
+      </article>
+      
+    </div>
+    // <article className="review-card">
+    //   <header className="review-header">
+    //     <h4 className="review-author">{review.cliente}</h4>
+    //   </header>
+
+    //   
+    // </article>
   );
 }
 export default Reviews;

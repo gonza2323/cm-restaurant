@@ -320,6 +320,13 @@ body {
   margin-bottom: 56px;
 }
 
+.product-element__img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 /* Basic footer styles, visually aligned with header but minimal */
 .app-footer {
   width: 100%;

@@ -7,7 +7,7 @@ const api = axios.create({
   }
 });
 
-// Opcional: Agregar token JWT automáticamente si existe
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token'); 
   if (token) {
@@ -15,5 +15,20 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+
+// Si el token expira o es inválido, limpia la sesión y manda al login
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 
 export default api;

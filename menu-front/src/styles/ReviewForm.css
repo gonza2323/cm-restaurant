@@ -1,0 +1,75 @@
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.review-form__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.review-form__textarea {
+  resize: vertical;
+  padding: 0.75rem;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #1a1a1a;
+  transition: border-color 0.15s;
+  min-height: 100px;
+}
+
+.review-form__textarea:focus {
+  outline: none;
+  border-color: #2d2d2d;
+}
+
+.review-form__counter {
+  font-size: 0.75rem;
+  color: #aaa;
+  text-align: right;
+  margin-top: -0.5rem;
+}
+
+.review-form__error {
+  font-size: 0.875rem;
+  color: #c0392b;
+  margin: 0;
+}
+
+.review-form__success {
+  font-size: 0.875rem;
+  color: #27ae60;
+  margin: 0;
+}
+
+.review-form__btn {
+  padding: 0.75rem 1.5rem;
+  background: #2d2d2d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  align-self: flex-end;
+}
+
+.review-form__btn:hover:not(:disabled) {
+  background: #444;
+}
+
+.review-form__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
