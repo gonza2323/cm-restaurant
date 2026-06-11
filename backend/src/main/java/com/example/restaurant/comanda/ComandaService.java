@@ -154,4 +154,9 @@ public class ComandaService {
         detalle.setEliminado(true);
         detalleComandaRepository.save(detalle);
     }
+
+    public Comanda find(Long comandaId) {
+        return repository.findByIdAndEliminadoFalse(comandaId)
+                .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
+    }
 }
