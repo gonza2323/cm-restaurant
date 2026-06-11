@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
+import { BASE_URL } from '../config';
 import api from '../services/api';
 import '../styles/Perfil.css';
 
@@ -40,7 +41,7 @@ function Perfil() {
         <div className="perfil-avatar-wrap">
           {perfil.imageUrl ? (
             <img
-              src={perfil.imageUrl}
+              src={`${BASE_URL}${perfil.imageUrl}`}
               alt="Foto de perfil"
               className="perfil-avatar-img"
             />
