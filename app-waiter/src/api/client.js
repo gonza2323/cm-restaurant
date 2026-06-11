@@ -62,7 +62,7 @@ async function request(method, path, body) {
 }
 
 // Auth
-export const login = (username, password) =>
+export const login = (email, password) =>
   apiClient.post("/api/auth/login", { email, password }).then((r) => r.data);
 
 export const getMe = () => apiClient.get("/api/auth/me").then((r) => r.data);
