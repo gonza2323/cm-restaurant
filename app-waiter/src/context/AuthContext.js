@@ -4,11 +4,12 @@ import {
   setAuthToken,
   clearAuthToken,
   login as apiLogin,
-  signup as apiSignup,
   getMe,
 } from "../api/client";
 
 const AuthContext = createContext(null);
+
+const STORAGE_KEY = "auth";
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null); // { id, token }
@@ -20,61 +21,42 @@ export function AuthProvider({ children }) {
 
   async function restoreSession() {
     try {
-      const stored = await AsyncStorage.getItem("auth");
+      const stored = await AsyncStorage.getItem(STORAGE_KEY);
       if (stored) {
-        const { token, userId } = JSON.parse(stored);
+        const { token, userId, roles} = JSON.parse(stored);
         setAuthToken(token);
         // Verify token is still valid
         await getMe();
-        setUser({ id: userId, token });
+        setUser({ id: userId, roles, token });
       }
     } catch {
-      await AsyncStorage.removeItem("auth");
+      // Si token expira o falla, limpiamos
+      await AsyncStorage.removeItem(STORAGE_KEY);
       clearAuthToken();
     } finally {
       setLoading(false);
     }
   }
 
-  async function login(username, password) {
-    const data = await apiLogin(username, password);
-    const token = data.token.value;
-    const userId = data.user.userId;
-    setAuthToken(token);
-    await AsyncStorage.setItem("auth", JSON.stringify({ token, userId }));
-    setUser({ id: userId, token });
-  }
+  async function login(email, password) {
+    const data = await apiLogin(email, password);
 
-  async function signup(
-    username,
-    password,
-    passwordConfirm,
-    latitude,
-    longitude,
-  ) {
-    const data = await apiSignup(
-      username,
-      password,
-      passwordConfirm,
-      latitude,
-      longitude,
-    );
-    console.log("signup response:", JSON.stringify(data));
     const token = data.token.value;
     const userId = data.user.userId;
+    const roles = data.user.roles;
     setAuthToken(token);
-    await AsyncStorage.setItem("auth", JSON.stringify({ token, userId }));
-    setUser({ id: userId, token });
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify({ token, userId, roles }));
+    setUser({ id: userId, roles, token });
   }
 
   async function logout() {
     clearAuthToken();
-    await AsyncStorage.removeItem("auth");
+    await AsyncStorage.removeItem(STORAGE_KEY);
     setUser(null);
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

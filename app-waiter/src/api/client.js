@@ -1,18 +1,46 @@
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+import axios from "axios"; 
 
-let authToken = null;
+// Instancia Base
+const apiClient = axios.create({
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
+  headers: { "Content-Type": "application/json" },
+  timeout: 10000,
+});
+
+// Adjunta el token si es que exste
+apiClient.interceptors.request.use((config) => {
+  if (apiClient.authToken) {
+    config.headers.Authorization = `Bearer ${apiClient.authToken}`;
+  }
+  return config;
+});
+
+// Normaliza errores para mostrar mensajes claros al usuario
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const backendMsg =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      null;
+    const statusMsg = error.response ? `Error ${error.response.status}` : null;
+    const finalMsg = backendMsg || statusMsg || "Error de conexión";
+    return Promise.reject(new Error(finalMsg));
+  }
+);
+
 
 export function setAuthToken(token) {
-  authToken = token;
+  apiClient.authToken = token;
 }
 
 export function clearAuthToken() {
-  authToken = null;
+  apiClient.authToken = null;
 }
 
 async function request(method, path, body) {
   const headers = { "Content-Type": "application/json" };
-  if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
+  if (apiClient.authToken) headers["Authorization"] = `Bearer ${apiClient.authToken}`;
 
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
@@ -35,56 +63,7 @@ async function request(method, path, body) {
 
 // Auth
 export const login = (username, password) =>
-  request("POST", "/api/auth/login", { username, password });
+  apiClient.post("/api/auth/login", { email, password }).then((r) => r.data);
 
-export const signup = (
-  username,
-  password,
-  passwordConfirm,
-  latitude,
-  longitude,
-) =>
-  request("POST", "/api/auth/signup", {
-    username,
-    password,
-    passwordConfirm,
-    latitude,
-    longitude,
-  });
+export const getMe = () => apiClient.get("/api/auth/me").then((r) => r.data);
 
-export const getMe = () => request("GET", "/api/auth/me");
-
-// Figuritas
-export const getMyFiguritas = () => request("GET", "/api/me/figuritas");
-
-export const updateFiguritaStatus = (figuritaId, owned, wanted) =>
-  request("PATCH", `/api/me/figuritas/${figuritaId}`, { owned, wanted });
-
-// Matches
-export const getMatches = () => request("GET", "/api/me/matches");
-
-export const getUserMatch = (userId) =>
-  request("GET", `/api/me/matches/${userId}`);
-
-// Position
-export const updatePosition = (latitude, longitude) =>
-  request("PATCH", "/api/me/position", { latitude, longitude });
-
-export async function fetchImageAsBase64(imagenId) {
-  try {
-    const res = await fetch(`${BASE_URL}/api/imagenes/${imagenId}`, {
-      headers: { Authorization: `Bearer ${authToken}` },
-    });
-    if (!res.ok) return null;
-    const buffer = await res.arrayBuffer();
-    const bytes = new Uint8Array(buffer);
-    let binary = "";
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    const base64 = btoa(binary);
-    return `data:image/png;base64,${base64}`;
-  } catch {
-    return null;
-  }
-}
