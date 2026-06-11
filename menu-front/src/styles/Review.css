@@ -1,0 +1,50 @@
+/* Contenedor principal de la tarjeta */
+.review-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Agrupa la foto y los textos (nombre y fecha) en fila */
+.review-author-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Estilos de la foto de perfil */
+.review-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+}
+
+/* Agrupa el nombre y la fecha en columna */
+.review-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-author {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 0.2rem;
+}
+
+.review-text {
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
