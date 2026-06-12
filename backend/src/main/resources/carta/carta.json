@@ -6,7 +6,7 @@
         {
           "nombre": "Coca Cola 500ml",
           "descripcion": "Bebida gaseosa clásica",
-          "precio": 3.00,
+          "precio": 0.30,
           "imagen": "coke.jpg",
           "articulosInvetario": [
             {
@@ -18,7 +18,7 @@
         {
           "nombre": "Sprite 500ml",
           "descripcion": "Bebida gaseosa con sabor limón",
-          "precio": 3.00,
+          "precio": 0.30,
           "imagen": "sprite.jpg",
           "articulosInvetario": [
             {
@@ -30,7 +30,7 @@
         {
           "nombre": "Agua Mineral 500ml",
           "descripcion": "Agua mineral sin gas",
-          "precio": 2.00,
+          "precio": 0.20,
           "imagen": "water.jpg",
           "articulosInvetario": [
             {
@@ -42,7 +42,7 @@
         {
           "nombre": "Cerveza Artesanal 473ml",
           "descripcion": "Cerveza premium artesanal",
-          "precio": 5.00,
+          "precio": 0.50,
           "imagen": "pint.jpg",
           "articulosInvetario": [
             {
@@ -59,7 +59,7 @@
         {
           "nombre": "Empanadas",
           "descripcion": "Empanadas de carne caseras (2 unidades)",
-          "precio": 5.00,
+          "precio": 0.50,
           "imagen": "empanadas.jpg",
           "articulosInvetario": [
             {
@@ -83,7 +83,7 @@
         {
           "nombre": "Alitas de Cebolla",
           "descripcion": "Aros de cebolla fritos crujientes",
-          "precio": 4.00,
+          "precio": 0.40,
           "imagen": "onion-rings.jpg",
           "articulosInvetario": [
             {
@@ -103,7 +103,7 @@
         {
           "nombre": "Ensalada de Pollo",
           "descripcion": "Ensalada fresca con pechuga de pollo grillada",
-          "precio": 8.00,
+          "precio": 0.80,
           "imagen": "chicken-salad.jpg",
           "articulosInvetario": [
             {
@@ -136,7 +136,7 @@
         {
           "nombre": "Hamburguesa Clásica",
           "descripcion": "Hamburguesa con queso, lechuga y tomate",
-          "precio": 9.00,
+          "precio": 0.90,
           "imagen": "burger.jpg",
           "articulosInvetario": [
             {
@@ -168,7 +168,7 @@
         {
           "nombre": "Bife de Carne",
           "descripcion": "Corte de carne premium a la parrilla con ajo y mantequilla",
-          "precio": 18.00,
+          "precio": 1.80,
           "imagen": "steak.jpg",
           "articulosInvetario": [
             {
@@ -192,7 +192,7 @@
         {
           "nombre": "Filete de Salmón",
           "descripcion": "Salmón fresco con limón y mantequilla",
-          "precio": 16.00,
+          "precio": 1.60,
           "imagen": "salmon.jpg",
           "articulosInvetario": [
             {
@@ -216,7 +216,7 @@
         {
           "nombre": "Spaghetti al Pomodoro",
           "descripcion": "Pasta con salsa de tomate casera y parmesano",
-          "precio": 8.00,
+          "precio": 0.80,
           "imagen": "spaghetti.jpg",
           "articulosInvetario": [
             {
@@ -244,7 +244,7 @@
         {
           "nombre": "Lasaña de Carne",
           "descripcion": "Lasaña casera con carne molida y queso fundido",
-          "precio": 11.00,
+          "precio": 1.10,
           "imagen": "lasagna.jpg",
           "articulosInvetario": [
             {
@@ -272,7 +272,7 @@
         {
           "nombre": "Papas Fritas",
           "descripcion": "Papas fritas caseras con sal",
-          "precio": 4.00,
+          "precio": 0.40,
           "imagen": "fries.jpg",
           "articulosInvetario": [
             {
@@ -293,7 +293,7 @@
         {
           "nombre": "Cheesecake",
           "descripcion": "Tarta de queso cremosa con costra de galleta",
-          "precio": 6.00,
+          "precio": 0.60,
           "imagen": "cheesecake.jpg",
           "articulosInvetario": [
             {
@@ -317,7 +317,7 @@
         {
           "nombre": "Tiramisu",
           "descripcion": "Postre italiano tradicional con mascarpone y cacao",
-          "precio": 5.00,
+          "precio": 0.50,
           "imagen": "tiramisu.jpg",
           "articulosInvetario": [
             {
@@ -345,7 +345,7 @@
         {
           "nombre": "Helado",
           "descripcion": "Helado cremoso con variedad de sabores",
-          "precio": 4.00,
+          "precio": 0.40,
           "imagen": "icecream.jpg",
           "articulosInvetario": [
             {
