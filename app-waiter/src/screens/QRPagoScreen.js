@@ -1,30 +1,42 @@
 import React, { useState, useEffect } from "react";
 import {
   View, Text, TouchableOpacity, StyleSheet,
-  ActivityIndicator,
+  ActivityIndicator, Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import QRCode from "react-native-qrcode-svg";
 import { generarQRPago } from "../api/client";
 
 export default function QRPagoScreen({ route, navigation }) {
-  const { comanda, total } = route.params;
+  const { idsComandas, total } = route.params;
 
-  const [qrData, setQrData]   = useState(null);
+  const [qrValue, setQrValue] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError]     = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    generarQR();
-  }, []);
+    if (idsComandas && idsComandas.length > 0) {
+      generarQR();
+    } else {
+      setError("IDs de comandas no válidos.");
+      setLoading(false);
+    }
+  }, [idsComandas]);
 
   async function generarQR() {
     setError("");
     setLoading(true);
     try {
-      const data = await generarQRPago(comanda.id);
-      setQrData(data.qrData);
+      const response = await generarQRPago(idsComandas);
+      console.log(response.urlDePago);
+      // Modificado: Ahora esperamos 'urlDePago' en lugar de 'qr_code'
+      if (response.urlDePago) {
+        setQrValue(response.urlDePago);
+      } else {
+        setError("La respuesta de la API no contiene una URL de pago válida.");
+      }
     } catch (e) {
+      console.error("Error generando QR:", e);
       setError(e.message || "No se pudo generar el QR");
     } finally {
       setLoading(false);
@@ -35,7 +47,7 @@ export default function QRPagoScreen({ route, navigation }) {
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>🍽️ Aromas de Viña</Text>
-        <Text style={styles.headerSub}>QR de pago — Comanda #{comanda.id}</Text>
+        <Text style={styles.headerSub}>QR de pago — Comandas #{idsComandas.join(', #')}</Text>
       </View>
 
       <View style={styles.body}>
@@ -58,12 +70,16 @@ export default function QRPagoScreen({ route, navigation }) {
             </Text>
 
             <View style={styles.qrBox}>
-              <QRCode
-                value={qrData}
-                size={230}
-                color="#1a1208"
-                backgroundColor="#FFD4BD"
-              />
+              {qrValue ? (
+                <QRCode
+                  value={qrValue}
+                  size={230}
+                  color="#1a1208"
+                  backgroundColor="#FFD4BD"
+                />
+              ) : (
+                <Text style={styles.emptyText}>QR no disponible.</Text>
+              )}
             </View>
 
             <Text style={styles.monto}>${total.toFixed(2)}</Text>
@@ -72,12 +88,11 @@ export default function QRPagoScreen({ route, navigation }) {
         )}
       </View>
 
-      {/* Boton volver a mesas — siempre visible */}
       {!loading && (
         <View style={styles.footer}>
           <TouchableOpacity
             style={styles.btnVolver}
-            onPress={() => navigation.navigate("Mesas")}
+            onPress={() => navigation.popToTop()}
           >
             <Text style={styles.btnVolverText}>✓ Listo — volver a mesas</Text>
           </TouchableOpacity>

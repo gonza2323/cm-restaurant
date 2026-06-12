@@ -59,11 +59,13 @@ export const addItemToComandaDetails = (idComanda, itemCartaId) =>
     apiClient.post(`/api/comandas/${idComanda}/detalles`, { itemCartaId }).then((r) => r.data);
 export const enviarACocina = (idComanda) =>
   apiClient.post(`/api/comandas/${idComanda}/enviar-a-cocina`).then((r) => r.data);
+export const marcarEntregado = (idComanda) => // Nueva función para marcar como entregado
+  apiClient.post(`/api/comandas/${idComanda}/marcar-entregada`).then((r) => r.data);
 
 // Items de Carta
 export const getMenuItems = () => apiClient.get("/api/items-carta").then((r) => r.data);
 export const getMozosCarta = () => apiClient.get("/api/mozos/carta").then((r) => r.data);
 
 // Mercado Pago 
-export const generarQRPago = (idComanda) =>
-  apiClient.post(`/api/payments/${idComanda}`).then((r) => r.data);
+export const generarQRPago = (idsComandas) =>
+  apiClient.post(`/api/payments`, { idsComandas }).then((r) => r.data);
