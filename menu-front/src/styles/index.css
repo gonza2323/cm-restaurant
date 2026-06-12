@@ -129,7 +129,7 @@ body {
   color: #2c1d07;
   text-decoration: none;
   font-weight: 800;
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-size: clamp(2.5rem, 2.5vw, 2rem);
   white-space: nowrap;
   min-height: 42px;
   cursor: pointer;
@@ -172,108 +172,105 @@ body {
   background: #2e7d32;
 }
 
-/* Hamburger button — oculto en desktop */
-.navigation-hamburger {
+/* =========================================
+   REACT BURGER MENU (Mobile Only)
+========================================= */
+
+/* Ocultar todo el contenedor del burger menu en Desktop */
+.burger-menu-wrapper {
   display: none;
-  margin-left: auto;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  min-height: 44px;
-  min-width: 44px;
-  align-items: center;
-  justify-content: center;
 }
 
-.navigation-hamburger:hover {
-  background: rgba(184, 135, 28, 0.1);
-}
-
-/* Las 3 rayitas */
-.hamburger-icon {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  width: 22px;
-}
-
-.hamburger-icon span {
-  display: block;
-  height: 2.5px;
-  background: #2c1d07;
-  border-radius: 4px;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-  transform-origin: center;
-}
-
-/* Animación a X cuando está abierto */
-.hamburger-icon--open span:nth-child(1) {
-  transform: translateY(7.5px) rotate(45deg);
-}
-.hamburger-icon--open span:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-.hamburger-icon--open span:nth-child(3) {
-  transform: translateY(-7.5px) rotate(-45deg);
-}
-
-/* ── Mobile ── */
 @media (max-width: 640px) {
-  .navigation-bar {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0;
+  /* Mostrar el wrapper en mobile */
+  .burger-menu-wrapper {
+    display: block;
   }
 
-  /* Hamburger visible en mobile */
-  .navigation-hamburger {
-    display: flex;
-    margin: 8px 12px 8px auto;
-  }
-
-  /* Links ocultos por defecto en mobile */
+  /* Ocultamos los links del nav normal de desktop */
   .navigation-links {
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: 8px 12px 12px;
-    border-top: 1px solid rgba(184, 135, 28, 0.12);
+    display: none !important;
   }
 
-  /* Links visibles cuando el menú está abierto */
-  .navigation-links--open {
+  /* --- 1. Estilos del Botón Hamburguesa --- */
+  .bm-burger-button {
+    position: fixed;
+    width: 32px;
+    height: 24px;
+    right: 20px; /* Alineado a la derecha */
+    top: 18px;   /* Ajustado para centrarse en tu navigation-bar */
+    z-index: 1000;
+  }
+
+  /* Las 3 rayitas de la hamburguesa */
+  .bm-burger-bars {
+    background: #2c1d07; /* Tu color marrón oscuro */
+    border-radius: 4px;
+    height: 3px !important;
+  }
+
+  /* --- 2. Estilos del Menú Desplegable --- */
+  .bm-menu {
+    /* Usamos tu degradado principal para el fondo del menú */
+    background: linear-gradient(135deg, #b8871c 0%, #8b5e13 100%);
+    padding: 3.5em 1.5em 0;
+    font-size: 1.15em;
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.2);
+  }
+
+  /* --- 3. Botón 'X' para cerrar --- */
+  .bm-cross-button {
+    height: 30px;
+    width: 30px;
+    right: 20px !important;
+    top: 20px !important;
+  }
+
+  .bm-cross {
+    background: #fff9ef; /* Cruz en color clarito */
+    height: 22px !important;
+  }
+
+  /* --- 4. Links dentro del Menú --- */
+  .bm-item-list {
     display: flex;
-  }
-
-  .navigation-link {
-    border-radius: 8px;
-    justify-content: flex-start;
-    padding: 12px 14px;
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    min-height: 48px;
-  }
-
-  .navigation-actions {
-    margin-left: 0;
-    margin-top: 8px;
     flex-direction: column;
-    align-items: stretch;
+    gap: 1.5rem;
   }
 
-  /* Botones de auth también full width en mobile */
-  .nav-btn {
+  .bm-item {
+    color: #fff9ef; /* Letras claras para contrastar con el fondo oscuro */
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.4rem;
+    padding: 8px 0;
+    outline: none;
+  }
+
+  /* Acciones (Login/Register) separadas con una línea */
+  .burger-menu-actions {
+    margin-top: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Ajuste para que los botones de Login no se rompan en el menú oscuro */
+  .burger-menu-actions .nav-btn {
     width: 100%;
-    justify-content: center;
-    min-height: 48px;
-    border-radius: 8px;
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    padding: 12px 14px;
+    color: #2c1d07;
+    background: #fff9ef;
+    border: none;
+  }
+
+  /* --- 5. Fondo oscuro (Overlay) detrás del menú --- */
+  .bm-overlay {
+    background: rgba(44, 29, 7, 0.7) !important; /* Tu color marrón con opacidad */
   }
 }
+
 
 
 .product-element {
@@ -578,5 +575,108 @@ body {
   .reviews-list {
     grid-template-columns: 1fr;
     padding: 0 8px;
+  }
+}
+
+
+/* =========================================
+   NAVEGACIÓN DESKTOP
+========================================= */
+.burger-menu-wrapper {
+  display: none; /* Oculta la hamburguesa en PC */
+}
+
+.navigation-links-desktop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+/* =========================================
+   NAVEGACIÓN MOBILE (Burger Menu)
+========================================= */
+@media (max-width: 768px) {
+  /* 1. Ocultar los botones gigantes de PC */
+  .navigation-links-desktop {
+    display: none !important;
+  }
+
+  /* 2. Mostrar la hamburguesa */
+  .burger-menu-wrapper {
+    display: block !important;
+  }
+
+  /* 3. Posicionar las 3 rayitas a la derecha */
+  .bm-burger-button {
+    position: fixed !important;
+    width: 36px !important;
+    height: 26px !important;
+    right: 20px !important;
+    top: 25px !important; /* Ajusta esto para centrarlo con "MENU" */
+    z-index: 1000 !important;
+  }
+
+  .bm-burger-bars {
+    background: #2c1d07 !important; /* Color marrón oscuro */
+    border-radius: 4px;
+  }
+
+  /* 4. Estilos de la caja del menú al abrirse */
+  .bm-menu-wrap {
+    position: fixed !important;
+    top: 0;
+    height: 100% !important;
+  }
+
+  .bm-menu {
+    background: linear-gradient(135deg, #b8871c 0%, #8b5e13 100%) !important;
+    padding: 3.5rem 1.5rem !important;
+  }
+
+  .bm-cross-button {
+    height: 30px !important;
+    width: 30px !important;
+    right: 20px !important;
+    top: 20px !important;
+  }
+
+  .bm-cross {
+    background: #fff9ef !important;
+  }
+
+  /* 5. Links del menú */
+  .bm-item-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  .bm-item {
+    color: #fff9ef !important;
+    background: transparent !important;
+    border: none !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    padding: 0 !important;
+  }
+
+  /* Botones de Login en móvil */
+  .burger-menu-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .burger-menu-actions .nav-btn {
+    width: 100% !important;
+    background: #fff9ef !important;
+    color: #2c1d07 !important;
+    border: none !important;
   }
 }

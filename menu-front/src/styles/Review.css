@@ -17,8 +17,8 @@
 
 /* Estilos de la foto de perfil */
 .review-avatar {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #e0e0e0;
@@ -32,19 +32,20 @@
 
 .review-author {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #333;
 }
 
 .review-date {
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   color: #888;
   margin-top: 0.2rem;
 }
 
 .review-text {
   color: #555;
+  font-size: 1.8rem;
   line-height: 1.5;
   margin: 0;
 }

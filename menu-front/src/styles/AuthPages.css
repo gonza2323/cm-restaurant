@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 1rem;
+  padding: 5rem;
 }
 
 .auth-card {
@@ -13,11 +13,10 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   width: 100%;
-  max-width: 400px;
 }
 
 .auth-title {
-  font-size: 1.5rem;
+  font-size: 6rem;
   font-weight: 700;
   color: #333;
   text-align: center;
@@ -37,16 +36,16 @@
 }
 
 .form-label {
-  font-size: 0.95rem;
+  font-size: 4rem;
   font-weight: 600;
   color: #333;
 }
 
 .form-input {
-  padding: 0.85rem;
+  padding: 3rem;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 2.5rem;
   transition: border-color 0.3s ease;
   font-family: inherit;
   /* tap target mínimo recomendado en mobile */
@@ -67,7 +66,7 @@
 
 .form-error {
   color: #dc2626;
-  font-size: 0.9rem;
+  font-size: 3rem;
   margin: 0;
   padding: 0.75rem;
   background-color: #fee2e2;
@@ -81,7 +80,7 @@
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 2.5rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -102,7 +101,7 @@
   text-align: center;
   margin-top: 1.5rem;
   color: #666;
-  font-size: 0.95rem;
+  font-size: 3rem;
 }
 
 .auth-link {
@@ -118,7 +117,7 @@
   text-decoration: underline;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
   .auth-card {
     padding: 1.25rem;
     border-radius: 8px;

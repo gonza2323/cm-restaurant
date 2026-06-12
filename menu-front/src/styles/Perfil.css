@@ -12,7 +12,6 @@
   border-radius: 16px;
   padding: 1.75rem 1.5rem;
   width: 100%;
-  max-width: 420px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,10 +25,11 @@
   background: none;
   border: none;
   color: #888;
-  font-size: 0.9rem;
+  font-size: 3rem;
   cursor: pointer;
-  padding: 0;
-  margin-bottom: 0.25rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   transition: color 0.15s;
   min-height: 40px;
   display: flex;
@@ -42,20 +42,20 @@
 
 /* Avatar */
 .perfil-avatar-wrap {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .perfil-avatar-img {
-  width: 88px;
-  height: 88px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #e8e8e4;
 }
 
 .perfil-avatar-placeholder {
-  width: 88px;
-  height: 88px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: #2d2d2d;
   display: flex;
@@ -73,7 +73,7 @@
 
 /* Nombre y rol */
 .perfil-nombre {
-  font-size: 1.35rem;
+  font-size: 5rem;
   font-weight: 700;
   color: #1a1a1a;
   margin: 0;
@@ -81,7 +81,7 @@
 }
 
 .perfil-rol {
-  font-size: 0.75rem;
+  font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -93,7 +93,7 @@
 .perfil-datos {
   width: 100%;
   border-top: 1px solid #eee;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
@@ -103,11 +103,11 @@
 .perfil-dato {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 1rem;
 }
 
 .perfil-dato-label {
-  font-size: 0.7rem;
+  font-size: 4rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #aaa;
@@ -115,7 +115,7 @@
 }
 
 .perfil-dato-valor {
-  font-size: 0.975rem;
+  font-size: 3rem;
   color: #1a1a1a;
   word-break: break-word;
 }
@@ -129,7 +129,7 @@
   border-radius: 8px;
   background: transparent;
   color: #555;
-  font-size: 0.95rem;
+  font-size: 2.5rem;
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s;
   min-height: 48px;
@@ -155,7 +155,7 @@
   color: #c0392b;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 1400px) {
   .perfil-card {
     padding: 1.25rem 1rem;
     border-radius: 12px;

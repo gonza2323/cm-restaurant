@@ -1,36 +1,34 @@
-/* Contenedor principal con fondo degradado estilo login */
 .create-review {
   padding: clamp(2rem, 5vw, 3rem) 1rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 350px;
+  min-height: 450px;
 }
 
-/* Tarjeta principal estilo auth-card */
 .create-review__card {
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 450px; /* Un poco más contenida para un aspecto más premium */
+  height: auto;
+  max-width: 800px; 
   padding: clamp(2rem, 4vw, 2.5rem);
   position: relative;
 }
 
-/* Detalle superior sutil (opcional) */
 .create-review__card::before {
   content: '✨';
   position: absolute;
-  top: -16px;
+  top: -40px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.8rem;
+  font-size: 3rem;
   line-height: 1;
   background: white;
   border-radius: 50%;
-  padding: 0.25rem;
+  padding: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -40,32 +38,29 @@
 
 /* Título estilo auth-title */
 .create-review__title {
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: 700;
   color: #333;
   margin: 0 0 1rem 0;
 }
 
-/* Descripción limpia */
 .create-review__description {
-  font-size: 0.95rem;
+  font-size: 2.5rem;
   color: #666;
   margin: 0 0 1.5rem 0;
   line-height: 1.6;
 }
 
-/* Acciones con mayor espaciado */
 .create-review__actions {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; /* Mayor separación entre botones */
+  gap: 1.5rem; /* Mayor separación entre botones */
 }
 
-/* Base de botones estilo auth-btn */
 .create-review__btn {
   padding: 0.85rem;
   border-radius: 8px; /* Bordes menos pronunciados */
-  font-size: 1rem;
+  font-size: 4rem;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
@@ -78,9 +73,8 @@
   box-sizing: border-box;
 }
 
-/* Efecto de clic uniforme para todos los botones */
 .create-review__btn:active {
-  transform: scale(0.98);
+  transform: scale(1);
 }
 
 /* Botón primario (Login) */
@@ -94,7 +88,6 @@
   background-color: #5568d3;
 }
 
-/* Botón secundario (Register) */
 .create-review__btn--register {
   background-color: transparent;
   color: #667eea;
@@ -108,7 +101,7 @@
 }
 
 /* Responsividad ajustada */
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .create-review {
     padding: clamp(1.5rem, 4vw, 2rem) 1rem;
   }
