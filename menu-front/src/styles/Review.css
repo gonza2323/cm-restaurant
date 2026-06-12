@@ -3,22 +3,22 @@
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  padding: 1.5rem;
-  margin-bottom: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Agrupa la foto y los textos (nombre y fecha) en fila */
 .review-author-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Estilos de la foto de perfil */
 .review-avatar {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #e0e0e0;
@@ -32,20 +32,20 @@
 
 .review-author {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #333;
 }
 
 .review-date {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #888;
   margin-top: 0.2rem;
 }
 
 .review-text {
   color: #555;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   line-height: 1.5;
   margin: 0;
 }

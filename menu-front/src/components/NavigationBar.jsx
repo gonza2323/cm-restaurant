@@ -15,6 +15,8 @@ function NavigationBar() {
       <a href="#platos-principales" className="navigation-link bm-item" onClick={closeMenu}>Platos principales</a>
       <a href="#bebidas" className="navigation-link bm-item" onClick={closeMenu}>Bebidas</a>
       <a href="#postres" className="navigation-link bm-item" onClick={closeMenu}>Postres</a>
+      <a href="#resenias" className="navigation-link bm-item" onClick={closeMenu}>Reseñas</a>
+
     </>
   );
 
