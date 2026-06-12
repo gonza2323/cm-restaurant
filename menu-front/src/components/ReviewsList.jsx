@@ -27,7 +27,7 @@ function ReviewsList() {
   if (error)   return <p>{error}</p>;
 
   return (
-    <div className="reviews-list">
+    <div id="resenias"className="reviews-list">
       {reviews.map((review) => (
         <Reviews key={review.id} review={review} />
       ))}

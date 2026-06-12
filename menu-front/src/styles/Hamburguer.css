@@ -1,0 +1,109 @@
+/* ── Ocultar/mostrar según pantalla ────────────────── */
+
+/* El sidebar burger solo en mobile */
+.burger-menu-wrapper {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  /* Mostrar burger en mobile */
+  .burger-menu-wrapper {
+    display: block;
+  }
+
+  /* Ocultar nav normal en mobile */
+  .navigation-bar {
+    display: none;
+  }
+}
+
+/* ── Estilos del sidebar (react-burger-menu) ───────── */
+
+/* Fondo del sidebar */
+.bm-menu-wrap {
+  position: fixed;
+  top: 0;
+  height: 100%;
+}
+
+.bm-menu {
+  background: #fff9ef;
+  padding: 2rem 1.25rem;
+  font-size: 1.1rem;
+  border-right: 2px solid rgba(184, 135, 28, 0.2);
+}
+
+/* Overlay oscuro detrás del sidebar */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Botón hamburguesa */
+.bm-burger-button {
+  position: fixed;
+  width: 28px;
+  height: 22px;
+  left: 14px;
+  top: 14px;
+  z-index: 1000;
+}
+
+.bm-burger-bars {
+  background: #2c1d07;
+  border-radius: 4px;
+}
+
+.bm-burger-bars-hover {
+  background: #b8871c;
+}
+
+/* Botón de cerrar (X) dentro del sidebar */
+.bm-cross-button {
+  height: 28px;
+  width: 28px;
+}
+
+.bm-cross {
+  background: #2c1d07;
+}
+
+/* Links dentro del sidebar */
+.bm-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1rem;
+}
+
+.bm-item-list .navigation-link {
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  color: #2c1d07;
+  text-decoration: none;
+  font-weight: 800;
+  background: transparent;
+  border: 1px solid rgba(184, 135, 28, 0.15);
+}
+
+.bm-item-list .navigation-link:hover {
+  background: #f8e8c7;
+}
+
+/* Botones de auth dentro del sidebar */
+.burger-menu-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.burger-menu-actions .nav-btn {
+  width: 100%;
+  justify-content: center;
+  min-height: 48px;
+  border-radius: 8px;
+}

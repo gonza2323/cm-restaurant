@@ -48,6 +48,10 @@ function Register() {
       <div className="auth-card">
         <h1 className="auth-title">Registrarse</h1>
 
+        <button className="perfil-volver-btn" onClick={() => navigate('/')}>
+        ← Volver al menú
+      </button>
+
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label htmlFor="nombre" className="form-label">Nombre</label>
