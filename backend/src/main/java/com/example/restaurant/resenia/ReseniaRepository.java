@@ -13,6 +13,7 @@ public interface ReseniaRepository extends JpaRepository<Resenia, Long> {
     JOIN FETCH r.cliente c
     JOIN FETCH c.usuario
     WHERE r.eliminado = false
+    ORDER BY  r.fecha DESC
 """)
     List<Resenia> findAllWithClientInfo();
 }

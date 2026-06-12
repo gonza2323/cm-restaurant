@@ -57,22 +57,30 @@ export default function Carta({ route }) {
     }
 
     setAdding(true);
-    try {
-      // Por cada item con cantidad > 0, hacemos N requests al backend
-      const entries = Object.entries(quantities).filter(([, qty]) => qty > 0);
-      for (const [itemId, qty] of entries) {
-        for (let i = 0; i < qty; i++) {
+
+    const entries = Object.entries(quantities).filter(([, qty]) => qty > 0);
+    let successCount = 0;
+    let failureCount = 0;
+
+    for (const [itemId, qty] of entries) {
+      for (let i = 0; i < qty; i++) {
+        try {
           await addItemToComandaDetails(idComanda, Number(itemId));
+          successCount += 1;
+        } catch (e) {
+          failureCount += 1;
         }
       }
-      Alert.alert("Éxito", `${totalItemsSeleccionados} item(s) agregado(s) a la comanda.`);
-      navigation.goBack();
-    } catch (e) {
-      Alert.alert("Error", e.message || "No se pudieron agregar los items.");
-    } finally {
-      setAdding(false);
     }
+
+    if (failureCount === 0)
+      Alert.alert("Éxito", `${totalItemsSeleccionados} item(s) agregado(s) a la comanda.`);
+    else
+      Alert.alert("Atención", `No se pudieron agregar ${failureCount} item(s) por falta de stock.`);
+    navigation.goBack();
+    setAdding(false);
   }
+
 
   // async function handleAddItemToComanda(itemCartaId) {
   //   const quantity = quantities[itemCartaId] || 0;

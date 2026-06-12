@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getComandaById, removeItemFromComanda, enviarACocina, marcarEntregado } from "../api/client";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export default function ComandaDetailScreen({ route }) {
   const { idComanda } = route.params;
@@ -28,6 +28,12 @@ export default function ComandaDetailScreen({ route }) {
   useEffect(() => {
     loadComandaData();
   }, [idComanda]);
+
+  useFocusEffect(
+    useCallback(() => {
+      onRefresh();
+    }, [])
+  );
 
   async function loadComandaData() {
     setLoading(true);
@@ -136,14 +142,16 @@ export default function ComandaDetailScreen({ route }) {
             <Text style={styles.menuItemName}>{itemCarta.nombre}</Text>
             <Text style={styles.menuItemDescription}>{itemCarta.descripcion}</Text>
             <Text style={styles.menuItemPrice}>${itemCarta.precio.toFixed(2)}</Text>
-            <Text style={[styles.menuItemStatus, estadoStyle]}>Estado: {estadoDisplay}</Text>
+            <Text style={[styles.menuItemStatus, estadoStyle]}>{estadoDisplay}</Text>
           </View>
+
+          {(estado == "EN_PROCESO_DE_SOLICITUD") &&
           <TouchableOpacity
               style={styles.removeButton}
               onPress={() => handleRemoveItem(id)}
           >
             <Text style={styles.removeButtonText}>Eliminar</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
     );
   }
@@ -189,7 +197,7 @@ export default function ComandaDetailScreen({ route }) {
     PREPARADO: "Preparado",
   }[comanda.estado] || comanda.estado;
 
-  // Lógica para habilitar el botón "Pagar"
+  // Lógica para habilitar el botón "Pagar" y "Agregar"
   const canPay = comanda.estado === "ENTREGADA" && comanda.detalles?.length > 0; // Actualizado aquí para la comanda principal
 
   // Lógica para el botón de acción flotante derecho
@@ -204,11 +212,8 @@ export default function ComandaDetailScreen({ route }) {
     fabRightDisabled = isSendingToKitchen || comanda.detalles?.length === 0;
     fabRightColor = styles.fabRightSend.backgroundColor;
   } else if (
-      comanda.estado === "ENVIADO_A_LA_COCINA" ||
-      comanda.estado === "COCINERO_ASIGNADO" ||
-      comanda.estado === "PREPARACION_LISTA" ||
-      comanda.estado === "PREPARADO" ||
-      comanda.estado === "ENTREGADO_PARA_DESPACHAR"
+      comanda.estado === "ENVIADA_A_COCINA" ||
+      comanda.estado === "PREPARACION_LISTA"
   ) {
     fabRightText = "Marcar Entregado";
     fabRightAction = handleMarcarEntregado;
@@ -257,12 +262,13 @@ export default function ComandaDetailScreen({ route }) {
             }
         />
 
+        {comanda.estado=='EN_PROCESO_DE_SOLICITUD' &&
         <TouchableOpacity
             style={styles.fabLeft}
             onPress={handleAddItem}
         >
           <Text style={styles.fabText}>+</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
 
         {fabRightText !== "Comanda Finalizada" && (
             <TouchableOpacity

@@ -90,8 +90,6 @@ public class ComandaService {
             throw new BusinessException("La comanda no tiene platos");
 
         List<ItemCarta> itemsCarta = detalles.stream().map(DetalleComanda::getItemCarta).toList();
-        if (!inventarioService.hayStockSuficiente(itemsCarta))
-            throw new BusinessException("Stock insuficiente");
 
         for (DetalleComanda detalle : detalles) {
             detalle.setEstado(EstadoDetalleComanda.PREPARADO);

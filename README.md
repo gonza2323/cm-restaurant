@@ -173,6 +173,22 @@ En el directorio `backend/`, ejecutar `docker compose up -d` (solo hace falta un
 
 ---
 
+### Pagos
+
+#### **POST `/api/payments`**
+* **Descripción**: Genera un link de pago de Mercado Pago para una o más comandas.
+* **Auth**: Autenticado.
+* **Input**:
+  ```json
+  { "idsComandas": [0] }
+  ```
+* **Output**:
+  ```json
+  { "urlDePago": "string" }
+  ```
+
+---
+
 ### Imágenes
 
 #### **GET `/api/items-carta/{id}/imagen`**

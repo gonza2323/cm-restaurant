@@ -122,12 +122,15 @@ export default function ComandasMesa({ route }) {
       ENTREGADA: "Entregada al Cliente", // Actualizado
       PLAZO_EXCEDIDO_DE_ENTREGA: "Plazo Excedido",
       PREPARACION_LISTA: "Preparación Lista",
+      PAGADA: "Pagada",
     }[item.estado] || item.estado;
 
     // Determinar el estilo del estado
-    const estadoStyle = item.estado === "PLAZO_EXCEDIDO_DE_ENTREGA" ? styles.comandaEstadoExcedido :
-        item.estado === "ENTREGADA" ? styles.comandaEstadoCompletada :
-            styles.comandaEstadoPendiente;
+    const estadoStyle =
+        item.estado === "EN_PROCESO_DE_SOLICITUD" ? styles.estadoEnProceso :
+        item.estado === "PREPARACION_LISTA" ? styles.estadoPreparada :
+        item.estado === "ENTREGADA" ? styles.estadoEntregada :
+        item.estado === "PAGADA" ? styles.estadoPagada : styles.estadoEnProceso
 
     const handlePress = () => {
       if (selectionMode) {
@@ -167,7 +170,7 @@ export default function ComandasMesa({ route }) {
               <Text style={styles.comandaId}>Comanda #{item.id}</Text>
               <Text style={styles.comandaFecha}>Fecha de solicitud: {fecha}</Text>
               <Text style={[styles.comandaEstado, estadoStyle]}>
-                Estado: {estadoDisplay}
+                {estadoDisplay}
               </Text>
             </View>
             {selectionMode && (
@@ -327,9 +330,10 @@ const styles = StyleSheet.create({
   comandaId: { fontSize: 16, fontWeight: "700", color: "#ede0d4", marginBottom: 5 },
   comandaFecha: { fontSize: 13, color: "#b09080", marginBottom: 5 },
   comandaEstado: { fontSize: 14, fontWeight: "600" },
-  estadoPendiente: { color: "#FFD4BD" },
-  estadoCompletada: { color: "#4ade80" },
-  estadoExcedido: { color: "#f87171" },
+  estadoEnProceso: { color: "#fcf9f6" },
+  estadoPreparada: { color: "#a2ff69" },
+  estadoEntregada: { color: "#7492fe" },
+  estadoPagada: { color: "#548d43" },
   checkbox: {
     width: 20,
     height: 20,
