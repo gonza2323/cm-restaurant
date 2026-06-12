@@ -36,4 +36,26 @@ public interface ComandaRepository extends JpaRepository<Comanda, Long> {
     AND c.eliminado = false
 """)
     List<Comanda> findAllByIds(List<Long> idsComandas);
+
+    @Query("""
+        SELECT d.itemCarta.id, COUNT(d.id)
+        FROM DetalleComanda d
+        WHERE d.comanda.estado = com.example.restaurant.comanda.EstadoComanda.EN_PROCESO_DE_SOLICITUD
+        AND d.eliminado = false
+        AND d.comanda.eliminado = false
+        GROUP BY d.itemCarta.id
+    """)
+    List<Object[]> countItemsInOpenComandas();
+
+    @Query("""
+    SELECT aiic.articuloInventario.id, SUM(aiic.cantidad)
+    FROM DetalleComanda dc
+    JOIN dc.itemCarta ic
+    JOIN ic.articulosInventario aiic
+    WHERE dc.comanda.estado = 'EN_PROCESO_DE_SOLICITUD'
+    AND dc.eliminado = false
+    AND aiic.eliminado = false
+    GROUP BY aiic.articuloInventario.id
+""")
+    List<Object[]> findStockReservadoEnComandasAbiertas();
 }

@@ -65,6 +65,9 @@ public class ComandaService {
         ItemCarta itemCarta = itemCartaRepository.findByIdAndEliminadoFalse(itemCartaId)
                 .orElseThrow(() -> new BusinessException("Item de carta no encontrado"));
 
+        if (!inventarioService.hayStockSuficiente(List.of(itemCarta)))
+            throw new BusinessException("Stock insuficiente");
+
         DetalleComanda detalle = DetalleComanda.builder()
                 .comanda(comanda)
                 .itemCarta(itemCarta)
@@ -85,6 +88,10 @@ public class ComandaService {
         List<DetalleComanda> detalles = detalleComandaRepository.getDetallesOfComanda(comanda);
         if (detalles.isEmpty())
             throw new BusinessException("La comanda no tiene platos");
+
+        List<ItemCarta> itemsCarta = detalles.stream().map(DetalleComanda::getItemCarta).toList();
+        if (!inventarioService.hayStockSuficiente(itemsCarta))
+            throw new BusinessException("Stock insuficiente");
 
         for (DetalleComanda detalle : detalles) {
             detalle.setEstado(EstadoDetalleComanda.PREPARADO);
