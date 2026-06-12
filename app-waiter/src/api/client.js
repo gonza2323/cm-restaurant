@@ -1,4 +1,4 @@
-import axios from "axios"; 
+import axios from "axios";
 
 // Instancia Base
 const apiClient = axios.create({
@@ -20,15 +20,12 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     const backendMsg =
-      error.response?.data?.message ||
-      error.response?.data?.error ||
-      null;
+      error.response?.data?.message || error.response?.data?.error || null;
     const statusMsg = error.response ? `Error ${error.response.status}` : null;
     const finalMsg = backendMsg || statusMsg || "Error de conexión";
     return Promise.reject(new Error(finalMsg));
-  }
+  },
 );
-
 
 export function setAuthToken(token) {
   apiClient.authToken = token;
@@ -40,7 +37,8 @@ export function clearAuthToken() {
 
 async function request(method, path, body) {
   const headers = { "Content-Type": "application/json" };
-  if (apiClient.authToken) headers["Authorization"] = `Bearer ${apiClient.authToken}`;
+  if (apiClient.authToken)
+    headers["Authorization"] = `Bearer ${apiClient.authToken}`;
 
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
@@ -67,3 +65,20 @@ export const login = (email, password) =>
 
 export const getMe = () => apiClient.get("/api/auth/me").then((r) => r.data);
 
+// Mesas
+export const getMesas = () => apiClient.get("/api/mesas").then((r) => r.data);
+export const getMesaById = (idMesa) =>
+  apiClient.get(`/api/mesas/${idMesa}`).then((r) => r.data);
+
+// Comandas
+export const createComanda = (mesaId) =>
+  apiClient.post("/api/comandas", { mesaId }).then((r) => r.data);
+export const getComandaById = (idComanda) =>
+  apiClient.get(`/api/comandas/${idComanda}`).then((r) => r.data);
+export const addItemToComanda = (idComanda, itemId) =>
+  apiClient.post(`/api/comandas/${idComanda}/items`, { itemId }).then((r) => r.data);
+export const removeItemFromComanda = (idComanda, itemComandaId) =>
+  apiClient.delete(`/api/comandas/${idComanda}/items/${itemComandaId}`).then((r) => r.data);
+
+// Items de Carta
+export const getMenuItems = () => apiClient.get("/api/items-carta").then((r) => r.data);
