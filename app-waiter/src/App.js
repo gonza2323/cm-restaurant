@@ -8,10 +8,8 @@ import LoginScreen from "./screens/LoginScreen";
 import Mesas from "./screens/Mesas"; // Importa el componente Mesas
 import ComandasMesa from "./screens/ComandasMesa"; // Importa el nuevo componente ComandasMesa
 import ComandaDetailScreen from "./screens/ComandaDetailScreen"; // Importa el nuevo componente ComandaDetailScreen
-
-function HomeScreen() {
-  return <View style={styles.center} />;
-}
+import PagarScreen from "./screens/PagarScreen";
+import QRPagoScreen from "./screens/QRPagoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,7 +29,13 @@ function RootNavigator() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Líneas originales comentadas */}
         {user ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <>
+            <Stack.Screen name="Mesas" component={Mesas} />
+            <Stack.Screen name="ComandasMesa" component={ComandasMesa} />
+            <Stack.Screen name="ComandaDetailScreen" component={ComandaDetailScreen} />
+            <Stack.Screen name="Pagar" component={PagarScreen} />
+            <Stack.Screen name="QRPago" component={QRPagoScreen} />
+          </>
         ) : (
           <Stack.Screen name="Login" component={LoginScreen} />
         )}

@@ -164,6 +164,13 @@ export default function ComandaDetailScreen({ route }) {
             <Text style={styles.addButtonText}>Agregar Plato</Text>
           )}
         </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.pagarButton}
+          onPress={() => navigation.navigate("Pagar", { comanda })}
+          disabled={!comanda?.detalles?.length}
+        >
+          <Text style={styles.pagarButtonText}>💳  Pagar</Text>
+        </TouchableOpacity>
       </View>
 
       <FlatList

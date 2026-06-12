@@ -35,30 +35,6 @@ export function clearAuthToken() {
   apiClient.authToken = null;
 }
 
-async function request(method, path, body) {
-  const headers = { "Content-Type": "application/json" };
-  if (apiClient.authToken)
-    headers["Authorization"] = `Bearer ${apiClient.authToken}`;
-
-  const res = await fetch(`${BASE_URL}${path}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  });
-
-  if (!res.ok) {
-    let errorMsg = `Error ${res.status}`;
-    try {
-      const errData = await res.json();
-      errorMsg = errData.message || errData.error || errorMsg;
-    } catch {}
-    throw new Error(errorMsg);
-  }
-
-  const text = await res.text();
-  return text ? JSON.parse(text) : null;
-}
-
 // Auth
 export const login = (email, password) =>
   apiClient.post("/api/auth/login", { email, password }).then((r) => r.data);
@@ -75,10 +51,16 @@ export const createComanda = (mesaId) =>
   apiClient.post("/api/comandas", { mesaId }).then((r) => r.data);
 export const getComandaById = (idComanda) =>
   apiClient.get(`/api/comandas/${idComanda}`).then((r) => r.data);
-export const addItemToComanda = (idComanda, itemId) =>
-  apiClient.post(`/api/comandas/${idComanda}/items`, { itemId }).then((r) => r.data);
-export const removeItemFromComanda = (idComanda, itemComandaId) =>
-  apiClient.delete(`/api/comandas/${idComanda}/items/${itemComandaId}`).then((r) => r.data);
+export const addItemToComanda = (idComanda, itemCartaId) =>
+  apiClient.post(`/api/comandas/${idComanda}/detalles`, { itemCartaId }).then((r) => r.data);
+export const removeItemFromComanda = (idComanda, detalleId) =>
+  apiClient.delete(`/api/comandas/${idComanda}/detalles/${detalleId}`).then((r) => r.data);
+export const enviarACocina = (idComanda) =>
+  apiClient.post(`/api/comandas/${idComanda}/enviar-a-cocina`).then((r) => r.data);
 
 // Items de Carta
 export const getMenuItems = () => apiClient.get("/api/items-carta").then((r) => r.data);
+
+// Mercado Pago 
+export const generarQRPago = (idComanda) =>
+  apiClient.post(`/api/payments/${idComanda}`).then((r) => r.data);
