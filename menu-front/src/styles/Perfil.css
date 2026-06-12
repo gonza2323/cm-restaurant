@@ -1,0 +1,163 @@
+.perfil-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background-color: #f8f8f6;
+}
+
+.perfil-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Volver */
+.perfil-volver-btn {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0.25rem;
+  transition: color 0.15s;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.perfil-volver-btn:hover {
+  color: #1a1a1a;
+}
+
+/* Avatar */
+.perfil-avatar-wrap {
+  margin-bottom: 0.5rem;
+}
+
+.perfil-avatar-img {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e8e8e4;
+}
+
+.perfil-avatar-placeholder {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: #2d2d2d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.perfil-iniciales {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-family: 'Georgia', serif;
+}
+
+/* Nombre y rol */
+.perfil-nombre {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  text-align: center;
+}
+
+.perfil-rol {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 0.25rem;
+}
+
+/* Datos */
+.perfil-datos {
+  width: 100%;
+  border-top: 1px solid #eee;
+  margin-top: 0.75rem;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.perfil-dato {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.perfil-dato-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.perfil-dato-valor {
+  font-size: 0.975rem;
+  color: #1a1a1a;
+  word-break: break-word;
+}
+
+/* Logout */
+.perfil-logout-btn {
+  margin-top: 1.25rem;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  background: transparent;
+  color: #555;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  min-height: 48px;
+}
+
+.perfil-logout-btn:hover {
+  border-color: #c0392b;
+  color: #c0392b;
+}
+
+/* Estados */
+.perfil-estado {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #888;
+  padding: 1rem;
+}
+
+.perfil-error {
+  color: #c0392b;
+}
+
+@media (max-width: 400px) {
+  .perfil-card {
+    padding: 1.25rem 1rem;
+    border-radius: 12px;
+  }
+}

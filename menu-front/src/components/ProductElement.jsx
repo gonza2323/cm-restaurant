@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { BASE_URL } from '../config';
+
+
 const ProductElement = ({ product }) => {
 	if (!product) return null;
 
@@ -21,7 +24,7 @@ const ProductElement = ({ product }) => {
 					) : null}
 				</div>
 
-				{imageUrl ? <img className="product-element__image" src={imageUrl} alt={nombre} /> : null}
+				<img src={`${BASE_URL}${imageUrl}`} alt={nombre} className="product-element__img"/>
 			</div>
 		</article>
 	);
