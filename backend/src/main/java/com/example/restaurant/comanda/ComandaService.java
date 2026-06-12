@@ -163,4 +163,11 @@ public class ComandaService {
     public List<DetalleComanda> findDetallesByComandaIds(List<Long> idsComandas) {
         return repository.findDetallesByComandaIds(idsComandas);
     }
+
+    @Transactional
+    public void marcarComoPagadas(List<Long> idsComandas) {
+        List<Comanda> comandas = repository.findAllByIds(idsComandas);
+        for (Comanda c : comandas)
+            c.setEstado(EstadoComanda.PAGADA);
+    }
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +39,9 @@ public class MercadoPagoService {
                 ).collect(Collectors.toList());
 
         PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                .success(appProperties.frontendUrl() + "/success")
-                .pending(appProperties.frontendUrl() + "/pending")
-                .failure(appProperties.frontendUrl() + "/failure")
+                .success(appProperties.frontendUrl())
+                .pending(appProperties.frontendUrl())
+                .failure(appProperties.frontendUrl())
                 .build();
 
         // No permitimos pagar en efectivo, así no queda pendiente el pago
@@ -64,7 +63,7 @@ public class MercadoPagoService {
                 .paymentMethods(paymentMethods)
                 .backUrls(backUrls)
                 .autoReturn("approved")
-                .notificationUrl(appProperties.baseUrl() + "/api/webhook/mercadopago")
+                .notificationUrl(appProperties.apiUrl() + "/api/webhook/mercadopago")
                 .externalReference(idsComandasStr)
                 .statementDescriptor("Restaurante")
                 .build();
