@@ -72,6 +72,7 @@ export default function ComandasMesa({ route }) {
       ENTREGADO_PARA_DESPACHAR: "Listo para Despachar",
       ENTREGADO_AL_CLIENTE: "Entregado al Cliente",
       PLAZO_EXCEDIDO_DE_ENTREGA: "Plazo Excedido",
+      PREPARACION_LISTA: "Preparación Lista",
     }[item.estado] || item.estado; // Fallback al estado original si no se encuentra
 
     // Determinar el estilo del estado (puedes expandir esto para más estados)

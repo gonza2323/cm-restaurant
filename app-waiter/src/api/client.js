@@ -55,6 +55,8 @@ export const addItemToComanda = (idComanda, itemCartaId) =>
   apiClient.post(`/api/comandas/${idComanda}/detalles`, { itemCartaId }).then((r) => r.data);
 export const removeItemFromComanda = (idComanda, detalleId) =>
   apiClient.delete(`/api/comandas/${idComanda}/detalles/${detalleId}`).then((r) => r.data);
+export const addItemToComandaDetails = (idComanda, itemCartaId) =>
+    apiClient.post(`/api/comandas/${idComanda}/detalles`, { itemCartaId }).then((r) => r.data);
 export const enviarACocina = (idComanda) =>
   apiClient.post(`/api/comandas/${idComanda}/enviar-a-cocina`).then((r) => r.data);
 

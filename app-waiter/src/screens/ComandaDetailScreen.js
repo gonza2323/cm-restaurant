@@ -87,6 +87,8 @@ export default function ComandaDetailScreen({ route }) {
       ENTREGADO_PARA_DESPACHAR: "Listo para Despachar",
       ENTREGADO_AL_CLIENTE: "Entregado al Cliente",
       PLAZO_EXCEDIDO_DE_ENTREGA: "Plazo Excedido",
+      PREPARACION_LISTA: "Preparacion Lista",
+      PREPARADO: "Preparado",
     }[estado] || estado; // Fallback al estado original si no se encuentra
 
     // Determinar el estilo del estado
@@ -156,27 +158,25 @@ export default function ComandaDetailScreen({ route }) {
     ENTREGADO_PARA_DESPACHAR: "Listo para Despachar",
     ENTREGADO_AL_CLIENTE: "Entregado al Cliente",
     PLAZO_EXCEDIDO_DE_ENTREGA: "Plazo Excedido",
+    PREPARACION_LISTA: "Preparacion Lista",
+    PREPARADO: "Preparado",
   }[comanda.estado] || comanda.estado;
 
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <Text style={styles.title}>Comanda #{comanda.id}</Text>
+        <View style={styles.headerTopRow}>
+          <Text style={styles.title}>Comanda #{comanda.id}</Text>
+          <TouchableOpacity
+            style={[styles.pagarButton, !comanda?.detalles?.length && styles.pagarButtonDisabled]}
+            onPress={() => navigation.navigate("Pagar", { comanda: comanda })}
+            disabled={!comanda?.detalles?.length}
+          >
+            <Text style={styles.pagarButtonText}>💳 Pagar</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.subtitle}>Fecha: {fechaSolicitud}</Text>
         <Text style={styles.subtitle}>Estado: {comandaEstadoDisplay}</Text>
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={handleAddItem}
-        >
-          <Text style={styles.addButtonText}>Agregar Plato</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.pagarButton}
-          onPress={() => navigation.navigate("Pagar", { comanda })}
-          disabled={!comanda?.detalles?.length}
-        >
-          <Text style={styles.pagarButtonText}>💳  Pagar</Text>
-        </TouchableOpacity>
       </View>
 
       <FlatList
@@ -197,6 +197,14 @@ export default function ComandaDetailScreen({ route }) {
           </View>
         }
       />
+
+      {/* Botón flotante para agregar plato */}
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={handleAddItem}
+      >
+        <Text style={styles.fabText}>+</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -205,6 +213,12 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "#1a1208" },
   center: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#1a1208" },
   header: { paddingHorizontal: 20, paddingTop: 15, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: "#4a3020", paddingBottom: 10 },
+  headerTopRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 5,
+  },
   title: { fontSize: 28, fontWeight: "800", color: "#FFD4BD" },
   subtitle: { fontSize: 16, color: "#b09080", marginTop: 4 },
   list: { paddingHorizontal: 15, paddingBottom: 30 },
@@ -236,11 +250,11 @@ const styles = StyleSheet.create({
   menuItemName: { fontSize: 16, fontWeight: "700", color: "#ede0d4" },
   menuItemDescription: { fontSize: 12, color: "#b09080", marginTop: 2 },
   menuItemPrice: { fontSize: 14, fontWeight: "600", color: "#FFD4BD", marginTop: 5 },
-  menuItemStatus: { fontSize: 12, fontWeight: "600", marginTop: 2 }, // Base style for item status
-  itemEstadoPendiente: { color: "#FFD4BD" }, // Por ejemplo, para EN_PROCESO_DE_SOLICITUD
-  itemEstadoEnProceso: { color: "#A2A3EB" }, // Por ejemplo, para ENVIADO_A_LA_COCINA, COCINERO_ASIGNADO
-  itemEstadoCompletado: { color: "#4ade80" }, // Por ejemplo, para ENTREGADO_AL_CLIENTE
-  itemEstadoExcedido: { color: "#f87171" }, // Por ejemplo, para PLAZO_EXCEDIDO_DE_ENTREGA
+  menuItemStatus: { fontSize: 12, fontWeight: "600", marginTop: 2 },
+  itemEstadoPendiente: { color: "#FFD4BD" },
+  itemEstadoEnProceso: { color: "#A2A3EB" },
+  itemEstadoCompletado: { color: "#4ade80" },
+  itemEstadoExcedido: { color: "#f87171" },
   removeButton: {
     backgroundColor: "#f87171",
     borderRadius: 8,
@@ -249,17 +263,38 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   removeButtonText: { color: "#1e1f4a", fontSize: 12, fontWeight: "700" },
-  addButton: {
+  fab: {
+    position: "absolute",
+    bottom: 20,
+    left: 20,
     backgroundColor: "#4ade80",
-    borderRadius: 12,
-    paddingVertical: 10,
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: 15,
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
-  addButtonDisabled: {
+  fabText: {
+    color: "#1e1f4a",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  pagarButton: {
+    backgroundColor: "#A2A3EB",
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    alignItems: "center",
+  },
+  pagarButtonDisabled: {
     backgroundColor: "#3d3e6a",
   },
-  addButtonText: {
+  pagarButtonText: {
     color: "#1e1f4a",
     fontSize: 16,
     fontWeight: "700",

@@ -63,7 +63,7 @@ export default function Carta({ route }) {
       Alert.alert("Éxito", `${quantity} unidad(es) agregada(s) a la comanda.`);
       setQuantities((prev) => ({ ...prev, [itemCartaId]: 0 })); // Reset quantity
       // Opcional: Navegar de vuelta a ComandaDetailScreen o refrescarla
-      // navigation.goBack();
+      navigation.goBack();
     } catch (e) {
       console.error("Error agregando plato a la comanda:", e);
       Alert.alert("Error", e.message || "No se pudo agregar el plato a la comanda.");
