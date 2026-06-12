@@ -35,6 +35,9 @@ public class CartaDataLoader {
 
     @Transactional
     public void loadMenuAndInventory() {
+        if (cartaRepository.count() > 0)
+            return;
+
         try {
             log.info("Starting menu and inventory data loading...");
 
