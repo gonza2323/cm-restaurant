@@ -46,7 +46,7 @@ export default function QRPagoScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>🍽️ Aromas de Viña</Text>
+        <Text style={styles.headerTitle}>🍽️ Lo de Fer</Text>
         <Text style={styles.headerSub}>QR de pago — Comandas #{idsComandas.join(', #')}</Text>
       </View>
 

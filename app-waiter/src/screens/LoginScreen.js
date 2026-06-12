@@ -44,7 +44,7 @@ export default function LoginScreen() {
       >
         <View style={styles.header}>
           <Text style={styles.emoji}>🍽️</Text>
-          <Text style={styles.title}>Aromas de Viña</Text>
+          <Text style={styles.title}>Lo de Fer</Text>
           <Text style={styles.subtitle}>Panel de mozos</Text>
         </View>
 
