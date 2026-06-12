@@ -11,8 +11,8 @@ import {
   Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getComandaById, removeItemFromComanda, addItemToComanda, getMenuItems } from "../api/client";
-import { useNavigation } from "@react-navigation/native"; // Para navegar de vuelta o a selección de ítems
+import { getComandaById, removeItemFromComanda } from "../api/client";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ComandaDetailScreen({ route }) {
   const { idComanda } = route.params;
@@ -22,7 +22,6 @@ export default function ComandaDetailScreen({ route }) {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
-  const [isAddingItem, setIsAddingItem] = useState(false); // Para el estado del botón "Agregar Plato"
 
   useEffect(() => {
     loadComandaData();
@@ -72,32 +71,34 @@ export default function ComandaDetailScreen({ route }) {
     );
   }
 
-  async function handleAddItem() {
-    // Por ahora, para simplificar, vamos a agregar un item de carta fijo (ej. el primero de la lista de menu items)
-    // En una implementación real, esto abriría un modal o una nueva pantalla para seleccionar el item.
-    setIsAddingItem(true);
-    try {
-      const menuItems = await getMenuItems();
-      if (menuItems && menuItems.length > 0) {
-        const firstMenuItemId = menuItems[0].id; // Tomamos el primer item disponible
-        await addItemToComanda(idComanda, firstMenuItemId);
-        Alert.alert("Éxito", `Plato "${menuItems[0].nombre}" agregado.`);
-        await loadComandaData(); // Recargar la comanda para reflejar el cambio
-      } else {
-        Alert.alert("Info", "No hay platos disponibles para agregar.");
-      }
-    } catch (e) {
-      console.error("Error agregando plato:", e);
-      Alert.alert("Error", e.message || "No se pudo agregar el plato.");
-    } finally {
-      setIsAddingItem(false);
-    }
+  function handleAddItem() {
+    navigation.navigate("Carta", { idComanda: idComanda });
   }
 
   function renderComandaItem({ item }) {
-    // item.itemCarta contiene los detalles del plato
     const { id, itemCarta, estado } = item;
     const imageUrl = itemCarta.imageUrl ? `${process.env.EXPO_PUBLIC_API_URL}${itemCarta.imageUrl}` : null;
+
+    // Mapeo de estados de la API a texto descriptivo
+    const estadoDisplay = {
+      EN_PROCESO_DE_SOLICITUD: "En Proceso de Solicitud",
+      ENVIADO_A_LA_COCINA: "Enviado a Cocina",
+      COCINERO_ASIGNADO: "Cocinero Asignado",
+      ENTREGADO_PARA_DESPACHAR: "Listo para Despachar",
+      ENTREGADO_AL_CLIENTE: "Entregado al Cliente",
+      PLAZO_EXCEDIDO_DE_ENTREGA: "Plazo Excedido",
+    }[estado] || estado; // Fallback al estado original si no se encuentra
+
+    // Determinar el estilo del estado
+    let estadoStyle = styles.itemEstadoPendiente; // Estilo por defecto
+    if (estado === "ENTREGADO_AL_CLIENTE") {
+      estadoStyle = styles.itemEstadoCompletado;
+    } else if (estado === "PLAZO_EXCEDIDO_DE_ENTREGA") {
+      estadoStyle = styles.itemEstadoExcedido;
+    } else if (estado === "ENVIADO_A_LA_COCINA" || estado === "COCINERO_ASIGNADO") {
+      estadoStyle = styles.itemEstadoEnProceso;
+    }
+
 
     return (
       <View style={styles.menuItemCard}>
@@ -106,11 +107,11 @@ export default function ComandaDetailScreen({ route }) {
           <Text style={styles.menuItemName}>{itemCarta.nombre}</Text>
           <Text style={styles.menuItemDescription}>{itemCarta.descripcion}</Text>
           <Text style={styles.menuItemPrice}>${itemCarta.precio.toFixed(2)}</Text>
-          <Text style={styles.menuItemStatus}>Estado: {estado}</Text>
+          <Text style={[styles.menuItemStatus, estadoStyle]}>Estado: {estadoDisplay}</Text>
         </View>
         <TouchableOpacity
           style={styles.removeButton}
-          onPress={() => handleRemoveItem(id)} // id del detalle de comanda
+          onPress={() => handleRemoveItem(id)}
         >
           <Text style={styles.removeButtonText}>Eliminar</Text>
         </TouchableOpacity>
@@ -147,22 +148,27 @@ export default function ComandaDetailScreen({ route }) {
 
   const fechaSolicitud = new Date(comanda.fechaSolicitud).toLocaleString();
 
+  // Mapeo de estados de la API a texto descriptivo para la comanda principal
+  const comandaEstadoDisplay = {
+    EN_PROCESO_DE_SOLICITUD: "En Proceso de Solicitud",
+    ENVIADO_A_LA_COCINA: "Enviado a Cocina",
+    COCINERO_ASIGNADO: "Cocinero Asignado",
+    ENTREGADO_PARA_DESPACHAR: "Listo para Despachar",
+    ENTREGADO_AL_CLIENTE: "Entregado al Cliente",
+    PLAZO_EXCEDIDO_DE_ENTREGA: "Plazo Excedido",
+  }[comanda.estado] || comanda.estado;
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
         <Text style={styles.title}>Comanda #{comanda.id}</Text>
         <Text style={styles.subtitle}>Fecha: {fechaSolicitud}</Text>
-        <Text style={styles.subtitle}>Estado: {comanda.estado}</Text>
+        <Text style={styles.subtitle}>Estado: {comandaEstadoDisplay}</Text>
         <TouchableOpacity
-          style={[styles.addButton, isAddingItem && styles.addButtonDisabled]}
+          style={styles.addButton}
           onPress={handleAddItem}
-          disabled={isAddingItem}
         >
-          {isAddingItem ? (
-            <ActivityIndicator color="#1e1f4a" />
-          ) : (
-            <Text style={styles.addButtonText}>Agregar Plato</Text>
-          )}
+          <Text style={styles.addButtonText}>Agregar Plato</Text>
         </TouchableOpacity>
       </View>
 
@@ -215,7 +221,7 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 8,
     marginRight: 10,
-    backgroundColor: "#4a3020", // Placeholder color
+    backgroundColor: "#4a3020",
   },
   menuItemDetails: {
     flex: 1,
@@ -223,7 +229,11 @@ const styles = StyleSheet.create({
   menuItemName: { fontSize: 16, fontWeight: "700", color: "#ede0d4" },
   menuItemDescription: { fontSize: 12, color: "#b09080", marginTop: 2 },
   menuItemPrice: { fontSize: 14, fontWeight: "600", color: "#FFD4BD", marginTop: 5 },
-  menuItemStatus: { fontSize: 12, color: "#b09080", marginTop: 2 },
+  menuItemStatus: { fontSize: 12, fontWeight: "600", marginTop: 2 }, // Base style for item status
+  itemEstadoPendiente: { color: "#FFD4BD" }, // Por ejemplo, para EN_PROCESO_DE_SOLICITUD
+  itemEstadoEnProceso: { color: "#A2A3EB" }, // Por ejemplo, para ENVIADO_A_LA_COCINA, COCINERO_ASIGNADO
+  itemEstadoCompletado: { color: "#4ade80" }, // Por ejemplo, para ENTREGADO_AL_CLIENTE
+  itemEstadoExcedido: { color: "#f87171" }, // Por ejemplo, para PLAZO_EXCEDIDO_DE_ENTREGA
   removeButton: {
     backgroundColor: "#f87171",
     borderRadius: 8,
@@ -233,7 +243,7 @@ const styles = StyleSheet.create({
   },
   removeButtonText: { color: "#1e1f4a", fontSize: 12, fontWeight: "700" },
   addButton: {
-    backgroundColor: "#4ade80", // Usar un color diferente para "Agregar Plato"
+    backgroundColor: "#4ade80",
     borderRadius: 12,
     paddingVertical: 10,
     alignItems: "center",

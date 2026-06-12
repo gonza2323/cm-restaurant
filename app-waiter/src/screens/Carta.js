@@ -1,84 +1,133 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   FlatList,
-  TouchableOpacity,
   StyleSheet,
-  Image,
   ActivityIndicator,
-  RefreshControl,
+  TouchableOpacity,
+  Alert,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getMyFiguritas, updateFiguritaStatus } from "../api/client";
-import CartaImage from "../components/CartaImage";
+import { getMozosCarta, addItemToComandaDetails } from "../api/client";
+import { useNavigation } from "@react-navigation/native";
 
-export default function CollectionScreen() {
-  const [carta, setCarta] = useState([]);
+export default function Carta({ route }) {
+  const { idComanda } = route.params;
+  const navigation = useNavigation();
+
+  const [menuData, setMenuData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [updating, setUpdating] = useState({}); // { [id]: true }
+  const [error, setError] = useState("");
+  const [quantities, setQuantities] = useState({}); // { itemId: quantity }
+  const [addingItem, setAddingItem] = useState(false);
 
   useEffect(() => {
-    load();
+    loadMenuData();
   }, []);
 
-  async function load() {
+  async function loadMenuData() {
+    setLoading(true);
+    setError("");
     try {
-      const data = await getCarta(); // TODO: Crear getCarta
-      setCarta(data);
+      const data = await getMozosCarta();
+      setMenuData(data);
     } catch (e) {
-      console.error(e);
+      console.error("Error cargando la carta:", e);
+      setError(e.message || "Error al cargar la carta.");
     } finally {
       setLoading(false);
     }
   }
 
-  async function onRefresh() {
-    setRefreshing(true);
-    await load();
-    setRefreshing(false);
+  const handleQuantityChange = (itemId, amount) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [itemId]: Math.max(0, (prev[itemId] || 0) + amount),
+    }));
+  };
+
+  async function handleAddItemToComanda(itemCartaId) {
+    const quantity = quantities[itemCartaId] || 0;
+    if (quantity === 0) {
+      Alert.alert("Atención", "Selecciona al menos una unidad para agregar.");
+      return;
+    }
+
+    setAddingItem(true);
+    try {
+      for (let i = 0; i < quantity; i++) {
+        await addItemToComandaDetails(idComanda, itemCartaId);
+      }
+      Alert.alert("Éxito", `${quantity} unidad(es) agregada(s) a la comanda.`);
+      setQuantities((prev) => ({ ...prev, [itemCartaId]: 0 })); // Reset quantity
+      // Opcional: Navegar de vuelta a ComandaDetailScreen o refrescarla
+      // navigation.goBack();
+    } catch (e) {
+      console.error("Error agregando plato a la comanda:", e);
+      Alert.alert("Error", e.message || "No se pudo agregar el plato a la comanda.");
+    } finally {
+      setAddingItem(false);
+    }
   }
 
-  function renderItem({ item }) {
-    const isUpdating = updating[item.id];
+  function renderMenuItem({ item }) {
+    const imageUrl = item.imageUrl ? `${process.env.EXPO_PUBLIC_API_URL}${item.imageUrl}` : null;
+    const currentQuantity = quantities[item.id] || 0;
+
     return (
-      <View style={styles.card}>
-        <CartaImage imagenUrl={item.imagenUrl} style={styles.cardImage} />
-        <Text style={styles.cardName} numberOfLines={2}>
-          {item.nombre}
-        </Text>
-        <View style={styles.cardActions}>
-          <TouchableOpacity
-            style={[styles.badge]}
-            onPress={() => addToComanda(item)} // TODO: Implementar addToComanda
-            disabled={isUpdating}
-            activeOpacity={0.75}
-          >
-            <Text
-              style={[styles.badgeText, item.owned && styles.badgeTextActive]}
-            >
-              {item.nombre}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.badge, item.wanted && styles.badgeWanted]}
-            onPress={() => toggleWanted(item)}
-            disabled={isUpdating}
-            activeOpacity={0.75}
-          >
-            <Text
-              style={[styles.badgeText, item.wanted && styles.badgeTextActive]}
-            >
-              {item.wanted ? "★ La quiero" : "La quiero"}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {isUpdating && (
-          <View style={styles.cardOverlay}>
-            <ActivityIndicator color="#3b82f6" size="small" />
+      <View style={styles.menuItemCard}>
+        {imageUrl && <Image source={{ uri: imageUrl }} style={styles.menuItemImage} />}
+        <View style={styles.menuItemContent}>
+          <View style={styles.menuItemDetails}>
+            <Text style={styles.menuItemName}>{item.nombre}</Text>
+            <Text style={styles.menuItemDescription}>{item.descripcion}</Text>
+            <Text style={styles.menuItemPrice}>${item.precio.toFixed(2)}</Text>
           </View>
-        )}
+          <View style={styles.itemActions}>
+            <TouchableOpacity
+              style={[styles.addPlusButton, (addingItem || currentQuantity === 0) && styles.addPlusButtonDisabled]}
+              onPress={() => handleAddItemToComanda(item.id)}
+              disabled={addingItem || currentQuantity === 0}
+            >
+              {addingItem ? (
+                <ActivityIndicator color="#1e1f4a" size="small" />
+              ) : (
+                <Text style={styles.addPlusButtonText}>+</Text>
+              )}
+            </TouchableOpacity>
+            <View style={styles.quantitySelector}>
+              <TouchableOpacity
+                style={styles.quantityButton}
+                onPress={() => handleQuantityChange(item.id, -1)}
+              >
+                <Text style={styles.quantityButtonText}>-</Text>
+              </TouchableOpacity>
+              <Text style={styles.quantityText}>{currentQuantity}</Text>
+              <TouchableOpacity
+                style={styles.quantityButton}
+                onPress={() => handleQuantityChange(item.id, 1)}
+              >
+                <Text style={styles.quantityButtonText}>+</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  function renderSection({ item }) {
+    return (
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>{item.nombre}</Text>
+        <FlatList
+          data={item.items}
+          keyExtractor={(menuItem) => String(menuItem.id)}
+          renderItem={renderMenuItem}
+          scrollEnabled={false}
+        />
       </View>
     );
   }
@@ -86,154 +135,145 @@ export default function CollectionScreen() {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator color="#3b82f6" size="large" />
+        <ActivityIndicator color="#A2A3EB" size="large" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity style={styles.retryButton} onPress={loadMenuData}>
+          <Text style={styles.retryButtonText}>Reintentar</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  if (!menuData || !menuData.secciones || menuData.secciones.length === 0) {
+    return (
+      <View style={styles.center}>
+        <Text style={styles.emptyText}>No hay elementos en la carta.</Text>
       </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top"]}>
-      <View style={styles.headerRow}>
-        <Text style={styles.title}>Mi Colección</Text>
-        <Text style={styles.stats}>
-          {ownedCount}/{figuritas.length} 🃏 · {wantedCount} ★
-        </Text>
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Carta del Restaurante</Text>
+        <Text style={styles.subtitle}>Comanda #{idComanda}</Text>
       </View>
-
-      <View style={styles.filterRow}>
-        {[
-          { key: "all", label: "Todas" },
-          { key: "owned", label: "Las tengo" },
-          { key: "wanted", label: "Las quiero" },
-        ].map((f) => (
-          <TouchableOpacity
-            key={f.key}
-            style={[
-              styles.filterBtn,
-              filter === f.key && styles.filterBtnActive,
-            ]}
-            onPress={() => setFilter(f.key)}
-          >
-            <Text
-              style={[
-                styles.filterText,
-                filter === f.key && styles.filterTextActive,
-              ]}
-            >
-              {f.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
       <FlatList
-        data={filtered}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={renderItem}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
+        data={menuData.secciones}
+        keyExtractor={(section) => String(section.id)}
+        renderItem={renderSection}
         contentContainerStyle={styles.list}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor="#3b82f6"
-          />
-        }
-        ListEmptyComponent={
-          <View style={styles.empty}>
-            <Text style={styles.emptyText}>
-              No hay figuritas en este filtro
-            </Text>
-          </View>
-        }
       />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#0f172a" },
-  center: {
-    flex: 1,
-    justifyContent: "center",
+  safe: { flex: 1, backgroundColor: "#1a1208" },
+  center: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#1a1208" },
+  header: { paddingHorizontal: 20, paddingTop: 15, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: "#4a3020", paddingBottom: 10 },
+  title: { fontSize: 26, fontWeight: "800", color: "#FFD4BD" },
+  subtitle: { fontSize: 14, color: "#b09080", marginTop: 4 },
+  list: { paddingHorizontal: 15, paddingBottom: 30 },
+  sectionContainer: { marginBottom: 20 },
+  sectionTitle: { fontSize: 22, fontWeight: "700", color: "#FFD4BD", marginBottom: 10, paddingLeft: 5 },
+  menuItemCard: {
+    flexDirection: "row",
+    backgroundColor: "#2a1e14",
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "#4a3020",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
     alignItems: "center",
-    backgroundColor: "#0f172a",
   },
-  headerRow: {
+  menuItemImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 8,
+    marginRight: 10,
+    backgroundColor: "#4a3020",
+  },
+  menuItemContent: { // Nuevo contenedor para detalles y acciones
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "baseline",
-    paddingHorizontal: 18,
-    paddingTop: 12,
-    paddingBottom: 8,
-  },
-  title: { fontSize: 22, fontWeight: "800", color: "#fff" },
-  stats: { fontSize: 13, color: "#64748b" },
-  filterRow: {
-    flexDirection: "row",
-    gap: 8,
-    paddingHorizontal: 18,
-    marginBottom: 12,
-  },
-  filterBtn: {
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-    borderRadius: 20,
-    backgroundColor: "#1e293b",
-    borderWidth: 1,
-    borderColor: "#334155",
-  },
-  filterBtnActive: { backgroundColor: "#3b82f6", borderColor: "#3b82f6" },
-  filterText: { color: "#64748b", fontSize: 13, fontWeight: "600" },
-  filterTextActive: { color: "#fff" },
-  list: { paddingHorizontal: 12, paddingBottom: 24 },
-  row: { justifyContent: "space-between", marginBottom: 12 },
-  card: {
-    width: "48%",
-    backgroundColor: "#1e293b",
-    borderRadius: 16,
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "#334155",
-  },
-  cardImage: {
-    width: "100%",
-    aspectRatio: 0.72,
-    backgroundColor: "#334155",
-  },
-  cardName: {
-    color: "#f1f5f9",
-    fontSize: 13,
-    fontWeight: "600",
-    paddingHorizontal: 10,
-    paddingTop: 8,
-    paddingBottom: 4,
-    minHeight: 38,
-  },
-  cardActions: {
-    flexDirection: "row",
-    gap: 6,
-    padding: 8,
-    paddingTop: 4,
-  },
-  badge: {
-    flex: 1,
-    paddingVertical: 5,
-    borderRadius: 8,
-    backgroundColor: "#334155",
     alignItems: "center",
   },
-  badgeOwned: { backgroundColor: "#166534" },
-  badgeWanted: { backgroundColor: "#1e3a5f" },
-  badgeText: { color: "#94a3b8", fontSize: 11, fontWeight: "600" },
-  badgeTextActive: { color: "#fff" },
-  cardOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(15,23,42,0.5)",
+  menuItemDetails: {
+    flex: 1, // Permite que los detalles ocupen el espacio disponible
+    marginRight: 10,
+  },
+  menuItemName: { fontSize: 16, fontWeight: "700", color: "#ede0d4" },
+  menuItemDescription: { fontSize: 12, color: "#b09080", marginTop: 2 },
+  menuItemPrice: { fontSize: 14, fontWeight: "600", color: "#FFD4BD", marginTop: 5 },
+  itemActions: { // Contenedor para el botón '+' y el selector de cantidad
+    alignItems: "center",
+  },
+  addPlusButton: {
+    backgroundColor: "#4ade80",
+    borderRadius: 20, // Para hacerlo circular
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 8, // Espacio entre el '+' y el selector de cantidad
+  },
+  addPlusButtonDisabled: {
+    backgroundColor: "#3d3e6a",
+  },
+  addPlusButtonText: {
+    color: "#1e1f4a",
+    fontSize: 24,
+    fontWeight: "bold",
+    lineHeight: 24, // Ajustar para centrar el '+'
+  },
+  quantitySelector: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  quantityButton: {
+    backgroundColor: "#4a3020",
+    borderRadius: 5,
+    width: 25,
+    height: 25,
     justifyContent: "center",
     alignItems: "center",
   },
-  empty: { alignItems: "center", marginTop: 60 },
-  emptyText: { color: "#64748b", fontSize: 16 },
+  quantityButtonText: {
+    color: "#ede0d4",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  quantityText: {
+    color: "#ede0d4",
+    fontSize: 16,
+    fontWeight: "bold",
+    minWidth: 20,
+    textAlign: "center",
+  },
+  empty: { alignItems: "center", marginTop: 50 },
+  emptyText: { color: "#b09080", fontSize: 16 },
+  errorText: { color: "#f87171", fontSize: 16, textAlign: "center", marginBottom: 10 },
+  retryButton: {
+    backgroundColor: "#A2A3EB",
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginTop: 10,
+  },
+  retryButtonText: { color: "#1e1f4a", fontSize: 16, fontWeight: "700" },
 });

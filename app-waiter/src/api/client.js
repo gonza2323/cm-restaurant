@@ -79,6 +79,10 @@ export const addItemToComanda = (idComanda, itemId) =>
   apiClient.post(`/api/comandas/${idComanda}/items`, { itemId }).then((r) => r.data);
 export const removeItemFromComanda = (idComanda, itemComandaId) =>
   apiClient.delete(`/api/comandas/${idComanda}/items/${itemComandaId}`).then((r) => r.data);
+export const addItemToComandaDetails = (idComanda, itemCartaId) =>
+  apiClient.post(`/api/comandas/${idComanda}/detalles`, { itemCartaId }).then((r) => r.data);
+
 
 // Items de Carta
 export const getMenuItems = () => apiClient.get("/api/items-carta").then((r) => r.data);
+export const getMozosCarta = () => apiClient.get("/api/mozos/carta").then((r) => r.data);

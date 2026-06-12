@@ -30,17 +30,17 @@ function RootNavigator() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* Líneas originales comentadas */}
-        {user ? (
+        {/*{user ? (
           <Stack.Screen name="Home" component={HomeScreen} />
         ) : (
           <Stack.Screen name="Login" component={LoginScreen} />
-        )}
-        
-        {/* Temporalmente renderizando la pantalla Mesas para pruebas
+        )}*/}
+
+        {/*Temporalmente renderizando la pantalla Mesas para pruebas*/}
         <Stack.Screen name="MesasTest" component={Mesas} />
         <Stack.Screen name="ComandasMesa" component={ComandasMesa} />
         <Stack.Screen name="ComandaDetailScreen" component={ComandaDetailScreen} />
-        */}
+        {/**/}
       </Stack.Navigator>
     </NavigationContainer>
   );

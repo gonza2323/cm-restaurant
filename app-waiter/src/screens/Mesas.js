@@ -77,8 +77,8 @@ export default function Mesas() {
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Aromas de Viña</Text>
-        <Text style={styles.subtitle}>Selecciona una mesa para gestionar</Text>
+        <Text style={styles.title}>🍽️ Aromas de Viña</Text>
+        <Text style={styles.subtitle}>Selecciona una mesa para atender</Text>
       </View>
 
       <FlatList
