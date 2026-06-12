@@ -60,6 +60,7 @@ export const enviarACocina = (idComanda) =>
 
 // Items de Carta
 export const getMenuItems = () => apiClient.get("/api/items-carta").then((r) => r.data);
+export const getMozosCarta = () => apiClient.get("/api/mozos/carta").then((r) => r.data);
 
 // Mercado Pago 
 export const generarQRPago = (idComanda) =>

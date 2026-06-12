@@ -1,43 +1,40 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import '../styles/AuthPages.css';
-import { useAuth } from "../auth/AuthContext";
-
+import { useAuth } from '../auth/AuthContext';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
+
+  // Si vino desde una ruta protegida, vuelve ahí después de loguear
+  const from = location.state?.from?.pathname ?? '/';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
-    const success = await login(email, password);
-
-    if (success) {
-      navigate("/");
-    } else {
-      setError("Email o contraseña incorrectos");
+    try {
+      await login(email, password);
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.message ?? 'Email o contraseña incorrectos');
+    } finally {
+      setLoading(false);
     }
   };
-
-  /*const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: Conectar con el backend
-    //armar contexto que guarde el state de autenticación
-    //llamar función de login del contexto, que a su vez llame al backend y guarde el token en localStorage
-    //config con axios mandar el token en el header de cada request(revisar el de los autos de ing en soft 2)
-    console.log('Login:', { email, password });
-    // navigate('/');
-  };*/
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h1 className="auth-title">Iniciar Sesión</h1>
-        
+
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label htmlFor="email" className="form-label">Email</label>
@@ -67,13 +64,16 @@ function Login() {
 
           {error && <p className="form-error">{error}</p>}
 
-          <button type="submit" className="auth-btn">
-            Iniciar Sesión
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? 'Entrando...' : 'Iniciar Sesión'}
           </button>
         </form>
 
+ <button className="perfil-volver-btn" onClick={() => navigate('/')}>
+        ← Volver al menú
+      </button>
         <p className="auth-footer">
-          ¿No tienes cuenta? 
+          ¿No tienes cuenta?{' '}
           <Link to="/register" className="auth-link">Registrate aquí</Link>
         </p>
       </div>
