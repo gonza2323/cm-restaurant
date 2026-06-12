@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MercadoPagoWebhookHandler {
@@ -25,8 +28,7 @@ public class MercadoPagoWebhookHandler {
         if (!payment.getStatus().equals("approved"))
             return;
 
-        Long comandaId = Long.parseLong(payment.getExternalReference());
-
-        pagosFacade.confirmarPagoMercadoPago(comandaId);
+        List<Long> idsComandas = Arrays.stream(payment.getExternalReference().split(",")).map(Long::parseLong).toList();
+        pagosFacade.confirmarPagoMercadoPago(idsComandas);
     }
 }

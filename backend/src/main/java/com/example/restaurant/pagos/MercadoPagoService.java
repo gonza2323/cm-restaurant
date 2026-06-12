@@ -39,11 +39,11 @@ public class MercadoPagoService {
                     .build()
                 ).collect(Collectors.toList());
 
-//        PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-//                .success(appProperties.frontendUrl() + "/success")
-//                .pending(appProperties.frontendUrl() + "/pending")
-//                .failure(appProperties.frontendUrl() + "/failure")
-//                .build();
+        PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
+                .success(appProperties.frontendUrl() + "/success")
+                .pending(appProperties.frontendUrl() + "/pending")
+                .failure(appProperties.frontendUrl() + "/failure")
+                .build();
 
         // No permitimos pagar en efectivo, así no queda pendiente el pago
         PreferencePaymentTypeRequest excludedType = PreferencePaymentTypeRequest.builder()
@@ -54,13 +54,18 @@ public class MercadoPagoService {
                         .excludedPaymentTypes(List.of(excludedType))
                         .build();
 
+        // Horrible pero por ahora funciona
+        String idsComandasStr = idsComandas.stream()
+                .map(String::valueOf)
+                .collect(java.util.stream.Collectors.joining(","));
+
         PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                 .items(itemsMP)
                 .paymentMethods(paymentMethods)
-//                .backUrls(backUrls)
+                .backUrls(backUrls)
                 .autoReturn("approved")
                 .notificationUrl(appProperties.baseUrl() + "/api/webhook/mercadopago")
-                .externalReference(idsComandas.toString())
+                .externalReference(idsComandasStr)
                 .statementDescriptor("Restaurante")
                 .build();
 

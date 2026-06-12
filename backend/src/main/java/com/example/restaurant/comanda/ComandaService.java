@@ -159,4 +159,8 @@ public class ComandaService {
         return repository.findByIdAndEliminadoFalse(comandaId)
                 .orElseThrow(() -> new BusinessException("Comanda no encontrada"));
     }
+
+    public List<DetalleComanda> findDetallesByComandaIds(List<Long> idsComandas) {
+        return repository.findDetallesByComandaIds(idsComandas);
+    }
 }
