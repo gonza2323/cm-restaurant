@@ -19,7 +19,7 @@ public class PagosController {
     private final PagosFacade pagosFacade;
 
     @PostMapping
-//    @PreAuthorize("hasRole('MOZO')") TODO QUITAR
+   @PreAuthorize("hasRole('MOZO')")
     public ResponseEntity<PaymentResponse> solicitarLinkMercadoPago(@RequestBody PaymentRequest request) {
         String urlDePago = pagosFacade.generarLinkDePagoMPClientes(request.idsComandas);
         PaymentResponse response = new PaymentResponse(urlDePago);

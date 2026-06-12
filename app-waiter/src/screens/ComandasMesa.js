@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { getMesaById, createComanda } from "../api/client";
 
 export default function ComandasMesa({ route }) {
@@ -28,6 +28,12 @@ export default function ComandasMesa({ route }) {
   useEffect(() => {
     loadMesaData();
   }, [idMesa]);
+
+  useFocusEffect(
+    useCallback(() => {
+      onRefresh();
+    }, [])
+  );
 
   useEffect(() => {
     // Si no hay comandas seleccionadas, salir del modo de selección
@@ -127,10 +133,10 @@ export default function ComandasMesa({ route }) {
 
     // Determinar el estilo del estado
     const estadoStyle =
-        item.estado === "EN_PROCESO_DE_SOLICITUD" ? styles.estadoEnProceso :
+      item.estado === "EN_PROCESO_DE_SOLICITUD" ? styles.estadoEnProceso :
         item.estado === "PREPARACION_LISTA" ? styles.estadoPreparada :
-        item.estado === "ENTREGADA" ? styles.estadoEntregada :
-        item.estado === "PAGADA" ? styles.estadoPagada : styles.estadoEnProceso
+          item.estado === "ENTREGADA" ? styles.estadoEntregada :
+            item.estado === "PAGADA" ? styles.estadoPagada : styles.estadoEnProceso
 
     const handlePress = () => {
       if (selectionMode) {
@@ -154,131 +160,131 @@ export default function ComandasMesa({ route }) {
     };
 
     return (
-        <TouchableOpacity
-            style={[
-              styles.comandaCard,
-              isSelected && styles.comandaCardSelected,
-              !isPayable && selectionMode && styles.comandaCardNotPayable // Visual cue for non-payable in selection mode
-            ]}
-            activeOpacity={0.8}
-            onPress={handlePress}
-            onLongPress={handleLongPress}
-            disabled={!isPayable && selectionMode} // Deshabilitar selección si no es pagable y en modo selección
-        >
-          <View style={styles.comandaCardContent}>
-            <View>
-              <Text style={styles.comandaId}>Comanda #{item.id}</Text>
-              <Text style={styles.comandaFecha}>Fecha de solicitud: {fecha}</Text>
-              <Text style={[styles.comandaEstado, estadoStyle]}>
-                {estadoDisplay}
-              </Text>
-            </View>
-            {selectionMode && (
-                <View style={[styles.checkbox, isSelected && styles.checkboxSelected]} />
-            )}
+      <TouchableOpacity
+        style={[
+          styles.comandaCard,
+          isSelected && styles.comandaCardSelected,
+          !isPayable && selectionMode && styles.comandaCardNotPayable // Visual cue for non-payable in selection mode
+        ]}
+        activeOpacity={0.8}
+        onPress={handlePress}
+        onLongPress={handleLongPress}
+        disabled={!isPayable && selectionMode} // Deshabilitar selección si no es pagable y en modo selección
+      >
+        <View style={styles.comandaCardContent}>
+          <View>
+            <Text style={styles.comandaId}>Comanda #{item.id}</Text>
+            <Text style={styles.comandaFecha}>Fecha de solicitud: {fecha}</Text>
+            <Text style={[styles.comandaEstado, estadoStyle]}>
+              {estadoDisplay}
+            </Text>
           </View>
-        </TouchableOpacity>
+          {selectionMode && (
+            <View style={[styles.checkbox, isSelected && styles.checkboxSelected]} />
+          )}
+        </View>
+      </TouchableOpacity>
     );
   }
 
   if (loading) {
     return (
-        <View style={styles.center}>
-          <ActivityIndicator color="#A2A3EB" size="large" />
-        </View>
+      <View style={styles.center}>
+        <ActivityIndicator color="#A2A3EB" size="large" />
+      </View>
     );
   }
 
   if (error) {
     return (
-        <View style={styles.center}>
-          <Text style={styles.errorText}>{error}</Text>
-          <TouchableOpacity style={styles.retryButton} onPress={loadMesaData}>
-            <Text style={styles.retryButtonText}>Reintentar</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.center}>
+        <Text style={styles.errorText}>{error}</Text>
+        <TouchableOpacity style={styles.retryButton} onPress={loadMesaData}>
+          <Text style={styles.retryButtonText}>Reintentar</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 
   if (!mesa) {
     return (
-        <View style={styles.center}>
-          <Text style={styles.emptyText}>No se encontraron datos para esta mesa.</Text>
-        </View>
+      <View style={styles.center}>
+        <Text style={styles.emptyText}>No se encontraron datos para esta mesa.</Text>
+      </View>
     );
   }
 
   return (
-      <SafeAreaView style={styles.safe}>
-        <View style={styles.header}>
-          <View style={styles.headerTopRow}>
-            <View>
-              <Text style={styles.title}>Mesa {mesa.numero}</Text>
-              <Text style={styles.subtitle}>Capacidad: {mesa.capacidad} personas</Text>
-              {mesa.zona && <Text style={styles.subtitle}>Zona: {mesa.zona}</Text>}
-            </View>
-            {/* Botón Pagar Todo */}
-            {!selectionMode && (
-              <TouchableOpacity
-                style={[styles.pagarTodoButton, !hayEntregadas && styles.pagarTodoButtonDisabled]}
-                onPress={handlePagarTodas}
-                disabled={!hayEntregadas}
-              >
-                <Text style={styles.pagarTodoButtonText}>💳 Pagar todo</Text>
-              </TouchableOpacity>
-            )}
-            {selectionMode && (
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={() => { setSelectedComandas([]); setSelectionMode(false); }}
-              >
-                <Text style={styles.cancelButtonText}>Cancelar</Text>
-              </TouchableOpacity>
-            )}
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.header}>
+        <View style={styles.headerTopRow}>
+          <View>
+            <Text style={styles.title}>Mesa {mesa.numero}</Text>
+            <Text style={styles.subtitle}>Capacidad: {mesa.capacidad} personas</Text>
+            {mesa.zona && <Text style={styles.subtitle}>Zona: {mesa.zona}</Text>}
           </View>
-        </View>
-
-        <FlatList
-            data={mesa.comandas}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={renderComandaItem}
-            contentContainerStyle={styles.list}
-            refreshControl={
-              <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefresh}
-                  tintColor="#A2A3EB"
-              />
-            }
-            ListEmptyComponent={
-              <View style={styles.empty}>
-                <Text style={styles.emptyText}>No hay comandas para esta mesa.</Text>
-              </View>
-            }
-        />
-
-        {/* Botón flotante para agregar comanda (izquierda) */}
-        {!selectionMode && (
+          {/* Botón Pagar Todo */}
+          {!selectionMode && (
             <TouchableOpacity
-                style={[styles.fabAdd, addingComanda && styles.fabDisabled]}
-                onPress={handleAddComanda}
-                disabled={addingComanda}
+              style={[styles.pagarTodoButton, !hayEntregadas && styles.pagarTodoButtonDisabled]}
+              onPress={handlePagarTodas}
+              disabled={!hayEntregadas}
             >
-              {addingComanda ? (
-                  <ActivityIndicator color="#1e1f4a" />
-              ) : (
-                  <Text style={styles.fabAddText}>+</Text>
-              )}
+              <Text style={styles.pagarTodoButtonText}>💳 Pagar todo</Text>
             </TouchableOpacity>
-        )}
+          )}
+          {selectionMode && (
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={() => { setSelectedComandas([]); setSelectionMode(false); }}
+            >
+              <Text style={styles.cancelButtonText}>Cancelar</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
 
-        {/* Botón flotante para pagar comandas seleccionadas (derecha) */}
-        {selectedComandas.length > 0 && (
+      <FlatList
+        data={mesa.comandas}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={renderComandaItem}
+        contentContainerStyle={styles.list}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#A2A3EB"
+          />
+        }
+        ListEmptyComponent={
+          <View style={styles.empty}>
+            <Text style={styles.emptyText}>No hay comandas para esta mesa.</Text>
+          </View>
+        }
+      />
+
+      {/* Botón flotante para agregar comanda (izquierda) */}
+      {!selectionMode && (
+        <TouchableOpacity
+          style={[styles.fabAdd, addingComanda && styles.fabDisabled]}
+          onPress={handleAddComanda}
+          disabled={addingComanda}
+        >
+          {addingComanda ? (
+            <ActivityIndicator color="#1e1f4a" />
+          ) : (
+            <Text style={styles.fabAddText}>+</Text>
+          )}
+        </TouchableOpacity>
+      )}
+
+      {/* Botón flotante para pagar comandas seleccionadas (derecha) */}
+      {selectedComandas.length > 0 && (
         <TouchableOpacity style={styles.fabPagar} onPress={handlePaySelected}>
           <Text style={styles.fabPagarText}>Pagar ({selectedComandas.length})</Text>
         </TouchableOpacity>
       )}
-      </SafeAreaView>
+    </SafeAreaView>
   );
 }
 

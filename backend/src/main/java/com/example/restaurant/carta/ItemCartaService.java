@@ -18,8 +18,6 @@ public class ItemCartaService extends BaseService<ItemCarta, ItemCartaRepository
                 .imagen(imagen)
                 .build();
 
-        // TODO Faltan los ingredientes y sus cantidades
-
         return repository.save(item);
     }
 }
