@@ -182,7 +182,6 @@ body {
 }
 
 
-
 @media (max-width: 640px) {
   /* Mostrar el wrapper en mobile */
   .burger-menu-wrapper {
@@ -237,7 +236,7 @@ body {
   .bm-item-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .bm-item {
@@ -256,7 +255,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
   }
 
   /* Ajuste para que los botones de Login no se rompan en el menú oscuro */
@@ -653,6 +652,7 @@ body {
     display: flex !important;
     flex-direction: column !important;
     gap: 1.5rem !important;
+    margin-bottom: 0;
   }
 
   .bm-item {
@@ -667,12 +667,11 @@ body {
 
   /* Botones de Login en móvil */
   .burger-menu-actions {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
+    margin-top: 2rem !important; 
+    padding-top: 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
   }
 
   .burger-menu-actions .nav-btn {
@@ -680,6 +679,22 @@ body {
     background: #fff9ef !important;
     color: #2c1d07 !important;
     border: none !important;
+
+  }
+
+  /* Forzamos el espaciado directamente en el botón en lugar de usar gap en el contenedor */
+  .burger-menu-actions .nav-btn {
+    width: 100%;
+    background: #fff9ef;
+    color: #2c1d07;
+    border: none;
+    justify-content: center;
+    margin-bottom: 1rem !important; /* ESTA ES LA MAGIA: Ajustá este valor a tu gusto */
+  }
+
+  /* Le sacamos el margen al último para que no quede espacio sobrando abajo */
+  .burger-menu-actions .nav-btn:last-child {
+    margin-bottom: 0 !important;
   }
 }
 
@@ -735,5 +750,6 @@ html, body, #root {
     font-size: 1rem !important;
     padding: 0.8rem 1rem !important;
     white-space: normal !important;
+    gap: 2.5rem !important;
   }
 }
