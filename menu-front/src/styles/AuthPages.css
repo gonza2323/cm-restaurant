@@ -4,19 +4,19 @@
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 5rem;
+  padding: 1rem;
 }
 
 .auth-card {
   background: white;
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  padding: 0.2rem;
   width: 100%;
 }
 
 .auth-title {
-  font-size: 6rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #333;
   text-align: center;
@@ -26,7 +26,7 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .form-group {
@@ -36,16 +36,16 @@
 }
 
 .form-label {
-  font-size: 4rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #333;
 }
 
 .form-input {
-  padding: 3rem;
+  padding: 1rem;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
-  font-size: 2.5rem;
+  font-size: 1rem;
   transition: border-color 0.3s ease;
   font-family: inherit;
   /* tap target mínimo recomendado en mobile */
@@ -66,7 +66,7 @@
 
 .form-error {
   color: #dc2626;
-  font-size: 3rem;
+  font-size: 1rem;
   margin: 0;
   padding: 0.75rem;
   background-color: #fee2e2;
@@ -75,12 +75,12 @@
 }
 
 .auth-btn {
-  padding: 0.85rem;
+  padding: 0.5rem;
   background-color: #667eea;
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -99,9 +99,9 @@
 
 .auth-footer {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   color: #666;
-  font-size: 3rem;
+  font-size: 1rem;
 }
 
 .auth-link {
@@ -117,13 +117,13 @@
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
   .auth-card {
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 8px;
   }
 
   .auth-title {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 }
