@@ -39,4 +39,15 @@ public interface CartaRepository extends BaseRepository<Carta> {
     HAVING MIN(stock.cantidadActual - miii.cantidad) >= 0
 """)
     List<ItemCarta> findItemsCartaDisponibles(@Param("cartaId") Long cartaId);
+
+    @Query("""
+        SELECT DISTINCT i FROM ItemCarta i
+        JOIN i.seccion s
+        LEFT JOIN FETCH i.articulosInventario aiic
+        LEFT JOIN FETCH aiic.articuloInventario art
+        LEFT JOIN FETCH art.stock
+        WHERE s.carta.id = :cartaId
+        AND i.eliminado = false
+    """)
+    List<ItemCarta> findAllItemsWithStock(@Param("cartaId") Long cartaId);
 }
