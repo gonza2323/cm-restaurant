@@ -21,7 +21,7 @@ export default function Carta({ route }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [quantities, setQuantities] = useState({}); // { itemId: quantity }
-  const [addingItem, setAddingItem] = useState(false);
+  const [adding, setAdding] = useState(false);
 
   useEffect(() => {
     loadMenuData();
@@ -48,29 +48,55 @@ export default function Carta({ route }) {
     }));
   };
 
-  async function handleAddItemToComanda(itemCartaId) {
-    const quantity = quantities[itemCartaId] || 0;
-    if (quantity === 0) {
-      Alert.alert("Atención", "Selecciona al menos una unidad para agregar.");
+  const totalItemsSeleccionados = Object.values(quantities).reduce((a, b) => a + b, 0);
+
+  async function handleAgregarTodos() {
+    if (totalItemsSeleccionados === 0) {
+      Alert.alert("Atención", "Seleccioná al menos un producto antes de agregar.");
       return;
     }
 
-    setAddingItem(true);
+    setAdding(true);
     try {
-      for (let i = 0; i < quantity; i++) {
-        await addItemToComandaDetails(idComanda, itemCartaId);
+      // Por cada item con cantidad > 0, hacemos N requests al backend
+      const entries = Object.entries(quantities).filter(([, qty]) => qty > 0);
+      for (const [itemId, qty] of entries) {
+        for (let i = 0; i < qty; i++) {
+          await addItemToComandaDetails(idComanda, Number(itemId));
+        }
       }
-      Alert.alert("Éxito", `${quantity} unidad(es) agregada(s) a la comanda.`);
-      setQuantities((prev) => ({ ...prev, [itemCartaId]: 0 })); // Reset quantity
-      // Opcional: Navegar de vuelta a ComandaDetailScreen o refrescarla
+      Alert.alert("Éxito", `${totalItemsSeleccionados} item(s) agregado(s) a la comanda.`);
       navigation.goBack();
     } catch (e) {
-      console.error("Error agregando plato a la comanda:", e);
-      Alert.alert("Error", e.message || "No se pudo agregar el plato a la comanda.");
+      Alert.alert("Error", e.message || "No se pudieron agregar los items.");
     } finally {
-      setAddingItem(false);
+      setAdding(false);
     }
   }
+
+  // async function handleAddItemToComanda(itemCartaId) {
+  //   const quantity = quantities[itemCartaId] || 0;
+  //   if (quantity === 0) {
+  //     Alert.alert("Atención", "Selecciona al menos una unidad para agregar.");
+  //     return;
+  //   }
+
+  //   setAddingItem(true);
+  //   try {
+  //     for (let i = 0; i < quantity; i++) {
+  //       await addItemToComandaDetails(idComanda, itemCartaId);
+  //     }
+  //     Alert.alert("Éxito", `${quantity} unidad(es) agregada(s) a la comanda.`);
+  //     setQuantities((prev) => ({ ...prev, [itemCartaId]: 0 })); // Reset quantity
+  //     // Opcional: Navegar de vuelta a ComandaDetailScreen o refrescarla
+  //     navigation.goBack();
+  //   } catch (e) {
+  //     console.error("Error agregando plato a la comanda:", e);
+  //     Alert.alert("Error", e.message || "No se pudo agregar el plato a la comanda.");
+  //   } finally {
+  //     setAddingItem(false);
+  //   }
+  // }
 
   function renderMenuItem({ item }) {
     const imageUrl = item.imageUrl ? `${process.env.EXPO_PUBLIC_API_URL}${item.imageUrl}` : null;
@@ -85,33 +111,20 @@ export default function Carta({ route }) {
             <Text style={styles.menuItemDescription}>{item.descripcion}</Text>
             <Text style={styles.menuItemPrice}>${item.precio.toFixed(2)}</Text>
           </View>
-          <View style={styles.itemActions}>
+          <View style={styles.quantitySelector}>
             <TouchableOpacity
-              style={[styles.addPlusButton, (addingItem || currentQuantity === 0) && styles.addPlusButtonDisabled]}
-              onPress={() => handleAddItemToComanda(item.id)}
-              disabled={addingItem || currentQuantity === 0}
+              style={styles.quantityButton}
+              onPress={() => handleQuantityChange(item.id, -1)}
             >
-              {addingItem ? (
-                <ActivityIndicator color="#1e1f4a" size="small" />
-              ) : (
-                <Text style={styles.addPlusButtonText}>+</Text>
-              )}
+              <Text style={styles.quantityButtonText}>−</Text>
             </TouchableOpacity>
-            <View style={styles.quantitySelector}>
-              <TouchableOpacity
-                style={styles.quantityButton}
-                onPress={() => handleQuantityChange(item.id, -1)}
-              >
-                <Text style={styles.quantityButtonText}>-</Text>
-              </TouchableOpacity>
-              <Text style={styles.quantityText}>{currentQuantity}</Text>
-              <TouchableOpacity
-                style={styles.quantityButton}
-                onPress={() => handleQuantityChange(item.id, 1)}
-              >
-                <Text style={styles.quantityButtonText}>+</Text>
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.quantityText}>{currentQuantity}</Text>
+            <TouchableOpacity
+              style={styles.quantityButton}
+              onPress={() => handleQuantityChange(item.id, 1)}
+            >
+              <Text style={styles.quantityButtonText}>+</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -171,6 +184,25 @@ export default function Carta({ route }) {
         renderItem={renderSection}
         contentContainerStyle={styles.list}
       />
+      {/* Boton flotante de agregar seleccionados */}
+      <TouchableOpacity
+        style={[
+          styles.fabAgregar,
+          (totalItemsSeleccionados === 0 || adding) && styles.fabAgregarDisabled,
+        ]}
+        onPress={handleAgregarTodos}
+        disabled={totalItemsSeleccionados === 0 || adding}
+      >
+        {adding ? (
+          <ActivityIndicator color="#1e1f4a" />
+        ) : (
+          <Text style={styles.fabAgregarText}>
+            {totalItemsSeleccionados > 0
+              ? `Agregar ${totalItemsSeleccionados} item(s)`
+              : "Seleccioná items"}
+          </Text>
+        )}
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -181,7 +213,7 @@ const styles = StyleSheet.create({
   header: { paddingHorizontal: 20, paddingTop: 15, marginBottom: 15, borderBottomWidth: 1, borderBottomColor: "#4a3020", paddingBottom: 10 },
   title: { fontSize: 26, fontWeight: "800", color: "#FFD4BD" },
   subtitle: { fontSize: 14, color: "#b09080", marginTop: 4 },
-  list: { paddingHorizontal: 15, paddingBottom: 30 },
+  list: { paddingHorizontal: 15, paddingBottom: 100 },
   sectionContainer: { marginBottom: 20 },
   sectionTitle: { fontSize: 22, fontWeight: "700", color: "#FFD4BD", marginBottom: 10, paddingLeft: 5 },
   menuItemCard: {
@@ -219,27 +251,27 @@ const styles = StyleSheet.create({
   menuItemName: { fontSize: 16, fontWeight: "700", color: "#ede0d4" },
   menuItemDescription: { fontSize: 12, color: "#b09080", marginTop: 2 },
   menuItemPrice: { fontSize: 14, fontWeight: "600", color: "#FFD4BD", marginTop: 5 },
-  itemActions: { // Contenedor para el botón '+' y el selector de cantidad
-    alignItems: "center",
-  },
-  addPlusButton: {
-    backgroundColor: "#4ade80",
-    borderRadius: 20, // Para hacerlo circular
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 8, // Espacio entre el '+' y el selector de cantidad
-  },
-  addPlusButtonDisabled: {
-    backgroundColor: "#3d3e6a",
-  },
-  addPlusButtonText: {
-    color: "#1e1f4a",
-    fontSize: 24,
-    fontWeight: "bold",
-    lineHeight: 24, // Ajustar para centrar el '+'
-  },
+  // itemActions: { // Contenedor para el botón '+' y el selector de cantidad
+  //   alignItems: "center",
+  // },
+  // addPlusButton: {
+  //   backgroundColor: "#4ade80",
+  //   borderRadius: 20, // Para hacerlo circular
+  //   width: 40,
+  //   height: 40,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   marginBottom: 8, // Espacio entre el '+' y el selector de cantidad
+  // },
+  // addPlusButtonDisabled: {
+  //   backgroundColor: "#3d3e6a",
+  // },
+  // addPlusButtonText: {
+  //   color: "#1e1f4a",
+  //   fontSize: 24,
+  //   fontWeight: "bold",
+  //   lineHeight: 24, // Ajustar para centrar el '+'
+  // },
   quantitySelector: {
     flexDirection: "row",
     alignItems: "center",
@@ -265,6 +297,24 @@ const styles = StyleSheet.create({
     minWidth: 20,
     textAlign: "center",
   },
+  fabAgregar: {
+    position: "absolute",
+    bottom: 36,
+    left: 20,
+    right: 20,
+    backgroundColor: "#4ade80",
+    borderRadius: 14,
+    paddingVertical: 14,
+    alignItems: "center",
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  fabAgregarDisabled: { backgroundColor: "#3d3e6a" },
+  fabAgregarText: { color: "#1e1f4a", fontSize: 16, fontWeight: "700" },
+
   empty: { alignItems: "center", marginTop: 50 },
   emptyText: { color: "#b09080", fontSize: 16 },
   errorText: { color: "#f87171", fontSize: 16, textAlign: "center", marginBottom: 10 },

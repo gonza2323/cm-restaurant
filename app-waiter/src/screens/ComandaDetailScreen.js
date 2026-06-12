@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
   removeButtonText: { color: "#1e1f4a", fontSize: 12, fontWeight: "700" },
   fabLeft: {
     position: "absolute",
-    bottom: 20,
+    bottom: 36,
     left: 20,
     backgroundColor: "#4ade80",
     borderRadius: 30,
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
   },
   fabRight: {
     position: "absolute",
-    bottom: 20,
+    bottom: 36,
     right: 20,
     borderRadius: 12,
     paddingVertical: 12,
