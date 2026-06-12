@@ -29,4 +29,11 @@ public interface ComandaRepository extends JpaRepository<Comanda, Long> {
     AND d.eliminado = false
 """)
     List<DetalleComanda> findDetallesByComandaIds(@Param("idsComandas") List<Long> idsComandas);
+
+    @Query("""
+    SELECT DISTINCT c FROM Comanda c
+    WHERE c.id IN :idsComandas
+    AND c.eliminado = false
+""")
+    List<Comanda> findAllByIds(List<Long> idsComandas);
 }

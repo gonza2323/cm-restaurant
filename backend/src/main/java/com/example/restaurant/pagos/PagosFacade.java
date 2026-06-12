@@ -49,12 +49,12 @@ public class PagosFacade {
 
     @Transactional
     public void confirmarPagoMercadoPago(List<Long> idsComandas) {
-        // TODO Temporal, marcar comandas como pagadas, generar factura
-
         String idsComandasStr = idsComandas.stream()
                 .map(String::valueOf)
                 .collect(java.util.stream.Collectors.joining(","));
 
         System.out.println("Confirmado el pago de las comandas " + idsComandasStr);
+
+        comandaService.marcarComoPagadas(idsComandas);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 @ConfigurationProperties(prefix = "app")
 public record AppProperties(
     Auth auth,
-    String baseUrl,
+    String apiUrl,
     String frontendUrl,
     List<String> corsOrigins
 ) {
