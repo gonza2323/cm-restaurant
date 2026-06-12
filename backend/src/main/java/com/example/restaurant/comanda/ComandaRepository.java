@@ -1,5 +1,6 @@
 package com.example.restaurant.comanda;
 
+import com.example.restaurant.carta.ItemCarta;
 import com.example.restaurant.mesa.Mesa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,13 @@ public interface ComandaRepository extends JpaRepository<Comanda, Long> {
     List<Comanda> findAllByMesa(@Param("mesa") Mesa mesa);
 
     Optional<Comanda> findByIdAndEliminadoFalse(Long id);
+
+    @Query("""
+    SELECT DISTINCT d FROM DetalleComanda d
+    JOIN FETCH d.itemCarta
+    JOIN FETCH d.comanda
+    WHERE d.comanda.id IN :idsComandas
+    AND d.eliminado = false
+""")
+    List<DetalleComanda> findDetallesByComandaIds(@Param("idsComandas") List<Long> idsComandas);
 }
