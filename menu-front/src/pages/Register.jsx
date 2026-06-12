@@ -1,55 +1,79 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/AuthPages.css';
+import { useAuth } from '../auth/AuthContext';
 
 function Register() {
   const [formData, setFormData] = useState({
-    name: '',
+    nombre: '',
+    apellido: '',
     email: '',
+    fechaNacimiento: '',
     password: '',
-    confirmPassword: ''
+    passwordConfirm: '',
   });
+  const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { signup } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
+    setError('');
+
+    if (formData.password !== formData.passwordConfirm) {
       setError('Las contraseñas no coinciden');
       return;
     }
 
-    // TODO: Conectar con el backend
-    console.log('Register:', formData);
-    // navigate('/');
+    setLoading(true);
+    try {
+      await signup({ ...formData, imageFile });
+      navigate('/');
+    } catch (err) {
+      setError(err.response?.data?.message ?? 'Error al registrarse. Intentá de nuevo.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h1 className="auth-title">Registrarse</h1>
-        
+
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="name" className="form-label">Nombre Completo</label>
+            <label htmlFor="nombre" className="form-label">Nombre</label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="nombre"
+              name="nombre"
+              value={formData.nombre}
               onChange={handleChange}
               required
               className="form-input"
               placeholder="Tu nombre"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="apellido" className="form-label">Apellido</label>
+            <input
+              type="text"
+              id="apellido"
+              name="apellido"
+              value={formData.apellido}
+              onChange={handleChange}
+              required
+              className="form-input"
+              placeholder="Tu apellido"
             />
           </div>
 
@@ -68,6 +92,19 @@ function Register() {
           </div>
 
           <div className="form-group">
+            <label htmlFor="fechaNacimiento" className="form-label">Fecha de nacimiento</label>
+            <input
+              type="date"
+              id="fechaNacimiento"
+              name="fechaNacimiento"
+              value={formData.fechaNacimiento}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
+
+          <div className="form-group">
             <label htmlFor="password" className="form-label">Contraseña</label>
             <input
               type="password"
@@ -82,12 +119,12 @@ function Register() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="confirmPassword" className="form-label">Confirmar Contraseña</label>
+            <label htmlFor="passwordConfirm" className="form-label">Confirmar contraseña</label>
             <input
               type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
+              id="passwordConfirm"
+              name="passwordConfirm"
+              value={formData.passwordConfirm}
               onChange={handleChange}
               required
               className="form-input"
@@ -95,15 +132,28 @@ function Register() {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="imageFile" className="form-label">
+              Foto de perfil <span style={{ fontWeight: 'normal', opacity: 0.6 }}>(opcional)</span>
+            </label>
+            <input
+              type="file"
+              id="imageFile"
+              accept="image/*"
+              onChange={(e) => setImageFile(e.target.files[0] ?? null)}
+              className="form-input"
+            />
+          </div>
+
           {error && <p className="form-error">{error}</p>}
 
-          <button type="submit" className="auth-btn">
-            Registrarse
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? 'Registrando...' : 'Registrarse'}
           </button>
         </form>
 
         <p className="auth-footer">
-          ¿Ya tienes cuenta? 
+          ¿Ya tienes cuenta?{' '}
           <Link to="/login" className="auth-link">Inicia sesión aquí</Link>
         </p>
       </div>

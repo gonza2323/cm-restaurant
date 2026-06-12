@@ -1,7 +1,16 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
+import ReviewForm from './ReviewForm'; 
+
 import '../styles/CreateReview.css';
 
-function CreateReview() {
+function CreateReview({ onReviewCreated }) {
+  const { isAuthenticated } = useAuth();
+
+  if (isAuthenticated) {
+    return <ReviewForm onReviewCreated={onReviewCreated} />;
+  }
+
   return (
     <section className="create-review">
       <div className="create-review__card">
@@ -10,12 +19,11 @@ function CreateReview() {
           <p className="create-review__description">
             Inicia sesión o registrate para compartir tu experiencia en nuestro restaurante
           </p>
-          
           <div className="create-review__actions">
-            <Link to="/login" className="create-review__btn create-review__btn--login">
+            <Link to="/login" className="nav-btn nav-btn--login">
               Iniciar Sesión
             </Link>
-            <Link to="/register" className="create-review__btn create-review__btn--register">
+            <Link to="/register" className="nav-btn nav-btn--register">
               Registrarse
             </Link>
           </div>
@@ -26,3 +34,5 @@ function CreateReview() {
 }
 
 export default CreateReview;
+
+
